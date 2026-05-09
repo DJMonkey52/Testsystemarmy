@@ -63,7 +63,6 @@
             flex-direction: column;
         }
 
-        /* Верхняя надпись ARMY (как в примере, но с центром) */
         .army-hero {
             text-align: center;
             margin-bottom: 32px;
@@ -113,7 +112,6 @@
             letter-spacing: 1px;
         }
 
-        /* 4 кнопки по центру — стиль такой же как в оригинальном коде (action-card стиль) */
         .action-buttons-grid {
             display: flex;
             justify-content: center;
@@ -185,7 +183,6 @@
             transform: translateX(6px);
         }
 
-        /* Панели форм (страницы каждой кнопки) */
         .form-page {
             display: none;
             animation: fadeInUp 0.45s ease;
@@ -247,6 +244,13 @@
 
         .card-body {
             padding: 28px;
+        }
+
+        .double-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 22px;
         }
 
         .input-group {
@@ -387,6 +391,7 @@
             .action-card h3 { font-size: 1.1rem; }
             .army-hero h1 { font-size: 2.6rem; letter-spacing: 2px; }
             .period-row { grid-template-columns: 1fr; gap: 12px; }
+            .double-group { grid-template-columns: 1fr; gap: 14px; }
             .card-body { padding: 20px; }
         }
 
@@ -410,7 +415,6 @@
 
         <div id="homePage" class="home-page">
             <div class="action-buttons-grid">
-                <!-- 4 КНОПКИ ПО ЦЕНТРУ, ПОЛНОСТЬЮ СООТВЕТСТВУЮТ ЗАДАНИЮ -->
                 <div class="action-card" data-page="lunch">
                     <div class="card-icon"><i class="fas fa-utensils"></i></div>
                     <h3>Обеденный перерыв</h3>
@@ -441,38 +445,46 @@
             </div>
         </div>
 
-        <!-- СТРАНИЦА: Обеденный перерыв -->
+        <!-- === ОБЕДЕННЫЙ ПЕРЕРЫВ (ранги с Рекрут, Рядовой) === -->
         <div id="lunchPage" class="form-page">
             <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
             <div class="glass-card">
                 <div class="card-header"><h2><i class="fas fa-utensils"></i> Обеденный перерыв</h2></div>
                 <div class="card-body">
                     <div id="lunchAlert"></div>
-                    <div class="input-group"><label>👤 ИГРОВОЙ НИКНЕЙМ</label><input type="text" id="lunchNick" placeholder="Введите ваш ник"></div>
-                    <div class="period-row">
-                        <div class="input-group"><label>⏰ ДАТА И ВРЕМЯ НАЧАЛА</label><input type="datetime-local" id="lunchStart"></div>
-                        <div class="input-group"><label>⏰ ДАТА И ВРЕМЯ ОКОНЧАНИЯ</label><input type="datetime-local" id="lunchEnd"></div>
+                    <div class="double-group">
+                        <div class="input-group"><label>👤 ИГРОВОЙ НИКНЕЙМ</label><input type="text" id="lunchNick" placeholder="Введите ваш ник"></div>
+                        <div class="input-group"><label>🏅 РАНГ</label><select id="lunchRank"></select></div>
                     </div>
+                    <div class="double-group">
+                        <div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="lunchDepartment"></select></div>
+                        <div class="input-group"><label>⏰ ДАТА И ВРЕМЯ НАЧАЛА</label><input type="datetime-local" id="lunchStart"></div>
+                    </div>
+                    <div class="input-group"><label>⏰ ДАТА И ВРЕМЯ ОКОНЧАНИЯ</label><input type="datetime-local" id="lunchEnd"></div>
                     <div class="info-note" id="lunchDurationInfo">📆 Укажите интервал перерыва</div>
                     <div class="input-group"><label>💬 ПРИЧИНА (необязательно)</label><textarea rows="2" id="lunchReason" placeholder="Например: приём пищи, технический перерыв..."></textarea></div>
                     <button class="submit-btn" id="submitLunchBtn"><i class="fab fa-discord"></i> 📨 ОТПРАВИТЬ ЗАЯВКУ</button>
-                    <div class="footer-signature">Обязательно укажите никнейм и интервал</div>
+                    <div class="footer-signature">Обязательно укажите никнейм, ранг, отдел и интервал</div>
                 </div>
             </div>
         </div>
 
-        <!-- Увольнительное время -->
+        <!-- === УВОЛЬНИТЕЛЬНОЕ ВРЕМЯ (основные ранги 3-12) === -->
         <div id="timeoffPage" class="form-page">
             <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
             <div class="glass-card">
                 <div class="card-header"><h2><i class="fas fa-plane-departure"></i> Увольнительное время</h2></div>
                 <div class="card-body">
                     <div id="timeoffAlert"></div>
-                    <div class="input-group"><label>👤 ИГРОВОЙ НИКНЕЙМ</label><input type="text" id="timeoffNick" placeholder="Ваш никнейм"></div>
-                    <div class="period-row">
-                        <div class="input-group"><label>📅 ДАТА НАЧАЛА</label><input type="date" id="timeoffStartDate"></div>
-                        <div class="input-group"><label>📅 ДАТА ОКОНЧАНИЯ</label><input type="date" id="timeoffEndDate"></div>
+                    <div class="double-group">
+                        <div class="input-group"><label>👤 ИГРОВОЙ НИКНЕЙМ</label><input type="text" id="timeoffNick" placeholder="Ваш никнейм"></div>
+                        <div class="input-group"><label>🏅 РАНГ</label><select id="timeoffRank"></select></div>
                     </div>
+                    <div class="double-group">
+                        <div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="timeoffDepartment"></select></div>
+                        <div class="input-group"><label>📅 ДАТА НАЧАЛА</label><input type="date" id="timeoffStartDate"></div>
+                    </div>
+                    <div class="input-group"><label>📅 ДАТА ОКОНЧАНИЯ</label><input type="date" id="timeoffEndDate"></div>
                     <div class="info-note" id="timeoffDaysInfo">🔹 Укажите период увольнительного</div>
                     <div class="input-group"><label>✍️ КОММЕНТАРИЙ</label><textarea rows="2" id="timeoffComment" placeholder="Причина увольнительной"></textarea></div>
                     <button class="submit-btn" id="submitTimeoffBtn"><i class="fab fa-discord"></i> 📨 ОТПРАВИТЬ ЗАЯВКУ</button>
@@ -480,36 +492,44 @@
             </div>
         </div>
 
-        <!-- IC Отпуск (In Character) -->
+        <!-- === IC ОТПУСК (ранги 3-12) === -->
         <div id="icPage" class="form-page">
             <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
             <div class="glass-card">
                 <div class="card-header"><h2><i class="fas fa-mask"></i> IC Отпуск</h2></div>
                 <div class="card-body">
                     <div id="icAlert"></div>
-                    <div class="input-group"><label>🎭 ИГРОВОЙ ПЕРСОНАЖ (НИК)</label><input type="text" id="icNick" placeholder="Имя персонажа"></div>
-                    <div class="period-row">
-                        <div class="input-group"><label>📅 НАЧАЛО ОТПУСКА</label><input type="date" id="icStart"></div>
-                        <div class="input-group"><label>📅 КОНЕЦ ОТПУСКА</label><input type="date" id="icEnd"></div>
+                    <div class="double-group">
+                        <div class="input-group"><label>🎭 ИГРОВОЙ ПЕРСОНАЖ (НИК)</label><input type="text" id="icNick" placeholder="Имя персонажа"></div>
+                        <div class="input-group"><label>🏅 РАНГ</label><select id="icRank"></select></div>
                     </div>
+                    <div class="double-group">
+                        <div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="icDepartment"></select></div>
+                        <div class="input-group"><label>📅 НАЧАЛО ОТПУСКА</label><input type="date" id="icStart"></div>
+                    </div>
+                    <div class="input-group"><label>📅 КОНЕЦ ОТПУСКА</label><input type="date" id="icEnd"></div>
                     <div class="input-group"><label>📖 ПРИЧИНА IC ОТПУСКА</label><textarea rows="2" id="icReason" placeholder="Например: ролевые обстоятельства, отъезд персонажа"></textarea></div>
                     <button class="submit-btn" id="submitIcBtn"><i class="fab fa-discord"></i> 📨 ПОДАТЬ IC ОТПУСК</button>
                 </div>
             </div>
         </div>
 
-        <!-- OOC Отпуск (Out Of Character) -->
+        <!-- === OOC ОТПУСК (ранги 3-12) === -->
         <div id="oocPage" class="form-page">
             <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
             <div class="glass-card">
                 <div class="card-header"><h2><i class="fas fa-comment-dots"></i> OOC Отпуск</h2></div>
                 <div class="card-body">
                     <div id="oocAlert"></div>
-                    <div class="input-group"><label>💬 ВАШ DISCORD / НИКНЕЙМ</label><input type="text" id="oocName" placeholder="Ник или Discord тег"></div>
-                    <div class="period-row">
-                        <div class="input-group"><label>📅 ДАТА НАЧАЛА ОТПУСКА</label><input type="date" id="oocStart"></div>
-                        <div class="input-group"><label>📅 ДАТА ОКОНЧАНИЯ</label><input type="date" id="oocEnd"></div>
+                    <div class="double-group">
+                        <div class="input-group"><label>💬 ВАШ DISCORD / НИКНЕЙМ</label><input type="text" id="oocName" placeholder="Ник или Discord тег"></div>
+                        <div class="input-group"><label>🏅 РАНГ</label><select id="oocRank"></select></div>
                     </div>
+                    <div class="double-group">
+                        <div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="oocDepartment"></select></div>
+                        <div class="input-group"><label>📅 ДАТА НАЧАЛА ОТПУСКА</label><input type="date" id="oocStart"></div>
+                    </div>
+                    <div class="input-group"><label>📅 ДАТА ОКОНЧАНИЯ</label><input type="date" id="oocEnd"></div>
                     <div class="input-group"><label>📢 ПРИЧИНА OOC ОТПУСКА</label><textarea rows="2" id="oocReason" placeholder="Личные обстоятельства, загруженность и т.д."></textarea></div>
                     <button class="submit-btn" id="submitOocBtn"><i class="fab fa-discord"></i> 📨 ЗАЯВИТЬ OOC ОТПУСК</button>
                 </div>
@@ -518,14 +538,58 @@
     </div>
 
     <script>
-        // --- Конфигурация Webhook (DEMO) — ЗАМЕНИТЕ НА РЕАЛЬНЫЕ ВЕБХУКИ ПРИ НЕОБХОДИМОСТИ
+        // === СПИСКИ ДЛЯ ВЫБОРА ===
+        const DEPARTMENTS = ["MA", "DIV", "MPB", "USAF", "Delta"];
+        // Основные ранги (с 3 по 12)
+        const MAIN_RANKS = [
+            "Специалист (3)", "Капрал (4)", "Сержант (5)", "Штаб-сержант (6)",
+            "Уорент-офицер (7)", "Старший Уорент-офицер (8)",
+            "Лейтенант (9)", "Капитан (10)", "Майор (11)", "Подполковник (12)"
+        ];
+        // Ранги для обеда (добавлены Рекрут и Рядовой)
+        const LUNCH_RANKS = ["Рекрут (1)", "Рядовой (2)", ...MAIN_RANKS];
+
+        function populateSelect(selectId, options) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+            select.innerHTML = '<option value="">-- Выберите ранг --</option>';
+            options.forEach(rank => {
+                const option = document.createElement('option');
+                option.value = rank;
+                option.textContent = rank;
+                select.appendChild(option);
+            });
+        }
+
+        function populateDepartment(selectId) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+            select.innerHTML = '<option value="">-- Выберите отдел --</option>';
+            DEPARTMENTS.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept;
+                option.textContent = dept;
+                select.appendChild(option);
+            });
+        }
+
+        // Заполняем все селекты рангов и отделов
+        populateSelect('lunchRank', LUNCH_RANKS);
+        populateSelect('timeoffRank', MAIN_RANKS);
+        populateSelect('icRank', MAIN_RANKS);
+        populateSelect('oocRank', MAIN_RANKS);
+        populateDepartment('lunchDepartment');
+        populateDepartment('timeoffDepartment');
+        populateDepartment('icDepartment');
+        populateDepartment('oocDepartment');
+
+        // === ВЕБХУКИ (демо, замените на реальные при необходимости) ===
         const WEBHOOKS = {
-            lunch: 'https://discord.com/api/webhooks/1500899546031591688/wpkBFTZbOGyCFvhJ-SfYbPvbJFikcwDCLv983roAS7zj-AelGhtwWltVZ8JUOEmCvAEv',   // общий тестовый
+            lunch: 'https://discord.com/api/webhooks/1500899546031591688/wpkBFTZbOGyCFvhJ-SfYbPvbJFikcwDCLv983roAS7zj-AelGhtwWltVZ8JUOEmCvAEv',
             timeoff: 'https://discord.com/api/webhooks/1500900181086961846/YJt7paNvrerqttykZ2Qk8q11ogdP-qMU8vBAwdPHf8hXcIoL-WsJbchkP-igh5L4R4gv',
             ic: 'https://discord.com/api/webhooks/1501309143691297043/BeXtbLJ7CY0cM83HIQjDInoS7vR2rQwPwt2QJ0yUXoWJiNVBOlLI-XMZfBEXiADxcVyl',
             ooc: 'https://discord.com/api/webhooks/1501309143691297043/BeXtbLJ7CY0cM83HIQjDInoS7vR2rQwPwt2QJ0yUXoWJiNVBOlLI-XMZfBEXiADxcVyl'
         };
-        // роль тег для уведомлений (опционально)
         const ROLES_TAG = '<@&793440125798973441> <@&792082143408160768>';
 
         function showAlert(containerId, message, type) {
@@ -567,19 +631,25 @@
             return true;
         }
 
-        // ---- ОБЕДЕННЫЙ ПЕРЕРЫВ ----
+        // ----- ЛАНЧ (Обеденный перерыв) -----
         document.getElementById('submitLunchBtn')?.addEventListener('click', async () => {
             const nick = document.getElementById('lunchNick').value.trim();
+            const rank = document.getElementById('lunchRank').value;
+            const dept = document.getElementById('lunchDepartment').value;
             const start = document.getElementById('lunchStart').value;
             const end = document.getElementById('lunchEnd').value;
             const reason = document.getElementById('lunchReason').value.trim() || 'Не указана';
             if(!nick) { showAlert('lunchAlert', 'Введите игровой никнейм', 'error'); return; }
+            if(!rank) { showAlert('lunchAlert', 'Выберите ранг', 'error'); return; }
+            if(!dept) { showAlert('lunchAlert', 'Выберите отдел', 'error'); return; }
             if(!start || !end) { showAlert('lunchAlert', 'Укажите дату и время начала и окончания', 'error'); return; }
             const btn = document.getElementById('submitLunchBtn');
             btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
             try {
                 const fields = [
                     { name: "👤 Никнейм", value: nick, inline: true },
+                    { name: "🏅 Ранг", value: rank, inline: true },
+                    { name: "🏛️ Отдел", value: dept, inline: true },
                     { name: "⏰ Начало перерыва", value: formatDateTime(start), inline: true },
                     { name: "⏰ Конец перерыва", value: formatDateTime(end), inline: true },
                     { name: "📝 Причина", value: reason }
@@ -587,6 +657,8 @@
                 await sendToDiscord(WEBHOOKS.lunch, "🍽️ ЗАЯВКА: Обеденный перерыв", fields, 0xF9A825);
                 showAlert('lunchAlert', '✅ Заявка на обеденный перерыв отправлена!', 'success');
                 document.getElementById('lunchNick').value = '';
+                document.getElementById('lunchRank').value = '';
+                document.getElementById('lunchDepartment').value = '';
                 document.getElementById('lunchStart').value = '';
                 document.getElementById('lunchEnd').value = '';
                 document.getElementById('lunchReason').value = '';
@@ -594,19 +666,25 @@
             finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> 📨 ОТПРАВИТЬ ЗАЯВКУ'; }
         });
 
-        // Увольнительное время
+        // ----- Увольнительное время -----
         document.getElementById('submitTimeoffBtn')?.addEventListener('click', async () => {
             const nick = document.getElementById('timeoffNick').value.trim();
+            const rank = document.getElementById('timeoffRank').value;
+            const dept = document.getElementById('timeoffDepartment').value;
             const start = document.getElementById('timeoffStartDate').value;
             const end = document.getElementById('timeoffEndDate').value;
             const comment = document.getElementById('timeoffComment').value.trim() || 'Без комментария';
             if(!nick) { showAlert('timeoffAlert', 'Введите никнейм', 'error'); return; }
+            if(!rank) { showAlert('timeoffAlert', 'Выберите ранг', 'error'); return; }
+            if(!dept) { showAlert('timeoffAlert', 'Выберите отдел', 'error'); return; }
             if(!start || !end) { showAlert('timeoffAlert', 'Укажите даты начала и окончания', 'error'); return; }
             const btn = document.getElementById('submitTimeoffBtn');
             btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
             try {
                 const fields = [
                     { name: "👤 Игрок", value: nick, inline: true },
+                    { name: "🏅 Ранг", value: rank, inline: true },
+                    { name: "🏛️ Отдел", value: dept, inline: true },
                     { name: "📅 Начало", value: formatDate(start), inline: true },
                     { name: "📅 Окончание", value: formatDate(end), inline: true },
                     { name: "✍️ Комментарий", value: comment }
@@ -614,6 +692,8 @@
                 await sendToDiscord(WEBHOOKS.timeoff, "🏖️ УВОЛЬНИТЕЛЬНОЕ ВРЕМЯ", fields, 0x42A5F5);
                 showAlert('timeoffAlert', '✅ Заявка на увольнительное отправлена!', 'success');
                 document.getElementById('timeoffNick').value = '';
+                document.getElementById('timeoffRank').value = '';
+                document.getElementById('timeoffDepartment').value = '';
                 document.getElementById('timeoffStartDate').value = '';
                 document.getElementById('timeoffEndDate').value = '';
                 document.getElementById('timeoffComment').value = '';
@@ -621,19 +701,25 @@
             finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> 📨 ОТПРАВИТЬ ЗАЯВКУ'; }
         });
 
-        // IC Отпуск
+        // ----- IC ОТПУСК -----
         document.getElementById('submitIcBtn')?.addEventListener('click', async () => {
             const nick = document.getElementById('icNick').value.trim();
+            const rank = document.getElementById('icRank').value;
+            const dept = document.getElementById('icDepartment').value;
             const start = document.getElementById('icStart').value;
             const end = document.getElementById('icEnd').value;
             const reason = document.getElementById('icReason').value.trim() || 'Ролевой отпуск';
             if(!nick) { showAlert('icAlert', 'Укажите ник персонажа', 'error'); return; }
+            if(!rank) { showAlert('icAlert', 'Выберите ранг', 'error'); return; }
+            if(!dept) { showAlert('icAlert', 'Выберите отдел', 'error'); return; }
             if(!start || !end) { showAlert('icAlert', 'Укажите даты IC отпуска', 'error'); return; }
             const btn = document.getElementById('submitIcBtn');
             btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
             try {
                 const fields = [
                     { name: "🎭 Персонаж", value: nick, inline: true },
+                    { name: "🏅 Ранг", value: rank, inline: true },
+                    { name: "🏛️ Отдел", value: dept, inline: true },
                     { name: "📅 Начало IC отпуска", value: formatDate(start), inline: true },
                     { name: "📅 Конец IC отпуска", value: formatDate(end), inline: true },
                     { name: "📖 Причина", value: reason }
@@ -641,6 +727,8 @@
                 await sendToDiscord(WEBHOOKS.ic, "🎭 IC ОТПУСК (In Character)", fields, 0x9C27B0);
                 showAlert('icAlert', '✅ Заявка на IC отпуск отправлена!', 'success');
                 document.getElementById('icNick').value = '';
+                document.getElementById('icRank').value = '';
+                document.getElementById('icDepartment').value = '';
                 document.getElementById('icStart').value = '';
                 document.getElementById('icEnd').value = '';
                 document.getElementById('icReason').value = '';
@@ -648,19 +736,25 @@
             finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> 📨 ПОДАТЬ IC ОТПУСК'; }
         });
 
-        // OOC Отпуск
+        // ----- OOC ОТПУСК -----
         document.getElementById('submitOocBtn')?.addEventListener('click', async () => {
             const name = document.getElementById('oocName').value.trim();
+            const rank = document.getElementById('oocRank').value;
+            const dept = document.getElementById('oocDepartment').value;
             const start = document.getElementById('oocStart').value;
             const end = document.getElementById('oocEnd').value;
             const reason = document.getElementById('oocReason').value.trim() || 'Личные обстоятельства';
             if(!name) { showAlert('oocAlert', 'Введите ваш Discord или никнейм', 'error'); return; }
+            if(!rank) { showAlert('oocAlert', 'Выберите ранг', 'error'); return; }
+            if(!dept) { showAlert('oocAlert', 'Выберите отдел', 'error'); return; }
             if(!start || !end) { showAlert('oocAlert', 'Укажите даты OOC отпуска', 'error'); return; }
             const btn = document.getElementById('submitOocBtn');
             btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
             try {
                 const fields = [
                     { name: "💬 Игрок / Discord", value: name, inline: true },
+                    { name: "🏅 Ранг", value: rank, inline: true },
+                    { name: "🏛️ Отдел", value: dept, inline: true },
                     { name: "📅 Начало (OOC)", value: formatDate(start), inline: true },
                     { name: "📅 Окончание (OOC)", value: formatDate(end), inline: true },
                     { name: "📢 Причина", value: reason }
@@ -668,6 +762,8 @@
                 await sendToDiscord(WEBHOOKS.ooc, "💬 OOC ОТПУСК (Out Of Character)", fields, 0xEF6C00);
                 showAlert('oocAlert', '✅ Заявка на OOC отпуск отправлена!', 'success');
                 document.getElementById('oocName').value = '';
+                document.getElementById('oocRank').value = '';
+                document.getElementById('oocDepartment').value = '';
                 document.getElementById('oocStart').value = '';
                 document.getElementById('oocEnd').value = '';
                 document.getElementById('oocReason').value = '';
@@ -675,7 +771,7 @@
             finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> 📨 ЗАЯВИТЬ OOC ОТПУСК'; }
         });
 
-        // Динамические подсказки
+        // подсчёт длительности перерыва
         function updateLunchDuration() {
             const start = document.getElementById('lunchStart')?.value;
             const end = document.getElementById('lunchEnd')?.value;
@@ -697,7 +793,6 @@
         document.getElementById('timeoffStartDate')?.addEventListener('change', updateTimeoffDays);
         document.getElementById('timeoffEndDate')?.addEventListener('change', updateTimeoffDays);
 
-        // Навигация между страницами
         function showHome() {
             document.getElementById('homePage').style.display = 'block';
             document.querySelectorAll('.form-page').forEach(p => p.style.display = 'none');
@@ -719,7 +814,6 @@
         });
         window.showHome = showHome;
 
-        // Тема
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             document.body.classList.add('light');
