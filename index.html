@@ -74,21 +74,22 @@
         }
 
         .logo-icon {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-            border-radius: 24px;
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 12px;
             box-shadow: var(--shadow-sm);
             animation: float 3s ease-in-out infinite;
+            font-size: 48px;
         }
 
-        .logo-icon i {
-            font-size: 38px;
-            color: white;
+        .logo-icon span {
+            font-size: 48px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
 
         @keyframes float {
@@ -402,6 +403,8 @@
             .period-row { grid-template-columns: 1fr; gap: 12px; }
             .double-group { grid-template-columns: 1fr; gap: 14px; }
             .card-body { padding: 20px; }
+            .logo-icon { width: 65px; height: 65px; font-size: 38px; }
+            .logo-icon span { font-size: 38px; }
         }
 
         @media (max-width: 560px) {
@@ -417,7 +420,7 @@
 
     <div class="container">
         <div class="army-hero">
-            <div class="logo-icon"><i class="fas fa-shield-halbed"></i></div>
+            <div class="logo-icon"><span>🔫</span></div>
             <h1>ARMY</h1>
             <div class="army-sub">управление заявлениями · отпуска и перерывы</div>
         </div>
