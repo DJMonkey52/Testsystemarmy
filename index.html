@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ARMY | Система заявлений</title>
+    <title>ARMY | Система отпусков</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -427,7 +427,7 @@
         <div class="army-hero">
             <div class="logo-icon"><i class="fas fa-gun"></i></div>
             <h1>ARMY</h1>
-            <div class="army-sub">управление заявлениями · отпуска и перерывы</div>
+            <div class="army-sub">Система подачи заявления отпусков</div>
         </div>
 
         <div id="homePage" class="home-page">
@@ -435,25 +435,25 @@
                 <div class="action-card" data-page="lunch">
                     <div class="card-icon"><i class="fas fa-utensils"></i></div>
                     <h3>Обеденный перерыв</h3>
-                    <p>Заявка на официальный перерыв</p>
+                    <p>Заявка на обеденный перерыв</p>
                     <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </div>
                 <div class="action-card" data-page="timeoff">
                     <div class="card-icon"><i class="fas fa-plane-departure"></i></div>
                     <h3>Увольнительное время</h3>
-                    <p>Запрос на увольнительную</p>
+                    <p>Запрос на увольнительное время</p>
                     <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </div>
                 <div class="action-card" data-page="ic">
                     <div class="card-icon"><i class="fas fa-mask"></i></div>
                     <h3>IC Отпуск</h3>
-                    <p>Ролевой отпуск (In Character)</p>
+                    <p>Игровой отпуск</p>
                     <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </div>
                 <div class="action-card" data-page="ooc">
                     <div class="card-icon"><i class="fas fa-comment-dots"></i></div>
                     <h3>OOC Отпуск</h3>
-                    <p>Личный отпуск вне игры</p>
+                    <p>Отпуск от игры (Не игровой отпуск)</p>
                     <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </div>
             </div>
@@ -615,9 +615,9 @@
 
         const WEBHOOKS = {
             lunch: 'https://discord.com/api/webhooks/1502639137289797733/rwQm4_oFPjwbPdY0Pfq3QxrTY6ZkbapRWr6bZaXDMSo73w2NdqZ2z-Bj95L1PBGy7395',
-            timeoff: 'https://discord.com/api/webhooks/1500900181086961846/YJt7paNvrerqttykZ2Qk8q11ogdP-qMU8vBAwdPHf8hXcIoL-WsJbchkP-igh5L4R4gv',
-            ic: 'https://discord.com/api/webhooks/1501309143691297043/BeXtbLJ7CY0cM83HIQjDInoS7vR2rQwPwt2QJ0yUXoWJiNVBOlLI-XMZfBEXiADxcVyl',
-            ooc: 'https://discord.com/api/webhooks/1501309143691297043/BeXtbLJ7CY0cM83HIQjDInoS7vR2rQwPwt2QJ0yUXoWJiNVBOlLI-XMZfBEXiADxcVyl'
+            timeoff: 'https://discord.com/api/webhooks/1502639180835065957/YY56iuWZgdXVZCxwe4SRbIZlrB-3T7HGvpWvUjGjaWexQ2Jaje5N8bQECREj3zsviDmy',
+            ic: 'https://discord.com/api/webhooks/1502639315283480576/EDQojWFQaIDjO3t9RM1izwFPVlzAwX0stBmV0OIOc9Fi8WYw4OCJGKVz0KxOIiy8ZMQV',
+            ooc: 'https://discord.com/api/webhooks/1502639280626073651/FSpQScyudIXwh4Z_dHUdFGuYBBxIZ3v-bFdBgENgK4C6iqw4rDYlX0pITUPX2DmIF5u5'
         };
 
         function showAlert(containerId, message, type) {
