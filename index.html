@@ -663,7 +663,7 @@
 
         async function sendToDiscord(webhook, title, fields, roleMention, color=0x4CAF50) {
             const embed = { title, color, fields, footer: { text: "ARMY · Система заявлений" }, timestamp: new Date().toISOString() };
-            const payload = { content: roleMention, embeds: [embed] };
+            const payload = { content: roleMention, embeds: [embed], avatar_url: "https://i.yapx.ru/dj4ak.png" };
             const resp = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
             if(!resp.ok) throw new Error(`Ошибка ${resp.status}`);
             return true;
