@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ARMY | Система отпусков — Увольнительное с временем</title>
+    <title>ARMY | Система отпусков</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -466,7 +466,7 @@
         <div id="timeoffPage" class="form-page">
             <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
             <div class="glass-card">
-                <div class="card-header"><h2><i class="fas fa-plane-departure"></i> Увольнительное время (с указанием времени)</h2></div>
+                <div class="card-header"><h2><i class="fas fa-plane-departure"></i> Увольнительное время</h2></div>
                 <div class="card-body">
                     <div id="timeoffAlert"></div>
                     <div class="double-group">
@@ -591,7 +591,7 @@
 
         const WEBHOOKS = {
             lunch: 'https://discord.com/api/webhooks/1502672112631025864/-yptacQUpgB-UUaoZFLK4cZIP8bTVbjbJ4Ae0G1vQmMqNaOqVMacBuuuoezjXB-M7Z5J',
-            timeoff: 'https://discord.com/api/webhooks/1502639180835065957/YY56iuWZgdXVZCxwe4SRbIZlrB-3T7HGvpWvUjGjaWexQ2Jaje5N8bQECREj3zsviDmy',
+            timeoff: 'https://discordapp.com/api/webhooks/1450193941088702525/bbqvKpVVvKTPykaw02bQ430DtUadgu8kx26sjynKFlXpv9Sm0wImIZ09ugsI2lvWDA6q',
             ic: 'https://discord.com/api/webhooks/1502674236429566003/zc5LmbJ7R78VGfJBQZCkNsFm0KOWg34U9vtfT1vAbTF0JSaaoCRCtbRQ5yld-T2x4SUK',
             ooc: 'https://discord.com/api/webhooks/1502674542424752241/eZhioFD4dQIQJpfPFIEdhYUNc8XdbOG4fUWJ2Md1Gm1WArxCkD6g3zjF0pxstKQrarMt'
         };
@@ -734,7 +734,7 @@
                     { name: "⌛ Общая продолжительность", value: duration, inline: true },
                     { name: "✍️ Комментарий", value: comment }
                 ];
-                await sendToDiscord(WEBHOOKS.timeoff, "🏖️ Увольнительное время (с указанием времени)", fields, ROLE_MAPPING[dept] || '', 0x42A5F5);
+                await sendToDiscord(WEBHOOKS.timeoff, "🏖️ Увольнительное время", fields, ROLE_MAPPING[dept] || '', 0x42A5F5);
                 showAlert('timeoffAlert', '✅ Заявка на увольнительное отправлена!', 'success');
                 document.getElementById('timeoffNick').value = '';
                 document.getElementById('timeoffRank').value = '';
