@@ -67,6 +67,7 @@
             flex-direction: column;
         }
 
+        /* Стиль заголовка ТОЧНО КАК В ПРИМЕРЕ с пистолетом */
         .army-hero {
             text-align: center;
             margin-bottom: 32px;
@@ -74,24 +75,21 @@
         }
 
         .logo-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.25), rgba(46, 125, 50, 0.15));
-            border-radius: 28px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 12px;
             box-shadow: var(--shadow-sm);
             animation: float 3s ease-in-out infinite;
-            font-size: 44px;
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--glass-border);
         }
 
-        .logo-icon span {
-            font-size: 44px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        .logo-icon i {
+            font-size: 28px;
+            color: white;
         }
 
         @keyframes float {
@@ -100,15 +98,20 @@
         }
 
         .army-hero h1 {
-            font-size: 4rem;
+            font-size: 2rem;
             font-weight: 800;
-            letter-spacing: 4px;
-            background: linear-gradient(135deg, var(--army-gradient-start), #E0B354, var(--army-gradient-end));
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #FFFFFF, #A5D6A7);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             transition: background 0.3s ease;
+        }
+
+        body.light .army-hero h1 {
+            background: linear-gradient(135deg, #1e3b1e, #2e7d32);
+            -webkit-background-clip: text;
+            background-clip: text;
         }
 
         .army-sub {
@@ -153,7 +156,7 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
-            font-size: 38px;
+            font-size: 36px;
             color: var(--accent);
             transition: all 0.3s;
         }
@@ -394,12 +397,10 @@
             .action-buttons-grid { gap: 18px; }
             .action-card { width: 220px; padding: 24px 18px; }
             .action-card h3 { font-size: 1.1rem; }
-            .army-hero h1 { font-size: 2.6rem; letter-spacing: 2px; }
+            .army-hero h1 { font-size: 1.8rem; letter-spacing: 1px; }
             .period-row { grid-template-columns: 1fr; gap: 12px; }
             .double-group { grid-template-columns: 1fr; gap: 14px; }
             .card-body { padding: 20px; }
-            .logo-icon { width: 65px; height: 65px; font-size: 36px; }
-            .logo-icon span { font-size: 36px; }
         }
 
         @media (max-width: 560px) {
@@ -415,7 +416,7 @@
 
     <div class="container">
         <div class="army-hero">
-            <div class="logo-icon"><span>🔫</span></div>
+            <div class="logo-icon"><i class="fas fa-gun"></i></div>
             <h1>ARMY</h1>
             <div class="army-sub">управление заявлениями · отпуска и перерывы</div>
         </div>
