@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ARMY | Система заявлений (отпуска / перерывы)</title>
+    <title>ARMY | Система заявлений</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -38,6 +38,8 @@
             --shadow-md: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
             --input-bg: rgba(5, 20, 5, 0.9);
             --card-hover: rgba(76, 175, 80, 0.12);
+            --army-gradient-start: #F5E7C8;
+            --army-gradient-end: #FFD966;
         }
 
         body.light {
@@ -52,6 +54,8 @@
             --border-light: rgba(0, 0, 0, 0.08);
             --input-bg: rgba(255, 255, 255, 0.95);
             --card-hover: rgba(76, 175, 80, 0.08);
+            --army-gradient-start: #2c5e2c;
+            --army-gradient-end: #81c784;
         }
 
         .container {
@@ -93,17 +97,12 @@
             font-size: 4rem;
             font-weight: 800;
             letter-spacing: 4px;
-            background: linear-gradient(135deg, #F5E7C8, #E0B354, #FFD966);
+            background: linear-gradient(135deg, var(--army-gradient-start), #E0B354, var(--army-gradient-end));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-
-        body.light .army-hero h1 {
-            background: linear-gradient(135deg, #2c5e2c, #4caf50, #81c784);
-            -webkit-background-clip: text;
-            background-clip: text;
+            transition: background 0.3s ease;
         }
 
         .army-sub {
@@ -445,7 +444,7 @@
             </div>
         </div>
 
-        <!-- === ОБЕДЕННЫЙ ПЕРЕРЫВ (ранги с Рекрут, Рядовой) === -->
+        <!-- ОБЕДЕННЫЙ ПЕРЕРЫВ (ранги с Рекрут, Рядовой + доп отдел ACD / КМБ) -->
         <div id="lunchPage" class="form-page">
             <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
             <div class="glass-card">
@@ -469,7 +468,7 @@
             </div>
         </div>
 
-        <!-- === УВОЛЬНИТЕЛЬНОЕ ВРЕМЯ (основные ранги 3-12) === -->
+        <!-- УВОЛЬНИТЕЛЬНОЕ ВРЕМЯ -->
         <div id="timeoffPage" class="form-page">
             <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
             <div class="glass-card">
@@ -492,7 +491,7 @@
             </div>
         </div>
 
-        <!-- === IC ОТПУСК (ранги 3-12) === -->
+        <!-- IC ОТПУСК -->
         <div id="icPage" class="form-page">
             <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
             <div class="glass-card">
@@ -514,7 +513,7 @@
             </div>
         </div>
 
-        <!-- === OOC ОТПУСК (ранги 3-12) === -->
+        <!-- OOC ОТПУСК -->
         <div id="oocPage" class="form-page">
             <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
             <div class="glass-card">
@@ -538,8 +537,21 @@
     </div>
 
     <script>
-        // === СПИСКИ ДЛЯ ВЫБОРА ===
-        const DEPARTMENTS = ["MA", "DIV", "MPB", "USAF", "Delta"];
+        // === СПИСКИ ===
+        // Отделы: добавили ACD / КМБ первым для обеда, для других отделов стандарт
+        const LUNCH_DEPARTMENTS = ["ACD / КМБ", "MA", "DIV", "MPB", "USAF", "Delta"];
+        const STANDARD_DEPARTMENTS = ["MA", "DIV", "MPB", "USAF", "Delta"];
+        
+        // Маппинг ролей для каждого отдела (строго по заданию)
+        const ROLE_MAPPING = {
+            "ACD / КМБ": "<@&793440128906821672> <@&792080799062556672> <@&792077657469747220>",
+            "MA": "<@&793440128906821672> <@&792080799062556672> <@&792077657469747220>",
+            "DIV": "<@&793440124067250207> <@&792079582500880415> <@&792076763941175296>",
+            "MPB": "<@&793440118367191050> <@&792081334541484062> <@&792078336024248391>",
+            "USAF": "<@&795409425434935306> <@&792081780588937227> <@&792079000485888022>",
+            "Delta": "<@&793440125798973441> <@&792082143408160768> <@&792079598795358248>"
+        };
+
         // Основные ранги (с 3 по 12)
         const MAIN_RANKS = [
             "Специалист (3)", "Капрал (4)", "Сержант (5)", "Штаб-сержант (6)",
@@ -561,11 +573,11 @@
             });
         }
 
-        function populateDepartment(selectId) {
+        function populateDepartment(selectId, departments) {
             const select = document.getElementById(selectId);
             if (!select) return;
             select.innerHTML = '<option value="">-- Выберите отдел --</option>';
-            DEPARTMENTS.forEach(dept => {
+            departments.forEach(dept => {
                 const option = document.createElement('option');
                 option.value = dept;
                 option.textContent = dept;
@@ -573,24 +585,23 @@
             });
         }
 
-        // Заполняем все селекты рангов и отделов
+        // Заполняем все селекты
         populateSelect('lunchRank', LUNCH_RANKS);
         populateSelect('timeoffRank', MAIN_RANKS);
         populateSelect('icRank', MAIN_RANKS);
         populateSelect('oocRank', MAIN_RANKS);
-        populateDepartment('lunchDepartment');
-        populateDepartment('timeoffDepartment');
-        populateDepartment('icDepartment');
-        populateDepartment('oocDepartment');
+        populateDepartment('lunchDepartment', LUNCH_DEPARTMENTS);
+        populateDepartment('timeoffDepartment', STANDARD_DEPARTMENTS);
+        populateDepartment('icDepartment', STANDARD_DEPARTMENTS);
+        populateDepartment('oocDepartment', STANDARD_DEPARTMENTS);
 
-        // === ВЕБХУКИ (демо, замените на реальные при необходимости) ===
+        // === ВЕБХУКИ (универсальные эндпоинты, замените при необходимости) ===
         const WEBHOOKS = {
             lunch: 'https://discord.com/api/webhooks/1500899546031591688/wpkBFTZbOGyCFvhJ-SfYbPvbJFikcwDCLv983roAS7zj-AelGhtwWltVZ8JUOEmCvAEv',
             timeoff: 'https://discord.com/api/webhooks/1500900181086961846/YJt7paNvrerqttykZ2Qk8q11ogdP-qMU8vBAwdPHf8hXcIoL-WsJbchkP-igh5L4R4gv',
             ic: 'https://discord.com/api/webhooks/1501309143691297043/BeXtbLJ7CY0cM83HIQjDInoS7vR2rQwPwt2QJ0yUXoWJiNVBOlLI-XMZfBEXiADxcVyl',
             ooc: 'https://discord.com/api/webhooks/1501309143691297043/BeXtbLJ7CY0cM83HIQjDInoS7vR2rQwPwt2QJ0yUXoWJiNVBOlLI-XMZfBEXiADxcVyl'
         };
-        const ROLES_TAG = '<@&793440125798973441> <@&792082143408160768>';
 
         function showAlert(containerId, message, type) {
             const container = document.getElementById(containerId);
@@ -613,7 +624,7 @@
             return d.toLocaleString('ru-RU');
         }
 
-        async function sendToDiscord(webhook, title, fields, color=0x4CAF50) {
+        async function sendToDiscord(webhook, title, fields, roleMention, color=0x4CAF50) {
             const embed = {
                 title: title,
                 color: color,
@@ -621,7 +632,8 @@
                 footer: { text: "ARMY · Система заявлений" },
                 timestamp: new Date().toISOString()
             };
-            const payload = { content: ROLES_TAG + "\n━━━━━━━━━━━━━━━━", embeds: [embed] };
+            // В content отправляем только роли, без лишнего текста
+            const payload = { content: roleMention, embeds: [embed] };
             const resp = await fetch(webhook, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -629,6 +641,16 @@
             });
             if(!resp.ok) throw new Error(`Ошибка ${resp.status}`);
             return true;
+        }
+
+        // Общая функция отправки заявки с выбором отдела и динамическими ролями
+        async function submitRequest(webhookKey, title, getFields, getDepartment, color) {
+            const fields = getFields();
+            const department = getDepartment();
+            if (!department) throw new Error('Отдел не выбран');
+            const roleMention = ROLE_MAPPING[department] || '';
+            if (!roleMention) console.warn('Роли для отдела не найдены');
+            await sendToDiscord(WEBHOOKS[webhookKey], title, fields, roleMention, color);
         }
 
         // ----- ЛАНЧ (Обеденный перерыв) -----
@@ -646,7 +668,7 @@
             const btn = document.getElementById('submitLunchBtn');
             btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
             try {
-                const fields = [
+                const getFields = () => [
                     { name: "👤 Никнейм", value: nick, inline: true },
                     { name: "🏅 Ранг", value: rank, inline: true },
                     { name: "🏛️ Отдел", value: dept, inline: true },
@@ -654,7 +676,8 @@
                     { name: "⏰ Конец перерыва", value: formatDateTime(end), inline: true },
                     { name: "📝 Причина", value: reason }
                 ];
-                await sendToDiscord(WEBHOOKS.lunch, "🍽️ ЗАЯВКА: Обеденный перерыв", fields, 0xF9A825);
+                const getDepartment = () => dept;
+                await submitRequest('lunch', "🍽️ ЗАЯВКА: Обеденный перерыв", getFields, getDepartment, 0xF9A825);
                 showAlert('lunchAlert', '✅ Заявка на обеденный перерыв отправлена!', 'success');
                 document.getElementById('lunchNick').value = '';
                 document.getElementById('lunchRank').value = '';
@@ -681,7 +704,7 @@
             const btn = document.getElementById('submitTimeoffBtn');
             btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
             try {
-                const fields = [
+                const getFields = () => [
                     { name: "👤 Игрок", value: nick, inline: true },
                     { name: "🏅 Ранг", value: rank, inline: true },
                     { name: "🏛️ Отдел", value: dept, inline: true },
@@ -689,7 +712,8 @@
                     { name: "📅 Окончание", value: formatDate(end), inline: true },
                     { name: "✍️ Комментарий", value: comment }
                 ];
-                await sendToDiscord(WEBHOOKS.timeoff, "🏖️ УВОЛЬНИТЕЛЬНОЕ ВРЕМЯ", fields, 0x42A5F5);
+                const getDepartment = () => dept;
+                await submitRequest('timeoff', "🏖️ УВОЛЬНИТЕЛЬНОЕ ВРЕМЯ", getFields, getDepartment, 0x42A5F5);
                 showAlert('timeoffAlert', '✅ Заявка на увольнительное отправлена!', 'success');
                 document.getElementById('timeoffNick').value = '';
                 document.getElementById('timeoffRank').value = '';
@@ -716,7 +740,7 @@
             const btn = document.getElementById('submitIcBtn');
             btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
             try {
-                const fields = [
+                const getFields = () => [
                     { name: "🎭 Персонаж", value: nick, inline: true },
                     { name: "🏅 Ранг", value: rank, inline: true },
                     { name: "🏛️ Отдел", value: dept, inline: true },
@@ -724,7 +748,8 @@
                     { name: "📅 Конец IC отпуска", value: formatDate(end), inline: true },
                     { name: "📖 Причина", value: reason }
                 ];
-                await sendToDiscord(WEBHOOKS.ic, "🎭 IC ОТПУСК (In Character)", fields, 0x9C27B0);
+                const getDepartment = () => dept;
+                await submitRequest('ic', "🎭 IC ОТПУСК (In Character)", getFields, getDepartment, 0x9C27B0);
                 showAlert('icAlert', '✅ Заявка на IC отпуск отправлена!', 'success');
                 document.getElementById('icNick').value = '';
                 document.getElementById('icRank').value = '';
@@ -751,7 +776,7 @@
             const btn = document.getElementById('submitOocBtn');
             btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
             try {
-                const fields = [
+                const getFields = () => [
                     { name: "💬 Игрок / Discord", value: name, inline: true },
                     { name: "🏅 Ранг", value: rank, inline: true },
                     { name: "🏛️ Отдел", value: dept, inline: true },
@@ -759,7 +784,8 @@
                     { name: "📅 Окончание (OOC)", value: formatDate(end), inline: true },
                     { name: "📢 Причина", value: reason }
                 ];
-                await sendToDiscord(WEBHOOKS.ooc, "💬 OOC ОТПУСК (Out Of Character)", fields, 0xEF6C00);
+                const getDepartment = () => dept;
+                await submitRequest('ooc', "💬 OOC ОТПУСК (Out Of Character)", getFields, getDepartment, 0xEF6C00);
                 showAlert('oocAlert', '✅ Заявка на OOC отпуск отправлена!', 'success');
                 document.getElementById('oocName').value = '';
                 document.getElementById('oocRank').value = '';
@@ -771,7 +797,7 @@
             finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> 📨 ЗАЯВИТЬ OOC ОТПУСК'; }
         });
 
-        // подсчёт длительности перерыва
+        // Вспомогательные функции UI
         function updateLunchDuration() {
             const start = document.getElementById('lunchStart')?.value;
             const end = document.getElementById('lunchEnd')?.value;
