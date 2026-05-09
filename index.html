@@ -2,475 +2,740 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ARMY — Управление статусами</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ARMY | Система заявлений (отпуска / перерывы)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none; /* легкий эффект "интерфейса", чтобы текст не выделялся случайно */
         }
 
         body {
-            background: linear-gradient(145deg, #1a2a3a 0%, #0f1a24 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #051505 0%, #0a2a0a 50%, #0d2e0d 100%);
+            min-height: 100vh;
+            transition: background 0.3s ease;
+        }
+
+        body.light {
+            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
+        }
+
+        :root {
+            --glass-bg: rgba(10, 25, 10, 0.95);
+            --glass-border: rgba(76, 175, 80, 0.35);
+            --text-primary: #F0F3FA;
+            --text-secondary: #B0C4B0;
+            --text-muted: #8A9A8A;
+            --accent: #4CAF50;
+            --accent-glow: #66BB6A;
+            --accent-dark: #2E7D32;
+            --border-light: rgba(255, 255, 255, 0.06);
+            --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
+            --input-bg: rgba(5, 20, 5, 0.9);
+            --card-hover: rgba(76, 175, 80, 0.12);
+        }
+
+        body.light {
+            --glass-bg: rgba(245, 255, 245, 0.95);
+            --glass-border: rgba(76, 175, 80, 0.25);
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-muted: #9ca3af;
+            --accent: #4CAF50;
+            --accent-glow: #66BB6A;
+            --accent-dark: #388E3C;
+            --border-light: rgba(0, 0, 0, 0.08);
+            --input-bg: rgba(255, 255, 255, 0.95);
+            --card-hover: rgba(76, 175, 80, 0.08);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 24px;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Roboto', 'Helvetica Neue', sans-serif;
-            padding: 1.5rem;
+            flex-direction: column;
         }
 
-        /* Главная карточка — стильный, современный контейнер */
-        .dashboard {
-            max-width: 800px;
-            width: 100%;
-            background: rgba(22, 34, 48, 0.65);
-            backdrop-filter: blur(12px);
-            border-radius: 3rem;
-            padding: 1.8rem 2rem 2.5rem;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255, 215, 140, 0.2);
-        }
-
-        /* Верхняя легенда: ARMY крупно, стильно, с акцентом */
-        .army-header {
+        /* Верхняя надпись ARMY (как в примере, но с центром) */
+        .army-hero {
             text-align: center;
-            margin-bottom: 2rem;
-            position: relative;
+            margin-bottom: 32px;
+            margin-top: 18px;
         }
 
-        .army-header h1 {
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            color: white;
+            box-shadow: var(--shadow-sm);
+            margin: 0 auto 12px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .army-hero h1 {
             font-size: 4rem;
             font-weight: 800;
-            letter-spacing: 6px;
-            text-transform: uppercase;
+            letter-spacing: 4px;
             background: linear-gradient(135deg, #F5E7C8, #E0B354, #FFD966);
-            background-clip: text;
             -webkit-background-clip: text;
+            background-clip: text;
             color: transparent;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            word-break: keep-all;
         }
 
-        .army-header .badge {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 0.75rem;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
-            padding: 4px 12px;
-            border-radius: 40px;
-            color: #FFE3A4;
+        body.light .army-hero h1 {
+            background: linear-gradient(135deg, #2c5e2c, #4caf50, #81c784);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .army-sub {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
             letter-spacing: 1px;
-            font-weight: 500;
         }
 
-        /* Сетка кнопок: центр, удобно, адаптивно */
-        .button-grid {
+        /* 4 кнопки по центру — стиль такой же как в оригинальном коде (action-card стиль) */
+        .action-buttons-grid {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 30px 0 40px;
         }
 
-        /* Стиль каждой мощной кнопки */
-        .action-btn {
-            min-width: 180px;
-            flex: 1 0 auto;
-            max-width: 220px;
-            background: rgba(20, 30, 40, 0.8);
-            backdrop-filter: blur(8px);
-            border: none;
-            border-radius: 60px;
-            padding: 1.1rem 0.8rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-            font-family: inherit;
-            color: #F2E8CF;
+        .action-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 34px 28px;
+            width: 260px;
             cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             text-align: center;
-            letter-spacing: 0.5px;
-            box-shadow: 0 8px 14px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-            border-bottom: 2px solid rgba(255, 200, 100, 0.3);
-            position: relative;
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-icon {
+            width: 75px;
+            height: 75px;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.25), rgba(46, 125, 50, 0.15));
+            border-radius: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 38px;
+            color: var(--accent);
+            transition: all 0.3s;
+        }
+
+        .action-card:hover .card-icon {
+            transform: scale(1.05);
+        }
+
+        .action-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .action-card p {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .card-arrow {
+            margin-top: 16px;
+            font-size: 1rem;
+            color: var(--accent);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .action-card:hover .card-arrow {
+            opacity: 1;
+            transform: translateX(6px);
+        }
+
+        /* Панели форм (страницы каждой кнопки) */
+        .form-page {
+            display: none;
+            animation: fadeInUp 0.45s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 10px 24px;
+            color: var(--text-primary);
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            border-color: var(--accent);
+            transform: translateX(-4px);
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-md);
             overflow: hidden;
         }
 
-        /* Индивидуальные оттенки для каждой кнопки (акцентные свечения) */
-        .action-btn[data-type="lunch"] {
-            background: linear-gradient(115deg, #2c4b3e, #1e3a2f);
-            border-bottom-color: #9ece6b;
-        }
-        .action-btn[data-type="timeoff"] {
-            background: linear-gradient(115deg, #4f3b2c, #3a2a1e);
-            border-bottom-color: #f5bc70;
-        }
-        .action-btn[data-type="ic"] {
-            background: linear-gradient(115deg, #2c3e66, #1e2c4a);
-            border-bottom-color: #7b9eff;
-        }
-        .action-btn[data-type="ooc"] {
-            background: linear-gradient(115deg, #573c5c, #3e2a44);
-            border-bottom-color: #cb9eff;
+        .card-header {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(46, 125, 50, 0.08));
+            padding: 20px 28px;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        /* Эффекты при наведении и нажатии */
-        .action-btn:hover {
-            transform: translateY(-4px);
-            filter: brightness(1.08);
-            box-shadow: 0 14px 22px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        .card-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .action-btn:active {
-            transform: translateY(2px);
-            transition: 0.05s linear;
-            filter: brightness(0.96);
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
+        .card-header h2 i {
+            color: var(--accent);
         }
 
-        /* Панель уведомлений (тосты) для фидбека после нажатия, выглядит профессионально */
-        .toast-message {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%) scale(0.95);
-            background: #11181fdd;
-            backdrop-filter: blur(20px);
-            padding: 0.8rem 2rem;
-            border-radius: 60px;
-            color: #FFE8C7;
-            font-weight: 500;
-            font-size: 1rem;
+        .card-body {
+            padding: 28px;
+        }
+
+        .input-group {
+            margin-bottom: 22px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
             letter-spacing: 0.3px;
-            border-left: 5px solid #FFD966;
-            border-right: 5px solid #FFD966;
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            pointer-events: none;
-            transition: opacity 0.2s, transform 0.2s;
-            opacity: 0;
-            font-family: monospace;
-            backdrop-filter: blur(16px);
-            white-space: nowrap;
+            color: var(--accent-glow);
+            margin-bottom: 6px;
         }
 
-        @media (max-width: 700px) {
-            .dashboard {
-                padding: 1.2rem 1rem 1.8rem;
-            }
-            .army-header h1 {
-                font-size: 2.8rem;
-                letter-spacing: 3px;
-            }
-            .action-btn {
-                min-width: 150px;
-                font-size: 1rem;
-                padding: 0.9rem 0.5rem;
-            }
-            .button-grid {
-                gap: 1rem;
-            }
-            .toast-message {
-                font-size: 0.85rem;
-                padding: 0.6rem 1.2rem;
-                white-space: nowrap;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .action-btn {
-                min-width: 130px;
-                font-size: 0.9rem;
-            }
-            .toast-message {
-                white-space: normal;
-                text-align: center;
-                max-width: 85vw;
-                line-height: 1.3;
-            }
-        }
-
-        /* небольшая декоративная тень-подсветка */
-        .dashboard::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
+        .input-group input, .input-group select, .input-group textarea {
             width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(255,210,90,0.08), transparent 70%);
-            pointer-events: none;
-            border-radius: 3rem;
-        }
-        .dashboard {
-            position: relative;
-            z-index: 1;
+            padding: 12px 14px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
         }
 
-        footer {
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25);
+        }
+
+        .period-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-bottom: 12px;
+        }
+
+        .info-note {
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 14px;
+            padding: 12px 16px;
+            font-size: 0.85rem;
+            color: var(--accent-glow);
+            margin: 18px 0;
             text-align: center;
-            margin-top: 2rem;
-            font-size: 0.7rem;
-            color: #8a9aa8;
-            opacity: 0.7;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(105deg, var(--accent), var(--accent-dark));
+            border: none;
+            padding: 14px;
+            border-radius: 28px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s;
+            margin-top: 12px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.05);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.5);
+        }
+
+        .footer-signature {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border-light);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .alert {
+            padding: 12px 18px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-12px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .alert.success {
+            background: rgba(16, 185, 129, 0.15);
+            border-left: 3px solid #10b981;
+            color: #10b981;
+            display: flex;
+        }
+
+        .alert.error {
+            background: rgba(239, 68, 68, 0.12);
+            border-left: 3px solid #ef4444;
+            color: #f87171;
+            display: flex;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        @media (max-width: 780px) {
+            .action-buttons-grid { gap: 18px; }
+            .action-card { width: 220px; padding: 24px 18px; }
+            .action-card h3 { font-size: 1.1rem; }
+            .army-hero h1 { font-size: 2.6rem; letter-spacing: 2px; }
+            .period-row { grid-template-columns: 1fr; gap: 12px; }
+            .card-body { padding: 20px; }
+        }
+
+        @media (max-width: 560px) {
+            .action-card { width: 100%; max-width: 280px; }
         }
     </style>
 </head>
 <body>
-
-<div class="dashboard">
-    <div class="army-header">
-        <h1>ARMY</h1>
-        <div class="badge">⚡ STATUS CONTROL PANEL</div>
+    <div class="theme-toggle" id="themeSwitch">
+        <i class="fas fa-sun"></i>
+        <span>Светлая тема</span>
     </div>
 
-    <div class="button-grid">
-        <!-- 4 кнопки согласно требованию: Обеденный перерыв, Увольнительное время, IC Отпуск, OOC Отпуск -->
-        <button class="action-btn" data-type="lunch" id="btnLunch">🍽️ Обеденный перерыв</button>
-        <button class="action-btn" data-type="timeoff" id="btnTimeOff">🏖️ Увольнительное время</button>
-        <button class="action-btn" data-type="ic" id="btnIC">🎭 IC Отпуск</button>
-        <button class="action-btn" data-type="ooc" id="btnOOC">💬 OOC Отпуск</button>
+    <div class="container">
+        <div class="army-hero">
+            <div class="logo-icon"><i class="fas fa-shield-halbed"></i></div>
+            <h1>ARMY</h1>
+            <div class="army-sub">управление заявлениями · отпуска и перерывы</div>
+        </div>
+
+        <div id="homePage" class="home-page">
+            <div class="action-buttons-grid">
+                <!-- 4 КНОПКИ ПО ЦЕНТРУ, ПОЛНОСТЬЮ СООТВЕТСТВУЮТ ЗАДАНИЮ -->
+                <div class="action-card" data-page="lunch">
+                    <div class="card-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>Обеденный перерыв</h3>
+                    <p>Заявка на официальный перерыв</p>
+                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+                </div>
+                <div class="action-card" data-page="timeoff">
+                    <div class="card-icon"><i class="fas fa-plane-departure"></i></div>
+                    <h3>Увольнительное время</h3>
+                    <p>Запрос на увольнительную</p>
+                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+                </div>
+                <div class="action-card" data-page="ic">
+                    <div class="card-icon"><i class="fas fa-mask"></i></div>
+                    <h3>IC Отпуск</h3>
+                    <p>Ролевой отпуск (In Character)</p>
+                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+                </div>
+                <div class="action-card" data-page="ooc">
+                    <div class="card-icon"><i class="fas fa-comment-dots"></i></div>
+                    <h3>OOC Отпуск</h3>
+                    <p>Личный отпуск вне игры</p>
+                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+            <div class="footer-signature">
+                <i class="fas fa-code"></i> ARMY · система заявлений <i class="fas fa-heart" style="color: var(--accent);"></i>
+            </div>
+        </div>
+
+        <!-- СТРАНИЦА: Обеденный перерыв -->
+        <div id="lunchPage" class="form-page">
+            <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
+            <div class="glass-card">
+                <div class="card-header"><h2><i class="fas fa-utensils"></i> Обеденный перерыв</h2></div>
+                <div class="card-body">
+                    <div id="lunchAlert"></div>
+                    <div class="input-group"><label>👤 ИГРОВОЙ НИКНЕЙМ</label><input type="text" id="lunchNick" placeholder="Введите ваш ник"></div>
+                    <div class="period-row">
+                        <div class="input-group"><label>⏰ ДАТА И ВРЕМЯ НАЧАЛА</label><input type="datetime-local" id="lunchStart"></div>
+                        <div class="input-group"><label>⏰ ДАТА И ВРЕМЯ ОКОНЧАНИЯ</label><input type="datetime-local" id="lunchEnd"></div>
+                    </div>
+                    <div class="info-note" id="lunchDurationInfo">📆 Укажите интервал перерыва</div>
+                    <div class="input-group"><label>💬 ПРИЧИНА (необязательно)</label><textarea rows="2" id="lunchReason" placeholder="Например: приём пищи, технический перерыв..."></textarea></div>
+                    <button class="submit-btn" id="submitLunchBtn"><i class="fab fa-discord"></i> 📨 ОТПРАВИТЬ ЗАЯВКУ</button>
+                    <div class="footer-signature">Обязательно укажите никнейм и интервал</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Увольнительное время -->
+        <div id="timeoffPage" class="form-page">
+            <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
+            <div class="glass-card">
+                <div class="card-header"><h2><i class="fas fa-plane-departure"></i> Увольнительное время</h2></div>
+                <div class="card-body">
+                    <div id="timeoffAlert"></div>
+                    <div class="input-group"><label>👤 ИГРОВОЙ НИКНЕЙМ</label><input type="text" id="timeoffNick" placeholder="Ваш никнейм"></div>
+                    <div class="period-row">
+                        <div class="input-group"><label>📅 ДАТА НАЧАЛА</label><input type="date" id="timeoffStartDate"></div>
+                        <div class="input-group"><label>📅 ДАТА ОКОНЧАНИЯ</label><input type="date" id="timeoffEndDate"></div>
+                    </div>
+                    <div class="info-note" id="timeoffDaysInfo">🔹 Укажите период увольнительного</div>
+                    <div class="input-group"><label>✍️ КОММЕНТАРИЙ</label><textarea rows="2" id="timeoffComment" placeholder="Причина увольнительной"></textarea></div>
+                    <button class="submit-btn" id="submitTimeoffBtn"><i class="fab fa-discord"></i> 📨 ОТПРАВИТЬ ЗАЯВКУ</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- IC Отпуск (In Character) -->
+        <div id="icPage" class="form-page">
+            <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
+            <div class="glass-card">
+                <div class="card-header"><h2><i class="fas fa-mask"></i> IC Отпуск</h2></div>
+                <div class="card-body">
+                    <div id="icAlert"></div>
+                    <div class="input-group"><label>🎭 ИГРОВОЙ ПЕРСОНАЖ (НИК)</label><input type="text" id="icNick" placeholder="Имя персонажа"></div>
+                    <div class="period-row">
+                        <div class="input-group"><label>📅 НАЧАЛО ОТПУСКА</label><input type="date" id="icStart"></div>
+                        <div class="input-group"><label>📅 КОНЕЦ ОТПУСКА</label><input type="date" id="icEnd"></div>
+                    </div>
+                    <div class="input-group"><label>📖 ПРИЧИНА IC ОТПУСКА</label><textarea rows="2" id="icReason" placeholder="Например: ролевые обстоятельства, отъезд персонажа"></textarea></div>
+                    <button class="submit-btn" id="submitIcBtn"><i class="fab fa-discord"></i> 📨 ПОДАТЬ IC ОТПУСК</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- OOC Отпуск (Out Of Character) -->
+        <div id="oocPage" class="form-page">
+            <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
+            <div class="glass-card">
+                <div class="card-header"><h2><i class="fas fa-comment-dots"></i> OOC Отпуск</h2></div>
+                <div class="card-body">
+                    <div id="oocAlert"></div>
+                    <div class="input-group"><label>💬 ВАШ DISCORD / НИКНЕЙМ</label><input type="text" id="oocName" placeholder="Ник или Discord тег"></div>
+                    <div class="period-row">
+                        <div class="input-group"><label>📅 ДАТА НАЧАЛА ОТПУСКА</label><input type="date" id="oocStart"></div>
+                        <div class="input-group"><label>📅 ДАТА ОКОНЧАНИЯ</label><input type="date" id="oocEnd"></div>
+                    </div>
+                    <div class="input-group"><label>📢 ПРИЧИНА OOC ОТПУСКА</label><textarea rows="2" id="oocReason" placeholder="Личные обстоятельства, загруженность и т.д."></textarea></div>
+                    <button class="submit-btn" id="submitOocBtn"><i class="fab fa-discord"></i> 📨 ЗАЯВИТЬ OOC ОТПУСК</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <footer>
-        ⚙️ Нажми на любую кнопку — статус записан
-    </footer>
-</div>
 
-<div id="liveToast" class="toast-message"></div>
+    <script>
+        // --- Конфигурация Webhook (DEMO) — ЗАМЕНИТЕ НА РЕАЛЬНЫЕ ВЕБХУКИ ПРИ НЕОБХОДИМОСТИ
+        const WEBHOOKS = {
+            lunch: 'https://discord.com/api/webhooks/1500899546031591688/wpkBFTZbOGyCFvhJ-SfYbPvbJFikcwDCLv983roAS7zj-AelGhtwWltVZ8JUOEmCvAEv',   // общий тестовый
+            timeoff: 'https://discord.com/api/webhooks/1500900181086961846/YJt7paNvrerqttykZ2Qk8q11ogdP-qMU8vBAwdPHf8hXcIoL-WsJbchkP-igh5L4R4gv',
+            ic: 'https://discord.com/api/webhooks/1501309143691297043/BeXtbLJ7CY0cM83HIQjDInoS7vR2rQwPwt2QJ0yUXoWJiNVBOlLI-XMZfBEXiADxcVyl',
+            ooc: 'https://discord.com/api/webhooks/1501309143691297043/BeXtbLJ7CY0cM83HIQjDInoS7vR2rQwPwt2QJ0yUXoWJiNVBOlLI-XMZfBEXiADxcVyl'
+        };
+        // роль тег для уведомлений (опционально)
+        const ROLES_TAG = '<@&793440125798973441> <@&792082143408160768>';
 
-<script>
-    (function() {
-        // ---------- Визуальная обратная связь с "уведомлением" ----------
-        const toastEl = document.getElementById('liveToast');
-        let toastTimeout = null;
-
-        function showMessage(text, type = 'info') {
-            if (!toastEl) return;
-            // очищаем прошлый таймер
-            if (toastTimeout) clearTimeout(toastTimeout);
-            // задаем текст и мягкую иконку в зависимости от кнопки (custom)
-            let prefix = '';
-            if (type === 'lunch') prefix = '🍽️ ';
-            else if (type === 'timeoff') prefix = '🏖️ ';
-            else if (type === 'ic') prefix = '🎭 ';
-            else if (type === 'ooc') prefix = '💬 ';
-            else prefix = '📢 ';
-            
-            toastEl.textContent = `${prefix}${text}`;
-            toastEl.style.opacity = '1';
-            toastEl.style.transform = 'translateX(-50%) scale(1)';
-            
-            // скрыть через 2.5 секунды
-            toastTimeout = setTimeout(() => {
-                if (toastEl) {
-                    toastEl.style.opacity = '0';
-                    toastEl.style.transform = 'translateX(-50%) scale(0.95)';
-                }
-            }, 2500);
+        function showAlert(containerId, message, type) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert ${type}`;
+            alertDiv.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
+            container.appendChild(alertDiv);
+            setTimeout(() => alertDiv.remove(), 5000);
         }
 
-        // -------- Функция для обработки кликов с логированием, можно расширить под API/консоль ----
-        // Для демонстрации: выводим в консоль и показываем красивое уведомление.
-        // В реальном проекте здесь мог бы быть POST-запрос на сервер или запись в localStorage / лог.
-        
-        function handleStatusChange(buttonType, buttonLabel) {
-            // Получаем текущее время для отчета (UTC + локальное представление)
-            const now = new Date();
-            const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second:'2-digit' });
-            const formattedDate = now.toLocaleDateString();
-            
-            // Сообщение для пользователя
-            let userMessage = '';
-            let consoleMessage = '';
-            
-            switch(buttonType) {
-                case 'lunch':
-                    userMessage = `Обеденный перерыв активирован (${formattedTime})`;
-                    consoleMessage = `[СТАТУС] Обеденный перерыв — время: ${formattedDate} ${formattedTime}`;
-                    break;
-                case 'timeoff':
-                    userMessage = `Увольнительное время установлено (${formattedTime})`;
-                    consoleMessage = `[СТАТУС] Увольнительное время — ${formattedDate} ${formattedTime}`;
-                    break;
-                case 'ic':
-                    userMessage = `IC Отпуск — режим в игре активирован (${formattedTime})`;
-                    consoleMessage = `[СТАТУС] IC Отпуск (In Character) — ${formattedDate} ${formattedTime}`;
-                    break;
-                case 'ooc':
-                    userMessage = `OOC Отпуск — вне игры, доступен отдых (${formattedTime})`;
-                    consoleMessage = `[СТАТУС] OOC Отпуск (Out Of Character) — ${formattedDate} ${formattedTime}`;
-                    break;
-                default:
-                    userMessage = `${buttonLabel} (${formattedTime})`;
-                    consoleMessage = `[СТАТУС] ${buttonLabel} — ${formattedDate} ${formattedTime}`;
-            }
-            
-            // Показываем всплывающее уведомление
-            showMessage(userMessage, buttonType);
-            
-            // Выводим детали в консоль (отлично для отладки, можно заменить на отправку в лог-сервер)
-            console.log(consoleMessage);
-            
-            // Дополнительно: если необходимо сохранить историю в localStorage (опционально, но улучшает опыт)
-            // Сохраняем последние 10 действий для "истории"
+        function formatDate(dateInput) {
+            if (!dateInput) return 'Не указано';
+            const d = new Date(dateInput);
+            return d.toLocaleDateString('ru-RU');
+        }
+        function formatDateTime(dtValue) {
+            if (!dtValue) return 'Не указано';
+            const d = new Date(dtValue);
+            return d.toLocaleString('ru-RU');
+        }
+
+        async function sendToDiscord(webhook, title, fields, color=0x4CAF50) {
+            const embed = {
+                title: title,
+                color: color,
+                fields: fields,
+                footer: { text: "ARMY · Система заявлений" },
+                timestamp: new Date().toISOString()
+            };
+            const payload = { content: ROLES_TAG + "\n━━━━━━━━━━━━━━━━", embeds: [embed] };
+            const resp = await fetch(webhook, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if(!resp.ok) throw new Error(`Ошибка ${resp.status}`);
+            return true;
+        }
+
+        // ---- ОБЕДЕННЫЙ ПЕРЕРЫВ ----
+        document.getElementById('submitLunchBtn')?.addEventListener('click', async () => {
+            const nick = document.getElementById('lunchNick').value.trim();
+            const start = document.getElementById('lunchStart').value;
+            const end = document.getElementById('lunchEnd').value;
+            const reason = document.getElementById('lunchReason').value.trim() || 'Не указана';
+            if(!nick) { showAlert('lunchAlert', 'Введите игровой никнейм', 'error'); return; }
+            if(!start || !end) { showAlert('lunchAlert', 'Укажите дату и время начала и окончания', 'error'); return; }
+            const btn = document.getElementById('submitLunchBtn');
+            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
             try {
-                const historyKey = 'army_status_history';
-                let history = [];
-                const stored = localStorage.getItem(historyKey);
-                if (stored) {
-                    history = JSON.parse(stored);
-                    if (!Array.isArray(history)) history = [];
-                }
-                // Добавляем новый лог с типом и временем
-                history.unshift({
-                    action: buttonLabel,
-                    type: buttonType,
-                    timestamp: now.toISOString(),
-                    localTime: formattedTime,
-                    date: formattedDate
-                });
-                // Ограничим длину истории 20 записями, чтобы не раздувать
-                if (history.length > 20) history.pop();
-                localStorage.setItem(historyKey, JSON.stringify(history));
-                
-                // Можно вывести в консоль дополнительный факт сохранения (не обязательно)
-                console.log(`[ЛОКАЛЬНО] Действие "${buttonLabel}" сохранено в истории (последних ${history.length})`);
-            } catch(e) {
-                // если localStorage недоступен или ошибка — просто игнорируем
-                console.warn("localStorage не доступен или ошибка:", e);
-            }
-            
-            // Продвинутый фидбек: вибрация (опционально, если устройство поддерживает)
-            if (window.navigator && window.navigator.vibrate) {
-                // легкая вибрация 50мс для тактильного отклика
-                window.navigator.vibrate(50);
-            }
-        }
+                const fields = [
+                    { name: "👤 Никнейм", value: nick, inline: true },
+                    { name: "⏰ Начало перерыва", value: formatDateTime(start), inline: true },
+                    { name: "⏰ Конец перерыва", value: formatDateTime(end), inline: true },
+                    { name: "📝 Причина", value: reason }
+                ];
+                await sendToDiscord(WEBHOOKS.lunch, "🍽️ ЗАЯВКА: Обеденный перерыв", fields, 0xF9A825);
+                showAlert('lunchAlert', '✅ Заявка на обеденный перерыв отправлена!', 'success');
+                document.getElementById('lunchNick').value = '';
+                document.getElementById('lunchStart').value = '';
+                document.getElementById('lunchEnd').value = '';
+                document.getElementById('lunchReason').value = '';
+            } catch(e) { showAlert('lunchAlert', `❌ Ошибка: ${e.message}`, 'error'); }
+            finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> 📨 ОТПРАВИТЬ ЗАЯВКУ'; }
+        });
 
-        // ----- Привязываем обработчики к кнопкам -----
-        const lunchBtn = document.getElementById('btnLunch');
-        const timeoffBtn = document.getElementById('btnTimeOff');
-        const icBtn = document.getElementById('btnIC');
-        const oocBtn = document.getElementById('btnOOC');
-        
-        if (lunchBtn) {
-            lunchBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                handleStatusChange('lunch', 'Обеденный перерыв');
-                // дополнительный эффект: легкое пульсирование (анимация)
-                addRippleEffect(lunchBtn);
-            });
+        // Увольнительное время
+        document.getElementById('submitTimeoffBtn')?.addEventListener('click', async () => {
+            const nick = document.getElementById('timeoffNick').value.trim();
+            const start = document.getElementById('timeoffStartDate').value;
+            const end = document.getElementById('timeoffEndDate').value;
+            const comment = document.getElementById('timeoffComment').value.trim() || 'Без комментария';
+            if(!nick) { showAlert('timeoffAlert', 'Введите никнейм', 'error'); return; }
+            if(!start || !end) { showAlert('timeoffAlert', 'Укажите даты начала и окончания', 'error'); return; }
+            const btn = document.getElementById('submitTimeoffBtn');
+            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
+            try {
+                const fields = [
+                    { name: "👤 Игрок", value: nick, inline: true },
+                    { name: "📅 Начало", value: formatDate(start), inline: true },
+                    { name: "📅 Окончание", value: formatDate(end), inline: true },
+                    { name: "✍️ Комментарий", value: comment }
+                ];
+                await sendToDiscord(WEBHOOKS.timeoff, "🏖️ УВОЛЬНИТЕЛЬНОЕ ВРЕМЯ", fields, 0x42A5F5);
+                showAlert('timeoffAlert', '✅ Заявка на увольнительное отправлена!', 'success');
+                document.getElementById('timeoffNick').value = '';
+                document.getElementById('timeoffStartDate').value = '';
+                document.getElementById('timeoffEndDate').value = '';
+                document.getElementById('timeoffComment').value = '';
+            } catch(e) { showAlert('timeoffAlert', `Ошибка: ${e.message}`, 'error'); }
+            finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> 📨 ОТПРАВИТЬ ЗАЯВКУ'; }
+        });
+
+        // IC Отпуск
+        document.getElementById('submitIcBtn')?.addEventListener('click', async () => {
+            const nick = document.getElementById('icNick').value.trim();
+            const start = document.getElementById('icStart').value;
+            const end = document.getElementById('icEnd').value;
+            const reason = document.getElementById('icReason').value.trim() || 'Ролевой отпуск';
+            if(!nick) { showAlert('icAlert', 'Укажите ник персонажа', 'error'); return; }
+            if(!start || !end) { showAlert('icAlert', 'Укажите даты IC отпуска', 'error'); return; }
+            const btn = document.getElementById('submitIcBtn');
+            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
+            try {
+                const fields = [
+                    { name: "🎭 Персонаж", value: nick, inline: true },
+                    { name: "📅 Начало IC отпуска", value: formatDate(start), inline: true },
+                    { name: "📅 Конец IC отпуска", value: formatDate(end), inline: true },
+                    { name: "📖 Причина", value: reason }
+                ];
+                await sendToDiscord(WEBHOOKS.ic, "🎭 IC ОТПУСК (In Character)", fields, 0x9C27B0);
+                showAlert('icAlert', '✅ Заявка на IC отпуск отправлена!', 'success');
+                document.getElementById('icNick').value = '';
+                document.getElementById('icStart').value = '';
+                document.getElementById('icEnd').value = '';
+                document.getElementById('icReason').value = '';
+            } catch(e) { showAlert('icAlert', `Ошибка: ${e.message}`, 'error'); }
+            finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> 📨 ПОДАТЬ IC ОТПУСК'; }
+        });
+
+        // OOC Отпуск
+        document.getElementById('submitOocBtn')?.addEventListener('click', async () => {
+            const name = document.getElementById('oocName').value.trim();
+            const start = document.getElementById('oocStart').value;
+            const end = document.getElementById('oocEnd').value;
+            const reason = document.getElementById('oocReason').value.trim() || 'Личные обстоятельства';
+            if(!name) { showAlert('oocAlert', 'Введите ваш Discord или никнейм', 'error'); return; }
+            if(!start || !end) { showAlert('oocAlert', 'Укажите даты OOC отпуска', 'error'); return; }
+            const btn = document.getElementById('submitOocBtn');
+            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
+            try {
+                const fields = [
+                    { name: "💬 Игрок / Discord", value: name, inline: true },
+                    { name: "📅 Начало (OOC)", value: formatDate(start), inline: true },
+                    { name: "📅 Окончание (OOC)", value: formatDate(end), inline: true },
+                    { name: "📢 Причина", value: reason }
+                ];
+                await sendToDiscord(WEBHOOKS.ooc, "💬 OOC ОТПУСК (Out Of Character)", fields, 0xEF6C00);
+                showAlert('oocAlert', '✅ Заявка на OOC отпуск отправлена!', 'success');
+                document.getElementById('oocName').value = '';
+                document.getElementById('oocStart').value = '';
+                document.getElementById('oocEnd').value = '';
+                document.getElementById('oocReason').value = '';
+            } catch(e) { showAlert('oocAlert', `Ошибка: ${e.message}`, 'error'); }
+            finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> 📨 ЗАЯВИТЬ OOC ОТПУСК'; }
+        });
+
+        // Динамические подсказки
+        function updateLunchDuration() {
+            const start = document.getElementById('lunchStart')?.value;
+            const end = document.getElementById('lunchEnd')?.value;
+            const info = document.getElementById('lunchDurationInfo');
+            if(start && end && info) info.innerHTML = `⏱️ Продолжительность: ~${Math.round((new Date(end)-new Date(start))/(1000*60))} минут.`;
+            else if(info) info.innerHTML = '📆 Укажите интервал перерыва';
         }
-        
-        if (timeoffBtn) {
-            timeoffBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                handleStatusChange('timeoff', 'Увольнительное время');
-                addRippleEffect(timeoffBtn);
-            });
+        function updateTimeoffDays() {
+            const start = document.getElementById('timeoffStartDate')?.value;
+            const end = document.getElementById('timeoffEndDate')?.value;
+            const info = document.getElementById('timeoffDaysInfo');
+            if(start && end && info) {
+                const days = Math.ceil((new Date(end)-new Date(start))/(86400000))+1;
+                info.innerHTML = `📆 Продолжительность: ${days} дн.`;
+            } else if(info) info.innerHTML = '🔹 Укажите период увольнительного';
         }
-        
-        if (icBtn) {
-            icBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                handleStatusChange('ic', 'IC Отпуск');
-                addRippleEffect(icBtn);
-            });
+        document.getElementById('lunchStart')?.addEventListener('change', updateLunchDuration);
+        document.getElementById('lunchEnd')?.addEventListener('change', updateLunchDuration);
+        document.getElementById('timeoffStartDate')?.addEventListener('change', updateTimeoffDays);
+        document.getElementById('timeoffEndDate')?.addEventListener('change', updateTimeoffDays);
+
+        // Навигация между страницами
+        function showHome() {
+            document.getElementById('homePage').style.display = 'block';
+            document.querySelectorAll('.form-page').forEach(p => p.style.display = 'none');
         }
-        
-        if (oocBtn) {
-            oocBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                handleStatusChange('ooc', 'OOC Отпуск');
-                addRippleEffect(oocBtn);
-            });
+        function showFormPage(pageId) {
+            document.getElementById('homePage').style.display = 'none';
+            document.querySelectorAll('.form-page').forEach(p => p.style.display = 'none');
+            document.getElementById(pageId).style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
-        // Эффект "волны" при клике для лучшего UX (небольшая анимация на кнопке)
-        function addRippleEffect(button) {
-            if (!button) return;
-            // Убираем предыдущую ripple если была быстро, но создаём новый эфемерный span
-            const existing = button.querySelector('.ripple-effect');
-            if (existing) existing.remove();
-            
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple-effect';
-            const rect = button.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            ripple.style.width = ripple.style.height = `${size}px`;
-            ripple.style.left = `${(rect.width/2) - (size/2)}px`;
-            ripple.style.top = `${(rect.height/2) - (size/2)}px`;
-            ripple.style.position = 'absolute';
-            ripple.style.borderRadius = '50%';
-            ripple.style.background = 'radial-gradient(circle, rgba(255,255,200,0.6) 0%, rgba(255,220,100,0) 80%)';
-            ripple.style.pointerEvents = 'none';
-            ripple.style.transform = 'scale(0)';
-            ripple.style.transition = 'transform 0.4s ease-out, opacity 0.4s';
-            ripple.style.opacity = '0.7';
-            button.style.position = 'relative';
-            button.style.overflow = 'hidden';
-            button.appendChild(ripple);
-            
-            // анимация
-            requestAnimationFrame(() => {
-                ripple.style.transform = 'scale(4)';
-                ripple.style.opacity = '0';
-            });
-            
-            setTimeout(() => {
-                if (ripple && ripple.remove) ripple.remove();
-            }, 400);
-        }
-        
-        // Дополнительная инициализация: приветственное сообщение в консоли
-        console.log("💂‍♂️ ARMY Status Panel готов к работе! Нажми на любую кнопку (Обеденный перерыв, Увольнительное время, IC Отпуск, OOC Отпуск)");
-        console.log("📌 История действий автоматически сохраняется в localStorage (army_status_history)");
-        
-        // Показываем мягкое напоминание про систему, если история уже есть можно вывести кол-во записей
-        try {
-            const storedHist = localStorage.getItem('army_status_history');
-            if(storedHist) {
-                const histArr = JSON.parse(storedHist);
-                if(Array.isArray(histArr) && histArr.length) {
-                    console.log(`📜 Найдена сохраненная история (${histArr.length} записей). Нажми кнопку для нового статуса.`);
-                }
-            }
-        } catch(e) {}
-        
-        // Небольшая "адаптивная" инициализация: если пользователь тыкает на кнопки, все ок.
-        // Для красоты: Можно добавить легкий tooltip при наведении через CSS, но всё и так понятно.
-        
-        /* 
-            СООТВЕТСТВУЕТ ТЗ:
-            - Надпись ARMY сверху по центру (стильно, заметно).
-            - 4 кнопки по центру: Обеденный перерыв, Увольнительное время, IC Отпуск, OOC Отпуск.
-            - При клике на каждую - визуальный фидбек + консоль-лог + сохранение в localstorage (доп. фича для демонстрации работы).
-            - Полностью адаптивно (мобильные экраны, планшеты, десктоп).
-            - Сделано с приятным дизайном, в современном стиле.
-            - Готово для размещения на GitHub Pages (простой HTML/CSS/JS).
-        */
-        
-        // Дополнительная защита от двойного клика, но без блокировки, просто фидбек остается.
-        // Объявляем что всё готово 
-        window.addEventListener('load', () => {
-            // маленькая эстетика: кнопки при полной загрузке показываются с плавным появлением
-            const btns = document.querySelectorAll('.action-btn');
-            btns.forEach((btn, idx) => {
-                btn.style.opacity = '0';
-                btn.style.transform = 'translateY(8px)';
-                setTimeout(() => {
-                    btn.style.transition = 'opacity 0.2s, transform 0.2s';
-                    btn.style.opacity = '1';
-                    btn.style.transform = 'translateY(0)';
-                }, idx * 50);
+        document.querySelectorAll('.action-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const page = card.dataset.page;
+                if (page === 'lunch') showFormPage('lunchPage');
+                else if (page === 'timeoff') showFormPage('timeoffPage');
+                else if (page === 'ic') showFormPage('icPage');
+                else if (page === 'ooc') showFormPage('oocPage');
             });
         });
-    })();
-</script>
+        window.showHome = showHome;
+
+        // Тема
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light');
+            document.querySelector('#themeSwitch i').className = 'fas fa-moon';
+            document.querySelector('#themeSwitch span').innerText = 'Тёмная тема';
+        }
+        document.getElementById('themeSwitch').addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            const isLight = document.body.classList.contains('light');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            const icon = document.querySelector('#themeSwitch i');
+            const span = document.querySelector('#themeSwitch span');
+            if (isLight) { icon.className = 'fas fa-moon'; span.innerText = 'Тёмная тема'; }
+            else { icon.className = 'fas fa-sun'; span.innerText = 'Светлая тема'; }
+        });
+        showHome();
+    </script>
 </body>
 </html>
