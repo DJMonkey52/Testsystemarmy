@@ -51,8 +51,8 @@
         .action-card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 32px; padding: 34px 28px; width: 280px; cursor: pointer; transition: all 0.4s; text-align: center; box-shadow: var(--shadow-md); }
         .action-card:hover { transform: translateY(-10px); border-color: var(--accent); }
         .card-icon { width: 75px; height: 75px; background: linear-gradient(135deg, rgba(76,175,80,0.25), rgba(46,125,50,0.15)); border-radius: 26px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; color: var(--accent); }
-        .action-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
-        .action-card p { color: var(--text-secondary); font-size: 0.75rem; }
+        .action-card h3 { font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+        .action-card p { color: var(--text-secondary); font-size: 0.8rem; }
         .card-arrow { margin-top: 16px; font-size: 1rem; color: var(--accent); opacity: 0; transition: 0.3s; }
         .action-card:hover .card-arrow { opacity: 1; transform: translateX(6px); }
         
@@ -95,30 +95,30 @@
         <div class="army-sub">Официальная система заявок</div>
     </div>
 
-    <!-- Главная страница с 4 кнопками -->
+    <!-- Главная страница с 4 кнопками (без эмодзи в названиях) -->
     <div id="homePage">
         <div class="cards-grid">
             <div class="action-card" data-page="mpb">
                 <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>🛡 MPB запрос</h3>
+                <h3>MPB запрос</h3>
                 <p>Медицина, лицензии, банк</p>
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
             <div class="action-card" data-page="parking">
                 <div class="card-icon"><i class="fas fa-parking"></i></div>
-                <h3>🅿 Бронирование парковки</h3>
+                <h3>Бронирование парковки</h3>
                 <p>Сектора, номера, оплата</p>
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
             <div class="action-card" data-page="discipline">
                 <div class="card-icon"><i class="fas fa-gavel"></i></div>
-                <h3>⚖ Снятие взыскания</h3>
+                <h3>Снятие дисциплинарного взыскания</h3>
                 <p>Обжалование / оплата</p>
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
             <div class="action-card" data-page="militaryid">
                 <div class="card-icon"><i class="fas fa-id-card"></i></div>
-                <h3>🪪 Военный билет</h3>
+                <h3>Заявка на военный билет</h3>
                 <p>Оформление военного билета</p>
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
@@ -132,7 +132,7 @@
     <div id="mpbPage" class="form-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="glass-card">
-            <div class="card-header"><h2><i class="fas fa-shield-alt"></i> 🛡 MPB запрос</h2></div>
+            <div class="card-header"><h2><i class="fas fa-shield-alt"></i> MPB запрос</h2></div>
             <div class="card-body">
                 <div id="mpbAlert"></div>
                 <div class="double-group">
@@ -152,14 +152,14 @@
     <div id="parkingPage" class="form-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="glass-card">
-            <div class="card-header"><h2><i class="fas fa-parking"></i> 🅿 Бронирование парковки</h2></div>
+            <div class="card-header"><h2><i class="fas fa-parking"></i> Бронирование парковки</h2></div>
             <div class="card-body">
                 <div id="parkingAlert"></div>
                 <div class="double-group">
                     <div class="input-group"><label><i class="fas fa-user"></i> Имя Фамилия</label><input type="text" id="parkingName" placeholder="Имя Фамилия"></div>
                     <div class="input-group"><label><i class="fas fa-chart-line"></i> Ваш ранг</label><select id="parkingRank"><option value="">-- Выберите --</option><option>3+</option><option>6+</option><option>9+</option><option>12+</option><option>14+</option></select></div>
                 </div>
-                <div class="input-group"><label><i class="fas fa-hand-paper"></i> Выбор действия</label><select id="parkingAction"><option value="">-- Действие --</option><option>🚗 Получения парковочного места (Платно)</option><option>🔄 Смена парковочного места (Платно)</option><option>🔢 Смена номерного знака (Бесплатно)</option><option>💰 Повторная оплата парковочного места</option></select></div>
+                <div class="input-group"><label><i class="fas fa-hand-paper"></i> Выбор действия</label><select id="parkingAction"><option value="">-- Действие --</option><option>Получения парковочного места (Платно)</option><option>Смена парковочного места (Платно)</option><option>Смена номерного знака (Бесплатно)</option><option>Повторная оплата парковочного места</option></select></div>
                 <div class="checkbox-group"><input type="checkbox" id="parkingAgree"> <label style="margin:0;"><i class="fas fa-check-circle"></i> Я соглашаюсь со всеми условиями, которые написаны в канале ❰🚗❱парковка (<span style="color:var(--accent);">#931300899517763594</span>)</label></div>
                 <div class="double-group">
                     <div class="input-group"><label><i class="fas fa-map-marker-alt"></i> Выберите сектор парковки</label><select id="parkingSector"><option value="">-- Сектор --</option><option>Сектор А (14+)</option><option>Сектор В (13+ / inst / Секретариат)</option><option>Сектор С (3+)</option><option>Сектор D1 (6+)</option><option>Сектор D2 (6+)</option><option>Сектор D3 (9+)</option><option>Сектор D4 (6+)</option><option>Сектор Е (3+)</option><option>Сектор F1 (3+)</option><option>Сектор F2 (3+)</option><option>Сектор H1 (3+)</option><option>Сектор H2 (3+)</option><option>Сектор Н3 (3+)</option><option>Сектор H4 (3+)</option><option>Сектор H5 (3+)</option><option>Сектор К</option><option>Вариант 16</option></select></div>
@@ -176,11 +176,11 @@
     <div id="disciplinePage" class="form-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="glass-card">
-            <div class="card-header"><h2><i class="fas fa-gavel"></i> ⚖ Снятие дисциплинарного взыскания</h2></div>
+            <div class="card-header"><h2><i class="fas fa-gavel"></i> Снятие дисциплинарного взыскания</h2></div>
             <div class="card-body">
                 <div id="disciplineAlert"></div>
                 <div class="input-group"><label><i class="fas fa-user"></i> Имя фамилия</label><input type="text" id="disciplineName" placeholder="Имя Фамилия"></div>
-                <div class="input-group"><label><i class="fas fa-tag"></i> Тип снятия</label><select id="disciplineTypeSelect"><option value="">-- Выберите --</option><option value="appeal">📢 Обжалование</option><option value="pay">💳 Оплата</option></select></div>
+                <div class="input-group"><label><i class="fas fa-tag"></i> Тип снятия</label><select id="disciplineTypeSelect"><option value="">-- Выберите --</option><option value="appeal">Обжалование</option><option value="pay">Оплата</option></select></div>
                 <div id="appealBlock" style="display:none;">
                     <div class="input-group"><label><i class="fas fa-calendar"></i> Дата получения взыскания</label><input type="date" id="disciplineDate"></div>
                     <div class="input-group"><label><i class="fas fa-link"></i> Ссылка на сообщение</label><input type="text" id="disciplineReasonLink" placeholder="Ссылка на сообщение"></div>
@@ -202,7 +202,7 @@
     <div id="militaryidPage" class="form-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="glass-card">
-            <div class="card-header"><h2><i class="fas fa-id-card"></i> 🪪 Заявка на военный билет</h2></div>
+            <div class="card-header"><h2><i class="fas fa-id-card"></i> Заявка на военный билет</h2></div>
             <div class="card-body">
                 <div id="militaryAlert"></div>
                 <div class="double-group">
@@ -213,8 +213,8 @@
                     <div class="input-group"><label><i class="fas fa-file-alt"></i> Ссылка на отчет #1</label><input type="url" id="milReport1" placeholder="https://..."></div>
                     <div class="input-group"><label><i class="fas fa-file-alt"></i> Ссылка на отчет #2</label><input type="url" id="milReport2" placeholder="https://..."></div>
                 </div>
-                <div class="checkbox-group"><input type="checkbox" id="milDaysCheck"> <label style="margin:0;"><i class="fas fa-check"></i> ✅ Да, прошло 15 дней с момента повышения (по дню блага)</label></div>
-                <div class="info-note"><i class="fas fa-info-circle"></i> 📌 Для оформления военного билета необходимо предоставить два отчета и подтверждение, что с момента последнего повышения прошло 15 дней.</div>
+                <div class="checkbox-group"><input type="checkbox" id="milDaysCheck"> <label style="margin:0;"><i class="fas fa-check"></i> Да, прошло 15 дней с момента повышения (по дню блага)</label></div>
+                <div class="info-note"><i class="fas fa-info-circle"></i> Для оформления военного билета необходимо предоставить два отчета и подтверждение, что с момента последнего повышения прошло 15 дней.</div>
                 <button class="submit-btn" id="submitMilitaryBtn"><i class="fab fa-discord"></i> Подать заявку</button>
                 <div class="footer-signature"><i class="fas fa-code"></i> By Alexandr DeHaus <i class="fas fa-heart"></i></div>
             </div>
@@ -223,12 +223,12 @@
 </div>
 
 <script>
-    // ========== ВЕБХУКИ ДЛЯ КАЖДОЙ СТРАНИЦЫ ==========
+    // ========== НОВЫЕ ВЕБХУКИ ==========
     const WEBHOOKS = {
-        mpb: 'https://discord.com/api/webhooks/1502672112631025864/-yptacQUpgB-UUaoZFLK4cZIP8bTVbjbJ4Ae0G1vQmMqNaOqVMacBuuuoezjXB-M7Z5J',
-        parking: 'https://discord.com/api/webhooks/1502639180835065957/YY56iuWZgdXVZCxwe4SRbIZlrB-3T7HGvpWvUjGjaWexQ2Jaje5N8bQECREj3zsviDmy',
-        discipline: 'https://discord.com/api/webhooks/1502674236429566003/zc5LmbJ7R78VGfJBQZCkNsFm0KOWg34U9vtfT1vAbTF0JSaaoCRCtbRQ5yld-T2x4SUK',
-        militaryid: 'https://discord.com/api/webhooks/1502674542424752241/eZhioFD4dQIQJpfPFIEdhYUNc8XdbOG4fUWJ2Md1Gm1WArxCkD6g3zjF0pxstKQrarMt'
+        mpb: 'https://discord.com/api/webhooks/1503122660912267384/R0BOhDzn314NgRtQmIdH66dbo0wkGfnlfCof6tDZQ9ZOd0QK1bwQUfUSkuZDN1DqEPjz',
+        parking: 'https://discord.com/api/webhooks/1503122582914994287/vdAO1ef_ycc3R3T7QK9-s_5ic907I8khxXavxgdWFMUXMpfeHS9ceQkG71JrEpkPci_z',
+        discipline: 'https://discord.com/api/webhooks/1503122412621922556/sjKSxRwUQpoGSJT-P74yo97b0D7-yt-G_40yfan4mFBoxuilBQrPJGnaEBvAKvkjwIi2',
+        militaryid: 'https://discord.com/api/webhooks/1503122342497484960/APMO-1Eq6px8w23Hsy8NufQMSvYS6NsuIbKYSkSHesWAsWnE8thZf1g5-0cIQ-hAEtgj'
     };
 
     // ========== РОЛИ ДЛЯ ТЕГА ПРИ ОТПРАВКЕ ==========
