@@ -95,7 +95,7 @@
         <div class="army-sub">Официальная система заявок</div>
     </div>
 
-    <!-- Главная страница с 4 кнопками (без эмодзи в названиях) -->
+    <!-- Главная страница с 4 кнопками -->
     <div id="homePage">
         <div class="cards-grid">
             <div class="action-card" data-page="mpb">
@@ -223,11 +223,13 @@
 </div>
 
 <script>
-    // ========== НОВЫЕ ВЕБХУКИ ==========
+    // ========== ВЕБХУКИ ==========
     const WEBHOOKS = {
         mpb: 'https://discord.com/api/webhooks/1503122660912267384/R0BOhDzn314NgRtQmIdH66dbo0wkGfnlfCof6tDZQ9ZOd0QK1bwQUfUSkuZDN1DqEPjz',
         parking: 'https://discord.com/api/webhooks/1503122582914994287/vdAO1ef_ycc3R3T7QK9-s_5ic907I8khxXavxgdWFMUXMpfeHS9ceQkG71JrEpkPci_z',
-        discipline: 'https://discord.com/api/webhooks/1503122412621922556/sjKSxRwUQpoGSJT-P74yo97b0D7-yt-G_40yfan4mFBoxuilBQrPJGnaEBvAKvkjwIi2',
+        // Дисциплина разделена на два вебхука
+        disciplineAppeal: 'https://discord.com/api/webhooks/1503122412621922556/sjKSxRwUQpoGSJT-P74yo97b0D7-yt-G_40yfan4mFBoxuilBQrPJGnaEBvAKvkjwIi2',
+        disciplinePay: 'https://discord.com/api/webhooks/1503122342497484960/APMO-1Eq6px8w23Hsy8NufQMSvYS6NsuIbKYSkSHesWAsWnE8thZf1g5-0cIQ-hAEtgj',
         militaryid: 'https://discord.com/api/webhooks/1503122342497484960/APMO-1Eq6px8w23Hsy8NufQMSvYS6NsuIbKYSkSHesWAsWnE8thZf1g5-0cIQ-hAEtgj'
     };
 
@@ -353,7 +355,7 @@
         finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Забронировать'; }
     });
 
-    // ========== ДИСЦИПЛИНА ==========
+    // ========== ДИСЦИПЛИНА (разделение по типам) ==========
     let typeSelect = document.getElementById('disciplineTypeSelect');
     let appealDiv = document.getElementById('appealBlock');
     let payDiv = document.getElementById('payBlock');
@@ -362,15 +364,22 @@
         appealDiv.style.display = (val === 'appeal') ? 'block' : 'none';
         payDiv.style.display = (val === 'pay') ? 'block' : 'none';
     });
+    
     document.getElementById('submitDisciplineBtn')?.addEventListener('click', async () => {
         const name = document.getElementById('disciplineName').value.trim();
         const type = typeSelect.value;
         if (!name) { showAlert('disciplineAlert', 'Введите имя и фамилию', 'error'); return; }
         if (!type) { showAlert('disciplineAlert', 'Выберите тип снятия', 'error'); return; }
+        
         let fields = [
             { name: '👤 Имя Фамилия', value: name, inline: true },
             { name: '📌 Тип', value: type === 'appeal' ? 'Обжалование' : 'Оплата', inline: true }
         ];
+        
+        let webhookUrl = '';
+        let title = '';
+        let color = 0x9B59B6;
+        
         if (type === 'appeal') {
             const date = document.getElementById('disciplineDate').value;
             const link = document.getElementById('disciplineReasonLink').value.trim();
@@ -381,6 +390,9 @@
             fields.push({ name: '📅 Дата взыскания', value: formatDate(date), inline: true });
             fields.push({ name: '🔗 Ссылка', value: link, inline: false });
             fields.push({ name: '📎 Доказательства', value: proof, inline: false });
+            webhookUrl = WEBHOOKS.disciplineAppeal;
+            title = '⚖️ Снятие дисциплинарного взыскания (Обжалование)';
+            color = 0xE67E22;
         } else if (type === 'pay') {
             const officer = document.getElementById('payOfficer').value.trim();
             const report = document.getElementById('payReportNumber').value.trim();
@@ -394,11 +406,15 @@
             fields.push({ name: '📄 Рапорт №', value: report, inline: true });
             fields.push({ name: '⚖️ Наказание', value: penalty, inline: true });
             fields.push({ name: '📖 Основание', value: basis, inline: false });
+            webhookUrl = WEBHOOKS.disciplinePay;
+            title = '💳 Снятие дисциплинарного взыскания (Оплата)';
+            color = 0x3498DB;
         }
+        
         const btn = document.getElementById('submitDisciplineBtn');
         btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
         try {
-            await sendToDiscord(WEBHOOKS.discipline, '⚖️ Снятие дисциплинарного взыскания', fields, ROLE_TAGS.discipline, 0x9B59B6);
+            await sendToDiscord(webhookUrl, title, fields, ROLE_TAGS.discipline, color);
             showAlert('disciplineAlert', '✅ Ходатайство отправлено!', 'success');
             document.getElementById('disciplineName').value = '';
             typeSelect.value = '';
