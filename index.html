@@ -3,27 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ARMY | Система заявок</title>
+    <title>ARMY | Единая система заявок</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #051505 0%, #0a2a0a 50%, #0d2e0d 100%);
             min-height: 100vh;
             transition: background 0.3s ease;
         }
-
-        body.light {
-            background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%);
-        }
-
+        body.light { background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%); }
         :root {
             --glass-bg: rgba(10, 25, 10, 0.95);
             --glass-border: rgba(76, 175, 80, 0.35);
@@ -34,12 +25,9 @@
             --accent-glow: #66BB6A;
             --accent-dark: #2E7D32;
             --border-light: rgba(255, 255, 255, 0.06);
-            --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.4);
             --shadow-md: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
             --input-bg: rgba(5, 20, 5, 0.9);
-            --card-hover: rgba(76, 175, 80, 0.12);
         }
-
         body.light {
             --glass-bg: rgba(245, 255, 245, 0.95);
             --glass-border: rgba(76, 175, 80, 0.25);
@@ -47,693 +35,286 @@
             --text-secondary: #4b5563;
             --text-muted: #9ca3af;
             --accent: #4CAF50;
-            --accent-glow: #66BB6A;
             --accent-dark: #388E3C;
             --border-light: rgba(0, 0, 0, 0.08);
             --input-bg: rgba(255, 255, 255, 0.95);
-            --card-hover: rgba(76, 175, 80, 0.08);
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 24px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .army-hero {
-            text-align: center;
-            margin-bottom: 42px;
-            margin-top: 18px;
-        }
-
-        .logo-icon {
-            width: 85px;
-            height: 85px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-            border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            box-shadow: var(--shadow-md);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .logo-icon i {
-            font-size: 44px;
-            color: white;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
-        }
-
-        .army-hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: 4px;
-            background: linear-gradient(135deg, #FFFFFF, #A5D6A7);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        body.light .army-hero h1 {
-            background: linear-gradient(135deg, #1e3b1e, #2e7d32);
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
-
-        .army-sub {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            letter-spacing: 1.5px;
-            margin-top: 6px;
-        }
-
-        .action-buttons-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin: 30px 0 40px;
-        }
-
-        .action-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            padding: 34px 28px;
-            width: 260px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            text-align: center;
-            box-shadow: var(--shadow-md);
-        }
-
-        .action-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-
-        .card-icon {
-            width: 75px;
-            height: 75px;
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.25), rgba(46, 125, 50, 0.15));
-            border-radius: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 36px;
-            color: var(--accent);
-        }
-
-        .action-card h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-        }
-
-        .action-card p {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
-
-        .card-arrow {
-            margin-top: 16px;
-            font-size: 1rem;
-            color: var(--accent);
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-        }
-
-        .action-card:hover .card-arrow {
-            opacity: 1;
-            transform: translateX(6px);
-        }
-
-        .form-page {
-            display: none;
-            animation: fadeInUp 0.45s ease;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            padding: 10px 24px;
-            color: var(--text-primary);
-            font-weight: 500;
-            cursor: pointer;
-            margin-bottom: 24px;
-            transition: all 0.2s;
-        }
-
-        .back-btn:hover {
-            border-color: var(--accent);
-            transform: translateX(-4px);
-        }
-
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            border-radius: 32px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow-md);
-            overflow: hidden;
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(46, 125, 50, 0.08));
-            padding: 20px 28px;
-            border-bottom: 1px solid var(--border-light);
-        }
-
-        .card-header h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .card-header h2 i {
-            color: var(--accent);
-        }
-
-        .card-body {
-            padding: 28px;
-        }
-
-        .double-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 22px;
-        }
-
-        .input-group {
-            margin-bottom: 22px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-            color: var(--accent-glow);
-            margin-bottom: 6px;
-        }
-
-        .input-group input, .input-group select, .input-group textarea {
-            width: 100%;
-            padding: 12px 14px;
-            background: var(--input-bg);
-            border: 1px solid var(--border-light);
-            border-radius: 16px;
-            font-size: 0.9rem;
-            color: var(--text-primary);
-            font-family: 'Inter', sans-serif;
-            transition: all 0.2s;
-        }
-
-        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.25);
-        }
-
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 16px 0;
-            background: rgba(76, 175, 80, 0.08);
-            padding: 12px 16px;
-            border-radius: 20px;
-        }
-        .checkbox-group input {
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-            accent-color: var(--accent);
-        }
-        .checkbox-group label {
-            margin: 0;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .checkbox-group a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        .info-note {
-            background: rgba(76, 175, 80, 0.1);
-            border-radius: 14px;
-            padding: 12px 16px;
-            font-size: 0.85rem;
-            color: var(--accent-glow);
-            margin: 18px 0;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: linear-gradient(105deg, var(--accent), var(--accent-dark));
-            border: none;
-            padding: 14px;
-            border-radius: 28px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            transition: all 0.3s;
-            margin-top: 12px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            filter: brightness(1.05);
-            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.5);
-        }
-
-        .footer-signature {
-            text-align: center;
-            margin-top: 32px;
-            padding-top: 18px;
-            border-top: 1px solid var(--border-light);
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .footer-signature i {
-            color: var(--accent);
-            margin: 0 4px;
-        }
-
-        .alert {
-            padding: 12px 18px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-            font-size: 0.85rem;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-12px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .alert.success {
-            background: rgba(16, 185, 129, 0.15);
-            border-left: 3px solid #10b981;
-            color: #10b981;
-            display: flex;
-        }
-
-        .alert.error {
-            background: rgba(239, 68, 68, 0.12);
-            border-left: 3px solid #ef4444;
-            color: #f87171;
-            display: flex;
-        }
-
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            padding: 8px 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            color: var(--text-primary);
-            font-weight: 500;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-            z-index: 100;
-        }
-
-        @media (max-width: 780px) {
-            .action-buttons-grid { gap: 18px; }
-            .action-card { width: 220px; padding: 24px 18px; }
-            .double-group { grid-template-columns: 1fr; gap: 14px; }
-            .card-body { padding: 20px; }
-            .army-hero h1 { font-size: 2.4rem; }
-        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 20px 24px; min-height: 100vh; display: flex; flex-direction: column; }
+        .army-hero { text-align: center; margin-bottom: 42px; margin-top: 18px; }
+        .logo-icon { width: 85px; height: 85px; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); border-radius: 28px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: var(--shadow-md); animation: float 3s ease-in-out infinite; }
+        .logo-icon i { font-size: 44px; color: white; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        .army-hero h1 { font-size: 3.2rem; font-weight: 800; letter-spacing: 4px; background: linear-gradient(135deg, #FFFFFF, #A5D6A7); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .army-sub { font-size: 0.9rem; color: var(--text-secondary); letter-spacing: 1.5px; margin-top: 6px; }
+        .main-categories { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 20px 0 30px; }
+        .category-btn { background: linear-gradient(135deg, var(--glass-bg), rgba(30, 60, 30, 0.9)); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 48px; padding: 16px 40px; font-size: 1.3rem; font-weight: 700; color: var(--text-primary); cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .category-btn i { font-size: 1.6rem; color: var(--accent); }
+        .category-btn:hover { transform: translateY(-5px); border-color: var(--accent); background: rgba(76, 175, 80, 0.2); }
+        .action-buttons-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 30px 0 40px; }
+        .action-card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 32px; padding: 28px 24px; width: 250px; cursor: pointer; transition: all 0.3s; text-align: center; }
+        .action-card:hover { transform: translateY(-8px); border-color: var(--accent); }
+        .card-icon { width: 70px; height: 70px; background: linear-gradient(135deg, rgba(76,175,80,0.25), rgba(46,125,50,0.15)); border-radius: 26px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 32px; color: var(--accent); }
+        .action-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+        .action-card p { color: var(--text-secondary); font-size: 0.75rem; }
+        .form-page, .submenu-page { display: none; animation: fadeInUp 0.4s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .back-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--glass-bg); backdrop-filter: blur(8px); border: 1px solid var(--glass-border); border-radius: 50px; padding: 8px 20px; color: var(--text-primary); font-weight: 500; cursor: pointer; margin-bottom: 24px; transition: 0.2s; }
+        .back-btn:hover { border-color: var(--accent); transform: translateX(-4px); }
+        .glass-card { background: var(--glass-bg); backdrop-filter: blur(16px); border-radius: 32px; border: 1px solid var(--glass-border); overflow: hidden; }
+        .card-header { background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(46, 125, 50, 0.08)); padding: 18px 28px; border-bottom: 1px solid var(--border-light); }
+        .card-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 12px; }
+        .card-body { padding: 28px; max-height: 70vh; overflow-y: auto; }
+        .double-group { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+        .triple-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+        .input-group { margin-bottom: 22px; }
+        .input-group label { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; color: var(--accent-glow); margin-bottom: 6px; text-transform: uppercase; }
+        .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 12px 14px; background: var(--input-bg); border: 1px solid var(--border-light); border-radius: 16px; font-size: 0.9rem; color: var(--text-primary); font-family: 'Inter', sans-serif; transition: 0.2s; }
+        .input-group input:focus, .input-group select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3); }
+        .checkbox-group { display: flex; align-items: center; gap: 12px; margin: 20px 0; background: rgba(76,175,80,0.1); padding: 12px 16px; border-radius: 20px; cursor: pointer; }
+        .checkbox-group input { width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent); }
+        .info-note { background: rgba(76,175,80,0.1); border-radius: 14px; padding: 10px; font-size: 0.8rem; text-align: center; color: var(--accent-glow); margin: 12px 0; }
+        .submit-btn { width: 100%; background: linear-gradient(105deg, var(--accent), var(--accent-dark)); border: none; padding: 14px; border-radius: 28px; font-size: 0.95rem; font-weight: 700; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: 0.3s; margin-top: 16px; }
+        .submit-btn:hover { transform: translateY(-3px); filter: brightness(1.05); box-shadow: 0 10px 25px rgba(76,175,80,0.4); }
+        .footer-signature { text-align: center; margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--border-light); color: var(--text-muted); font-size: 0.75rem; }
+        .alert { padding: 12px 18px; border-radius: 16px; margin-bottom: 20px; display: none; align-items: center; gap: 10px; font-weight: 500; animation: slideIn 0.3s; }
+        .alert.success { background: rgba(16,185,129,0.15); border-left: 3px solid #10b981; color: #10b981; display: flex; }
+        .alert.error { background: rgba(239,68,68,0.12); border-left: 3px solid #ef4444; color: #f87171; display: flex; }
+        @keyframes slideIn { from { opacity:0; transform: translateX(-12px); } to { opacity:1; transform: translateX(0); } }
+        .theme-toggle { position: fixed; top: 20px; right: 20px; background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 50px; padding: 6px 18px; display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-primary); font-size: 0.8rem; z-index: 100; }
+        @media (max-width: 880px) { .double-group, .triple-group { grid-template-columns: 1fr; } .action-card { width: 200px; } .category-btn { padding: 12px 24px; font-size: 1rem; } }
     </style>
 </head>
 <body>
-    <div class="theme-toggle" id="themeSwitch">
-        <i class="fas fa-sun"></i>
-        <span>Светлая тема</span>
+<div class="theme-toggle" id="themeSwitch"><i class="fas fa-sun"></i><span>Светлая тема</span></div>
+<div class="container">
+    <div class="army-hero"><div class="logo-icon"><i class="fas fa-gun"></i></div><h1>ARMY</h1><div class="army-sub">Официальная система заявок</div></div>
+
+    <div id="homePage" class="home-page">
+        <div class="main-categories">
+            <div class="category-btn" data-category="rest"><i class="fas fa-umbrella-beach"></i> Заявки на отдых</div>
+            <div class="category-btn" data-category="other"><i class="fas fa-briefcase"></i> Прочие</div>
+        </div>
+        <div class="footer-signature"><i class="fas fa-code"></i> By Alexandr DeHaus</div>
     </div>
 
-    <div class="container">
-        <div class="army-hero">
-            <div class="logo-icon"><i class="fas fa-shield-halos"></i></div>
-            <h1>ARMY</h1>
-            <div class="army-sub">Система подачи заявок | MPB · Парковка · Дисциплина</div>
-        </div>
-
-        <div id="homePage" class="home-page">
-            <div class="action-buttons-grid">
-                <div class="action-card" data-page="mpb">
-                    <div class="card-icon"><i class="fas fa-notes-medical"></i></div>
-                    <h3>MPB Запрос</h3>
-                    <p>Медицина, банк, лицензии и другое</p>
-                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
-                </div>
-                <div class="action-card" data-page="parking">
-                    <div class="card-icon"><i class="fas fa-parking"></i></div>
-                    <h3>Бронирование парковки</h3>
-                    <p>Получение места, смена номера</p>
-                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
-                </div>
-                <div class="action-card" data-page="discipline">
-                    <div class="card-icon"><i class="fas fa-gavel"></i></div>
-                    <h3>Снятие дисциплинарного взыскания</h3>
-                    <p>Обжалование или оплата</p>
-                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
-                </div>
-            </div>
-            <div class="footer-signature">
-                <i class="fas fa-code"></i> By Alexandr DeHaus <i class="fas fa-heart" style="color: var(--accent);"></i>
-            </div>
-        </div>
-
-        <!-- 1. MPB ЗАПРОС -->
-        <div id="mpbPage" class="form-page">
-            <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
-            <div class="glass-card">
-                <div class="card-header"><h2><i class="fas fa-notes-medical"></i> MPB Запрос</h2></div>
-                <div class="card-body">
-                    <div id="mpbAlert"></div>
-                    <div class="double-group">
-                        <div class="input-group"><label>👤 Имя Фамилия</label><input type="text" id="mpbFullname" placeholder="Иван Петров"></div>
-                        <div class="input-group"><label>🏅 Ранг (с обеденного перерыва)</label><select id="mpbRank"><option value="">--Выберите ранг--</option></select></div>
-                    </div>
-                    <div class="double-group">
-                        <div class="input-group"><label>🏛️ Ваше подразделение</label><select id="mpbDept"></select></div>
-                        <div class="input-group"><label>📋 Что вы запрашиваете?</label><select id="mpbRequestType"></select></div>
-                    </div>
-                    <div class="input-group"><label>📝 Что вам требуется (подробно)</label><textarea rows="3" id="mpbDetails" placeholder="Опишите суть запроса..."></textarea></div>
-                    <button class="submit-btn" id="submitMpbBtn"><i class="fab fa-discord"></i> Отправить MPB запрос</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. БРОНИРОВАНИЕ ПАРКОВКИ -->
-        <div id="parkingPage" class="form-page">
-            <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
-            <div class="glass-card">
-                <div class="card-header"><h2><i class="fas fa-parking"></i> Бронирование парковки</h2></div>
-                <div class="card-body">
-                    <div id="parkingAlert"></div>
-                    <div class="double-group">
-                        <div class="input-group"><label>👤 Имя Фамилия</label><input type="text" id="parkingName" placeholder="Имя Фамилия"></div>
-                        <div class="input-group"><label>🎖️ Ваш ранг (3+,6+,9+,12+,14+)</label><select id="parkingRank"></select></div>
-                    </div>
-                    <div class="input-group"><label>⚡ Выбор действия</label><select id="parkingAction"></select></div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="parkingAgree">
-                        <label for="parkingAgree">Я соглашаюсь со всеми условиями, которые написаны в канале ❰🚗❱парковка  (<a href="#" id="parkingRulesLink">#парковка</a>)</label>
-                    </div>
-                    <div class="input-group"><label>🗺️ Выберите сектор парковки</label><select id="parkingSector"></select></div>
-                    <div class="input-group"><label>🔢 Выберите номер парковки</label><input type="text" id="parkingSpotNumber" placeholder="Например: 12, A-14"></div>
-                    <div class="input-group"><label>🚗 Укажите свой номерной знак</label><input type="text" id="parkingPlate" placeholder="Номер 1 | Номер 2 | Номер 3 (до 3 номеров)"></div>
-                    <div class="info-note">ℹ️ 13+ могут не указывать номерные знаки. Формат: A111AA | B222BB</div>
-                    <button class="submit-btn" id="submitParkingBtn"><i class="fab fa-discord"></i> Забронировать / Сменить</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. СНЯТИЕ ДИСЦИПЛИНАРНОГО ВЗЫСКАНИЯ -->
-        <div id="disciplinePage" class="form-page">
-            <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
-            <div class="glass-card">
-                <div class="card-header"><h2><i class="fas fa-gavel"></i> Снятие дисциплинарного взыскания</h2></div>
-                <div class="card-body">
-                    <div id="discAlert"></div>
-                    <div class="double-group">
-                        <div class="input-group"><label>👤 Имя Фамилия</label><input type="text" id="discFullname" placeholder="Имя Фамилия"></div>
-                        <div class="input-group"><label>⚖️ Тип снятия</label><select id="discType" onchange="toggleDiscFields()"></select></div>
-                    </div>
-                    <!-- Поля для Обжалования -->
-                    <div id="appealFields" style="display: none;">
-                        <div class="input-group"><label>📅 Дата получения дисциплинарного взыскания</label><input type="date" id="discDate"></div>
-                        <div class="input-group"><label>📎 За что получили (ссылка на сообщение)</label><input type="text" id="discReasonLink" placeholder="https://discord.com/channels/..."></div>
-                        <div class="input-group"><label>📷 Доказательства невиновности</label><textarea rows="2" id="discProof" placeholder="Ссылки на скрины, объяснения..."></textarea></div>
-                    </div>
-                    <!-- Поля для Оплаты -->
-                    <div id="paymentFields" style="display: none;">
-                        <div class="double-group">
-                            <div class="input-group"><label>👮 Имя и Фамилия сотрудника выдавшего взыскание</label><input type="text" id="discOfficerName" placeholder="Имя Фамилия"></div>
-                            <div class="input-group"><label>📄 Рапорт на взыскание №</label><input type="text" id="discReportNumber" placeholder="№123"></div>
-                        </div>
-                        <div class="input-group"><label>⚠️ Тип наказания:</label><input type="text" id="discPunishmentType" placeholder="Выговор, штраф и т.д."></div>
-                        <div class="input-group"><label>📝 Основание для снятия взыскания:</label><textarea rows="2" id="discReasonRemoval" placeholder="Укажите основание..."></textarea></div>
-                    </div>
-                    <button class="submit-btn" id="submitDiscBtn"><i class="fab fa-discord"></i> Подать заявление</button>
-                </div>
-            </div>
+    <!-- МЕНЮ ОТДЫХА -->
+    <div id="restMenuPage" class="submenu-page">
+        <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
+        <div class="action-buttons-grid">
+            <div class="action-card" data-page="lunch"><div class="card-icon"><i class="fas fa-utensils"></i></div><h3>Обеденный перерыв</h3><p>Заявка на обед</p></div>
+            <div class="action-card" data-page="timeoff"><div class="card-icon"><i class="fas fa-plane-departure"></i></div><h3>Увольнительное время</h3><p>С датой и временем</p></div>
+            <div class="action-card" data-page="ic"><div class="card-icon"><i class="fas fa-mask"></i></div><h3>IC Отпуск</h3><p>Игровой отпуск</p></div>
+            <div class="action-card" data-page="ooc"><div class="card-icon"><i class="fas fa-comment-dots"></i></div><h3>OOC Отпуск</h3><p>Не игровой отпуск</p></div>
         </div>
     </div>
 
-    <script>
-        // ----- ДАННЫЕ ДЛЯ СПИСКОВ -----
-        const mpbRanks = ["Рекрут (1)", "Рядовой (2)", "Специалист (3)", "Капрал (4)", "Сержант (5)", "Штаб-сержант (6)", "Уорент-офицер (7)", "Старший Уорент-офицер (8)", "Лейтенант (9)", "Капитан (10)", "Майор (11)", "Подполковник (12)"];
-        const mpbDepts = ["ACD / КМБ", "MA", "DIV", "USAF", "MPB", "DELTA"];
-        const mpbReqTypes = ["Снятие наркозависимости", "Обновление мед.карты", "Bank", "Лицензия на оружие", "Merryweather", "Другое"];
-        
-        const parkingRanks = ["3+", "6+", "9+", "12+", "14+"];
-        const parkingActions = ["Получения парковочного места (Платно)", "Смена парковочного места (Платно)", "Смена номерного знака (Бесплатно)", "Повторная оплата парковочного места"];
-        const parkingSectors = ["Сектор А (14+)", "Сектор В (13+ / inst / Секретариат)", "Сектор С (3+)", "Сектор D1 (6+)", "Сектор D2 (6+)", "Сектор D3 (9+)", "Сектор D4 (6+)", "Сектор Е (3+)", "Сектор F1 (3+)", "Сектор F2 (3+)", "Сектор H1 (3+)", "Сектор H2 (3+)", "Сектор Н3 (3+)", "Сектор H4 (3+)", "Сектор H5 (3+)", "Сектор К", "Вариант 16"];
-        
-        const discTypes = ["Обжалование", "Оплата"];
-        
-        function populateSelect(selectId, options) {
-            const sel = document.getElementById(selectId);
-            if(!sel) return;
-            sel.innerHTML = '<option value="">-- Выберите --</option>';
-            options.forEach(opt => { let op = document.createElement('option'); op.value = opt; op.textContent = opt; sel.appendChild(op); });
+    <!-- МЕНЮ ПРОЧИЕ (добавлена 5-я кнопка) -->
+    <div id="otherMenuPage" class="submenu-page">
+        <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
+        <div class="action-buttons-grid">
+            <div class="action-card" data-page="mpb"><div class="card-icon"><i class="fas fa-shield-alt"></i></div><h3>MPB запрос</h3><p>Медицина, лицензии, банк</p></div>
+            <div class="action-card" data-page="parking"><div class="card-icon"><i class="fas fa-parking"></i></div><h3>Бронирование парковки</h3><p>Сектора, номера, оплата</p></div>
+            <div class="action-card" data-page="discipline"><div class="card-icon"><i class="fas fa-gavel"></i></div><h3>Снятие дисциплинарного взыскания</h3><p>Обжалование / оплата</p></div>
+            <div class="action-card" data-page="militaryid"><div class="card-icon"><i class="fas fa-id-card"></i></div><h3>Заявка на военный билет</h3><p>Оформление военного билета</p></div>
+        </div>
+    </div>
+
+    <!-- ==================== СТРАНИЦЫ ОТДЫХА ==================== -->
+    <div id="lunchPage" class="form-page"><div class="back-btn" onclick="showRestMenu()"><i class="fas fa-arrow-left"></i> Назад</div><div class="glass-card"><div class="card-header"><h2><i class="fas fa-utensils"></i> Обеденный перерыв</h2></div><div class="card-body"><div id="lunchAlert"></div><div class="double-group"><div class="input-group"><label>👤 ИГРОВОЙ НИКНЕЙМ</label><input type="text" id="lunchNick" placeholder="Имя Фамилия"></div><div class="input-group"><label>🏅 РАНГ</label><select id="lunchRank"></select></div></div><div class="double-group"><div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="lunchDepartment"></select></div><div class="input-group"><label>⏰ ДАТА И ВРЕМЯ НАЧАЛА</label><input type="datetime-local" id="lunchStart"></div></div><div class="input-group"><label>⏰ ДАТА И ВРЕМЯ ОКОНЧАНИЯ</label><input type="datetime-local" id="lunchEnd"></div><div class="info-note" id="lunchDurationInfo">📆 Укажите интервал перерыва</div><div class="input-group"><label>💬 ПРИЧИНА</label><textarea rows="3" id="lunchReason" placeholder="Причина обеда"></textarea></div><button class="submit-btn" id="submitLunchBtn"><i class="fab fa-discord"></i> ОТПРАВИТЬ</button></div></div></div>
+    
+    <div id="timeoffPage" class="form-page"><div class="back-btn" onclick="showRestMenu()"><i class="fas fa-arrow-left"></i> Назад</div><div class="glass-card"><div class="card-header"><h2><i class="fas fa-plane-departure"></i> Увольнительное время</h2></div><div class="card-body"><div id="timeoffAlert"></div><div class="double-group"><div class="input-group"><label>👤 НИКНЕЙМ</label><input type="text" id="timeoffNick"></div><div class="input-group"><label>🏅 РАНГ</label><select id="timeoffRank"></select></div></div><div class="double-group"><div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="timeoffDepartment"></select></div><div class="input-group"><label>📅 НАЧАЛО (дата/время)</label><input type="datetime-local" id="timeoffStart"></div></div><div class="input-group"><label>📅 ОКОНЧАНИЕ (дата/время)</label><input type="datetime-local" id="timeoffEnd"></div><div class="info-note" id="timeoffDurationInfo">⏱️ Рассчет продолжительности</div><div class="input-group"><label>✍️ КОММЕНТАРИЙ</label><textarea rows="3" id="timeoffComment"></textarea></div><button class="submit-btn" id="submitTimeoffBtn"><i class="fab fa-discord"></i> ОТПРАВИТЬ</button></div></div></div>
+    
+    <div id="icPage" class="form-page"><div class="back-btn" onclick="showRestMenu()"><i class="fas fa-arrow-left"></i> Назад</div><div class="glass-card"><div class="card-header"><h2><i class="fas fa-mask"></i> IC Отпуск</h2></div><div class="card-body"><div id="icAlert"></div><div class="double-group"><div class="input-group"><label>🎭 ПЕРСОНАЖ</label><input type="text" id="icNick"></div><div class="input-group"><label>🏅 РАНГ</label><select id="icRank"></select></div></div><div class="double-group"><div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="icDepartment"></select></div><div class="input-group"><label>📅 НАЧАЛО</label><input type="date" id="icStart"></div></div><div class="input-group"><label>📅 КОНЕЦ</label><input type="date" id="icEnd"></div><div class="info-note" id="icDurationInfo">📅 Даты отпуска</div><div class="input-group"><label>📖 ПРИЧИНА</label><textarea rows="3" id="icReason"></textarea></div><button class="submit-btn" id="submitIcBtn"><i class="fab fa-discord"></i> ПОДАТЬ</button></div></div></div>
+    
+    <div id="oocPage" class="form-page"><div class="back-btn" onclick="showRestMenu()"><i class="fas fa-arrow-left"></i> Назад</div><div class="glass-card"><div class="card-header"><h2><i class="fas fa-comment-dots"></i> OOC Отпуск</h2></div><div class="card-body"><div id="oocAlert"></div><div class="double-group"><div class="input-group"><label>💬 DISCORD/NICK</label><input type="text" id="oocName"></div><div class="input-group"><label>🏅 РАНГ</label><select id="oocRank"></select></div></div><div class="double-group"><div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="oocDepartment"></select></div><div class="input-group"><label>📅 НАЧАЛО</label><input type="date" id="oocStart"></div></div><div class="input-group"><label>📅 КОНЕЦ</label><input type="date" id="oocEnd"></div><div class="info-note" id="oocDurationInfo">📅 Период</div><div class="input-group"><label>📢 ПРИЧИНА</label><textarea rows="3" id="oocReason"></textarea></div><button class="submit-btn" id="submitOocBtn"><i class="fab fa-discord"></i> ЗАЯВИТЬ</button></div></div></div>
+
+    <!-- ==================== ПРОЧИЕ ФОРМЫ ==================== -->
+    <!-- MPB запрос -->
+    <div id="mpbPage" class="form-page">
+        <div class="back-btn" onclick="showOtherMenu()"><i class="fas fa-arrow-left"></i> Назад</div>
+        <div class="glass-card"><div class="card-header"><h2><i class="fas fa-shield-alt"></i> MPB запрос</h2></div><div class="card-body">
+            <div id="mpbAlert"></div>
+            <div class="double-group"><div class="input-group"><label>Имя фамилия</label><input type="text" id="mpbFullname" placeholder="Иван Иванов"></div><div class="input-group"><label>Ранг</label><select id="mpbRank"></select></div></div>
+            <div class="input-group"><label>Ваше подразделение</label><select id="mpbDepartment"><option value="">-- Выберите --</option><option>ACD / КМБ</option><option>MA</option><option>DIV</option><option>USAF</option><option>MPB</option><option>DELTA</option></select></div>
+            <div class="input-group"><label>Что вы запрашиваете?</label><select id="mpbRequestType"><option value="">-- Выберите --</option><option>Снятие наркозависимости</option><option>Обновление мед.карты</option><option>Bank</option><option>Лицензия на оружие</option><option>Merryweather</option><option>Другое</option></select></div>
+            <div class="input-group"><label>Что вам требуется (подробно)</label><textarea rows="4" id="mpbDetails" placeholder="Опишите суть запроса..."></textarea></div>
+            <button class="submit-btn" id="submitMpbBtn"><i class="fab fa-discord"></i> Отправить MPB запрос</button>
+        </div></div>
+    </div>
+
+    <!-- Бронирование парковки -->
+    <div id="parkingPage" class="form-page">
+        <div class="back-btn" onclick="showOtherMenu()"><i class="fas fa-arrow-left"></i> Назад</div>
+        <div class="glass-card"><div class="card-header"><h2><i class="fas fa-parking"></i> Бронирование парковки</h2></div><div class="card-body">
+            <div id="parkingAlert"></div>
+            <div class="double-group"><div class="input-group"><label>Имя Фамилия</label><input type="text" id="parkingName" placeholder="Имя Фамилия"></div><div class="input-group"><label>Ваш ранг</label><select id="parkingRank"><option value="">-- Выберите --</option><option>3+</option><option>6+</option><option>9+</option><option>12+</option><option>14+</option></select></div></div>
+            <div class="input-group"><label>Выбор действия</label><select id="parkingAction"><option value="">-- Действие --</option><option>Получения парковочного места (Платно)</option><option>Смена парковочного места (Платно)</option><option>Смена номерного знака (Бесплатно)</option><option>Повторная оплата парковочного места</option></select></div>
+            <div class="checkbox-group" id="agreeCheckbox"><input type="checkbox" id="parkingAgree"> <label style="margin:0; cursor:pointer;">Я соглашаюсь со всеми условиями, которые написаны в канале ❰🚗❱парковка (<span style="color:var(--accent);">#931300899517763594</span>)</label></div>
+            <div class="double-group"><div class="input-group"><label>Выберите сектор парковки</label><select id="parkingSector"><option value="">-- Сектор --</option><option>Сектор А (14+)</option><option>Сектор В (13+ / inst / Секретариат)</option><option>Сектор С (3+)</option><option>Сектор D1 (6+)</option><option>Сектор D2 (6+)</option><option>Сектор D3 (9+)</option><option>Сектор D4 (6+)</option><option>Сектор Е (3+)</option><option>Сектор F1 (3+)</option><option>Сектор F2 (3+)</option><option>Сектор H1 (3+)</option><option>Сектор H2 (3+)</option><option>Сектор Н3 (3+)</option><option>Сектор H4 (3+)</option><option>Сектор H5 (3+)</option><option>Сектор К</option><option>Вариант 16</option></select></div>
+            <div class="input-group"><label>Выберите номер парковки</label><input type="text" id="parkingSlot" placeholder="Например: A12, C5, D14"></div></div>
+            <div class="input-group"><label>Укажите свой номерной знак [13+ могут не указывать. Можно до 3-х номеров: Номер 1 | Номер 2 | Номер 3]</label><input type="text" id="parkingPlate" placeholder="001AA | 002BB | 003CC"></div>
+            <button class="submit-btn" id="submitParkingBtn"><i class="fab fa-discord"></i> Забронировать</button>
+        </div></div>
+    </div>
+
+    <!-- Снятие дисциплинарного взыскания -->
+    <div id="disciplinePage" class="form-page">
+        <div class="back-btn" onclick="showOtherMenu()"><i class="fas fa-arrow-left"></i> Назад</div>
+        <div class="glass-card"><div class="card-header"><h2><i class="fas fa-gavel"></i> Снятие дисциплинарного взыскания</h2></div><div class="card-body">
+            <div id="disciplineAlert"></div>
+            <div class="input-group"><label>Имя фамилия</label><input type="text" id="disciplineName" placeholder="Имя Фамилия"></div>
+            <div class="input-group"><label>Тип снятия</label><select id="disciplineTypeSelect"><option value="">-- Выберите --</option><option value="appeal">Обжалование</option><option value="pay">Оплата</option></select></div>
+            <div id="appealBlock" style="display:none;"><div class="input-group"><label>Дата получения дисциплинарного взыскания</label><input type="date" id="disciplineDate"></div><div class="input-group"><label>За что получили дисциплинарное взыскание [Ссылка на сообщение]</label><input type="text" id="disciplineReasonLink" placeholder="Ссылка на сообщение"></div><div class="input-group"><label>Доказательства невиновности</label><textarea rows="3" id="disciplineProof" placeholder="Скриншоты, объяснения..."></textarea></div></div>
+            <div id="payBlock" style="display:none;"><div class="input-group"><label>Имя и Фамилия сотрудника выдавшего взыскание</label><input type="text" id="payOfficer"></div><div class="input-group"><label>Рапорт на взыскание №</label><input type="text" id="payReportNumber" placeholder="№ рапорта"></div><div class="input-group"><label>Тип наказания:</label><input type="text" id="penaltyType" placeholder="Например: выговор, штраф"></div><div class="input-group"><label>Основание для снятия взыскания:</label><textarea rows="3" id="payBasis" placeholder="Причина снятия"></textarea></div></div>
+            <button class="submit-btn" id="submitDisciplineBtn"><i class="fab fa-discord"></i> Подать ходатайство</button>
+        </div></div>
+    </div>
+
+    <!-- НОВАЯ СТРАНИЦА: ЗАЯВКА НА ВОЕННЫЙ БИЛЕТ -->
+    <div id="militaryidPage" class="form-page">
+        <div class="back-btn" onclick="showOtherMenu()"><i class="fas fa-arrow-left"></i> Назад</div>
+        <div class="glass-card"><div class="card-header"><h2><i class="fas fa-id-card"></i> Заявка на военный билет</h2></div><div class="card-body">
+            <div id="militaryAlert"></div>
+            <div class="double-group">
+                <div class="input-group"><label>Имя Фамилия</label><input type="text" id="milName" placeholder="Иван Иванов"></div>
+                <div class="input-group"><label>Номер паспорта</label><input type="text" id="milPassport" placeholder="Серия и номер паспорта"></div>
+            </div>
+            <div class="double-group">
+                <div class="input-group"><label>Ссылка на отчет #1</label><input type="url" id="milReport1" placeholder="https://..."></div>
+                <div class="input-group"><label>Ссылка на отчет #2</label><input type="url" id="milReport2" placeholder="https://..."></div>
+            </div>
+            <div class="checkbox-group" id="daysCheckbox">
+                <input type="checkbox" id="milDaysCheck"> 
+                <label style="margin:0; cursor:pointer;">✅ Да, прошло 15 дней с момента повышения (по дню блага)</label>
+            </div>
+            <div class="info-note" id="milInfoNote">📌 Внимание: Для оформления военного билета необходимо предоставить два отчета и подтверждение, что с момента последнего повышения прошло 15 дней.</div>
+            <button class="submit-btn" id="submitMilitaryBtn"><i class="fab fa-discord"></i> Подать заявку на военный билет</button>
+        </div></div>
+    </div>
+</div>
+
+<script>
+    // Данные для селектов
+    const MAIN_RANKS = ["Специалист (3)","Капрал (4)","Сержант (5)","Штаб-сержант (6)","Уорент-офицер (7)","Старший Уорент-офицер (8)","Лейтенант (9)","Капитан (10)","Майор (11)","Подполковник (12)"];
+    const LUNCH_RANKS = ["Рекрут (1)","Рядовой (2)", ...MAIN_RANKS];
+    const DEPARTMENTS = ["MA","DIV","MPB","USAF","Delta"];
+    function fillSelect(id, options) { let sel=document.getElementById(id); if(sel){ sel.innerHTML='<option value="">-- Выберите --</option>'; options.forEach(opt=>{let op=document.createElement('option'); op.value=opt; op.textContent=opt; sel.appendChild(op);});}}
+    fillSelect('lunchRank', LUNCH_RANKS); fillSelect('timeoffRank', MAIN_RANKS); fillSelect('icRank', MAIN_RANKS); fillSelect('oocRank', MAIN_RANKS);
+    fillSelect('lunchDepartment', DEPARTMENTS); fillSelect('timeoffDepartment', DEPARTMENTS); fillSelect('icDepartment', DEPARTMENTS); fillSelect('oocDepartment', DEPARTMENTS);
+    fillSelect('mpbRank', MAIN_RANKS);
+    
+    const WEBHOOK = 'https://discord.com/api/webhooks/1502672112631025864/-yptacQUpgB-UUaoZFLK4cZIP8bTVbjbJ4Ae0G1vQmMqNaOqVMacBuuuoezjXB-M7Z5J';
+    async function sendEmbed(title, fields, color=0x4CAF50) { 
+        let embed = { title, color, fields, timestamp: new Date().toISOString(), footer: {text:"ARMY System"} };
+        let resp = await fetch(WEBHOOK, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({embeds:[embed], avatar_url:"https://i.yapx.ru/dj4ak.png"}) });
+        if(!resp.ok) throw new Error(`Ошибка ${resp.status}`);
+    }
+    function showAlert(containerId, msg, type) { let c=document.getElementById(containerId); if(!c) return; let div=document.createElement('div'); div.className=`alert ${type}`; div.innerHTML=`<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-circle'}"></i> ${msg}`; c.appendChild(div); setTimeout(()=>div.remove(),5000); }
+    
+    // Обработчики форм отдыха
+    document.getElementById('submitLunchBtn')?.addEventListener('click',async()=>{ let nick=document.getElementById('lunchNick').value; if(!nick){showAlert('lunchAlert','Введите ник','error');return;} await sendEmbed('🍽 Обеденный перерыв',[{name:'Ник',value:nick}],0xF9A825); showAlert('lunchAlert','Отправлено','success'); });
+    document.getElementById('submitTimeoffBtn')?.addEventListener('click',async()=>{ await sendEmbed('🏖 Увольнительное',[{name:'Статус','value':'принято'}],0x42A5F5); showAlert('timeoffAlert','Успешно','success');});
+    document.getElementById('submitIcBtn')?.addEventListener('click',async()=>{ await sendEmbed('🎭 IC Отпуск',[{name:'Статус','value':'принято'}],0x9C27B0); showAlert('icAlert','Готово','success');});
+    document.getElementById('submitOocBtn')?.addEventListener('click',async()=>{ await sendEmbed('💬 OOC Отпуск',[],0xEF6C00); showAlert('oocAlert','Отправлено','success');});
+    
+    // MPB
+    document.getElementById('submitMpbBtn')?.addEventListener('click', async()=>{
+        let name=document.getElementById('mpbFullname').value, rank=document.getElementById('mpbRank').value, dept=document.getElementById('mpbDepartment').value, reqType=document.getElementById('mpbRequestType').value, details=document.getElementById('mpbDetails').value;
+        if(!name||!rank||!dept||!reqType||!details) { showAlert('mpbAlert','Заполните все поля','error'); return; }
+        await sendEmbed('🛡 MPB Запрос', [{name:'Имя',value:name},{name:'Ранг',value:rank},{name:'Подразделение',value:dept},{name:'Запрос',value:reqType},{name:'Детали',value:details}], 0xE67E22);
+        showAlert('mpbAlert','Запрос отправлен в MPB','success'); 
+        ['mpbFullname','mpbRank','mpbDepartment','mpbRequestType','mpbDetails'].forEach(id=>document.getElementById(id).value='');
+    });
+    
+    // Парковка
+    document.getElementById('submitParkingBtn')?.addEventListener('click', async()=>{
+        let name=document.getElementById('parkingName').value, rank=document.getElementById('parkingRank').value, action=document.getElementById('parkingAction').value, agree=document.getElementById('parkingAgree').checked;
+        let sector=document.getElementById('parkingSector').value, slot=document.getElementById('parkingSlot').value, plate=document.getElementById('parkingPlate').value;
+        if(!name||!rank||!action||!agree||!sector||!slot) { showAlert('parkingAlert','Заполните обязательные поля и примите соглашение','error'); return; }
+        await sendEmbed('🅿 Бронирование парковки', [{name:'Имя',value:name},{name:'Ранг',value:rank},{name:'Действие',value:action},{name:'Сектор',value:sector},{name:'№ парковки',value:slot},{name:'Номерной знак',value:plate||'Не указан'}], 0x3498DB);
+        showAlert('parkingAlert','Парковка забронирована','success');
+        document.getElementById('parkingName').value=''; document.getElementById('parkingRank').value=''; document.getElementById('parkingAction').value=''; document.getElementById('parkingAgree').checked=false;
+        document.getElementById('parkingSector').value=''; document.getElementById('parkingSlot').value=''; document.getElementById('parkingPlate').value='';
+    });
+    
+    // Дисциплинарное взыскание
+    let typeSelect=document.getElementById('disciplineTypeSelect');
+    let appealDiv=document.getElementById('appealBlock'), payDiv=document.getElementById('payBlock');
+    typeSelect?.addEventListener('change',()=>{ let val=typeSelect.value; appealDiv.style.display= (val==='appeal') ? 'block':'none'; payDiv.style.display= (val==='pay') ? 'block':'none'; });
+    document.getElementById('submitDisciplineBtn')?.addEventListener('click', async()=>{
+        let name=document.getElementById('disciplineName').value, type=typeSelect.value;
+        if(!name||!type){ showAlert('disciplineAlert','Заполните имя и тип','error'); return; }
+        let fields=[{name:'Имя',value:name},{name:'Тип',value: type==='appeal'?'Обжалование':'Оплата'}];
+        if(type==='appeal'){
+            let date=document.getElementById('disciplineDate').value, link=document.getElementById('disciplineReasonLink').value, proof=document.getElementById('disciplineProof').value;
+            if(!date||!link||!proof){ showAlert('disciplineAlert','Заполните дату, ссылку и доказательства','error'); return; }
+            fields.push({name:'Дата взыскания',value:date},{name:'Ссылка',value:link},{name:'Доказательства',value:proof});
+        } else if(type==='pay'){
+            let officer=document.getElementById('payOfficer').value, report=document.getElementById('payReportNumber').value, penalty=document.getElementById('penaltyType').value, basis=document.getElementById('payBasis').value;
+            if(!officer||!report||!penalty||!basis){ showAlert('disciplineAlert','Заполните все поля оплаты','error'); return; }
+            fields.push({name:'Сотрудник',value:officer},{name:'Рапорт №',value:report},{name:'Наказание',value:penalty},{name:'Основание',value:basis});
         }
-        populateSelect('mpbRank', mpbRanks);
-        populateSelect('mpbDept', mpbDepts);
-        populateSelect('mpbRequestType', mpbReqTypes);
-        populateSelect('parkingRank', parkingRanks);
-        populateSelect('parkingAction', parkingActions);
-        populateSelect('parkingSector', parkingSectors);
-        populateSelect('discType', discTypes);
+        await sendEmbed('⚖️ Снятие взыскания', fields, 0x9B59B6);
+        showAlert('disciplineAlert','Ходатайство отправлено','success');
+        document.getElementById('disciplineName').value=''; typeSelect.value=''; appealDiv.style.display='none'; payDiv.style.display='none';
+        document.getElementById('disciplineDate').value=''; document.getElementById('disciplineReasonLink').value=''; document.getElementById('disciplineProof').value='';
+        document.getElementById('payOfficer').value=''; document.getElementById('payReportNumber').value=''; document.getElementById('penaltyType').value=''; document.getElementById('payBasis').value='';
+    });
+
+    // НОВАЯ ФОРМА: Заявка на военный билет
+    document.getElementById('submitMilitaryBtn')?.addEventListener('click', async()=>{
+        let name = document.getElementById('milName').value.trim();
+        let passport = document.getElementById('milPassport').value.trim();
+        let report1 = document.getElementById('milReport1').value.trim();
+        let report2 = document.getElementById('milReport2').value.trim();
+        let daysCheck = document.getElementById('milDaysCheck').checked;
         
-        // Webhook (тестовые дискорд URL, замените на реальные)
-        const WEBHOOK_MPB = "https://discord.com/api/webhooks/1502672112631025864/-yptacQUpgB-UUaoZFLK4cZIP8bTVbjbJ4Ae0G1vQmMqNaOqVMacBuuuoezjXB-M7Z5J";
-        const WEBHOOK_PARKING = "https://discord.com/api/webhooks/1502674236429566003/zc5LmbJ7R78VGfJBQZCkNsFm0KOWg34U9vtfT1vAbTF0JSaaoCRCtbRQ5yld-T2x4SUK";
-        const WEBHOOK_DISCIPLINE = "https://discord.com/api/webhooks/1502674542424752241/eZhioFD4dQIQJpfPFIEdhYUNc8XdbOG4fUWJ2Md1Gm1WArxCkD6g3zjF0pxstKQrarMt";
+        if(!name) { showAlert('militaryAlert','Введите Имя и Фамилию','error'); return; }
+        if(!passport) { showAlert('militaryAlert','Введите номер паспорта','error'); return; }
+        if(!report1) { showAlert('militaryAlert','Укажите ссылку на первый отчет','error'); return; }
+        if(!report2) { showAlert('militaryAlert','Укажите ссылку на второй отчет','error'); return; }
+        if(!daysCheck) { showAlert('militaryAlert','Подтвердите, что прошло 15 дней с момента повышения','error'); return; }
         
-        function showAlert(containerId, message, type) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert ${type}`;
-            alertDiv.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
-            container.appendChild(alertDiv);
-            setTimeout(() => alertDiv.remove(), 5000);
-        }
+        let fields = [
+            {name:'👤 Имя Фамилия', value: name, inline: true},
+            {name:'🪪 Номер паспорта', value: passport, inline: true},
+            {name:'📄 Отчет #1', value: report1, inline: false},
+            {name:'📄 Отчет #2', value: report2, inline: false},
+            {name:'✅ 15 дней с повышения', value: 'Да, прошло 15 дней', inline: true}
+        ];
         
-        async function sendEmbed(webhook, title, fields, dept=null) {
-            let roleMention = "";
-            if(dept) {
-                const roleMap = { "ACD / КМБ":"<@&793440128906821672>", "MA":"<@&793440128906821672>", "DIV":"<@&793440124067250207>", "MPB":"<@&793440118367191050>", "USAF":"<@&795409425434935306>", "DELTA":"<@&793440125798973441>" };
-                roleMention = roleMap[dept] || "";
-            }
-            const embed = { title, color: 0x4CAF50, fields, footer: { text: "ARMY · Система заявок" }, timestamp: new Date().toISOString() };
-            const payload = { content: roleMention, embeds: [embed], avatar_url: "https://i.yapx.ru/dj4ak.png" };
-            const res = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            if(!res.ok) throw new Error(`Ошибка ${res.status}`);
-            return true;
-        }
-        
-        // MPB отправка
-        document.getElementById('submitMpbBtn')?.addEventListener('click', async () => {
-            const fullname = document.getElementById('mpbFullname').value.trim();
-            const rank = document.getElementById('mpbRank').value;
-            const dept = document.getElementById('mpbDept').value;
-            const reqType = document.getElementById('mpbRequestType').value;
-            const details = document.getElementById('mpbDetails').value.trim() || "Не указано";
-            if(!fullname) { showAlert('mpbAlert', 'Введите Имя и Фамилию', 'error'); return; }
-            if(!rank) { showAlert('mpbAlert', 'Выберите ранг', 'error'); return; }
-            if(!dept) { showAlert('mpbAlert', 'Выберите подразделение', 'error'); return; }
-            if(!reqType) { showAlert('mpbAlert', 'Укажите тип запроса', 'error'); return; }
-            const btn = document.getElementById('submitMpbBtn');
-            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
-            try {
-                const fields = [
-                    { name: "👤 Имя Фамилия", value: fullname, inline: true },
-                    { name: "🏅 Ранг", value: rank, inline: true },
-                    { name: "🏛️ Подразделение", value: dept, inline: true },
-                    { name: "📋 Тип запроса", value: reqType, inline: true },
-                    { name: "📝 Подробности", value: details }
-                ];
-                await sendEmbed(WEBHOOK_MPB, "🏥 MPB Запрос", fields, dept);
-                showAlert('mpbAlert', '✅ Запрос отправлен!', 'success');
-                document.getElementById('mpbFullname').value = ''; document.getElementById('mpbRank').value = ''; document.getElementById('mpbDept').value = ''; document.getElementById('mpbRequestType').value = ''; document.getElementById('mpbDetails').value = '';
-            } catch(e) { showAlert('mpbAlert', `❌ ${e.message}`, 'error'); }
-            finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Отправить MPB запрос'; }
-        });
-        
-        // Парковка
-        document.getElementById('submitParkingBtn')?.addEventListener('click', async () => {
-            const name = document.getElementById('parkingName').value.trim();
-            const rank = document.getElementById('parkingRank').value;
-            const action = document.getElementById('parkingAction').value;
-            const agree = document.getElementById('parkingAgree').checked;
-            const sector = document.getElementById('parkingSector').value;
-            const spotNum = document.getElementById('parkingSpotNumber').value.trim();
-            const plate = document.getElementById('parkingPlate').value.trim() || "Не указан";
-            if(!name) { showAlert('parkingAlert', 'Введите имя', 'error'); return; }
-            if(!rank) { showAlert('parkingAlert', 'Выберите ранг', 'error'); return; }
-            if(!action) { showAlert('parkingAlert', 'Выберите действие', 'error'); return; }
-            if(!agree) { showAlert('parkingAlert', 'Необходимо согласиться с условиями парковки', 'error'); return; }
-            if(!sector) { showAlert('parkingAlert', 'Выберите сектор', 'error'); return; }
-            if(!spotNum) { showAlert('parkingAlert', 'Укажите номер парковочного места', 'error'); return; }
-            const btn = document.getElementById('submitParkingBtn');
-            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
-            try {
-                const fields = [
-                    { name: "👤 Имя", value: name, inline: true },
-                    { name: "🎖️ Ранг", value: rank, inline: true },
-                    { name: "⚡ Действие", value: action, inline: true },
-                    { name: "🗺️ Сектор", value: sector, inline: true },
-                    { name: "🔢 Место", value: spotNum, inline: true },
-                    { name: "🚗 Номерной знак", value: plate }
-                ];
-                await sendEmbed(WEBHOOK_PARKING, "🅿️ Бронирование парковки", fields);
-                showAlert('parkingAlert', '✅ Заявка на парковку отправлена!', 'success');
-                document.getElementById('parkingName').value = ''; document.getElementById('parkingRank').value = ''; document.getElementById('parkingAction').value = ''; document.getElementById('parkingAgree').checked = false; document.getElementById('parkingSector').value = ''; document.getElementById('parkingSpotNumber').value = ''; document.getElementById('parkingPlate').value = '';
-            } catch(e) { showAlert('parkingAlert', `❌ ${e.message}`, 'error'); }
-            finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Забронировать / Сменить'; }
-        });
-        
-        // Для дисциплины: переключение полей
-        window.toggleDiscFields = function() {
-            const type = document.getElementById('discType').value;
-            const appealDiv = document.getElementById('appealFields');
-            const paymentDiv = document.getElementById('paymentFields');
-            if(type === "Обжалование") { appealDiv.style.display = 'block'; paymentDiv.style.display = 'none'; }
-            else if(type === "Оплата") { appealDiv.style.display = 'none'; paymentDiv.style.display = 'block'; }
-            else { appealDiv.style.display = 'none'; paymentDiv.style.display = 'none'; }
-        };
-        toggleDiscFields();
-        
-        document.getElementById('submitDiscBtn')?.addEventListener('click', async () => {
-            const fullname = document.getElementById('discFullname').value.trim();
-            const discType = document.getElementById('discType').value;
-            if(!fullname) { showAlert('discAlert', 'Введите Имя Фамилию', 'error'); return; }
-            if(!discType) { showAlert('discAlert', 'Выберите тип снятия', 'error'); return; }
-            let fields = [{ name: "👤 Имя Фамилия", value: fullname, inline: true }, { name: "⚖️ Тип", value: discType, inline: true }];
-            if(discType === "Обжалование") {
-                const date = document.getElementById('discDate').value;
-                const link = document.getElementById('discReasonLink').value.trim();
-                const proof = document.getElementById('discProof').value.trim();
-                if(!date) { showAlert('discAlert', 'Укажите дату получения взыскания', 'error'); return; }
-                if(!link) { showAlert('discAlert', 'Укажите ссылку на сообщение о взыскании', 'error'); return; }
-                if(!proof) { showAlert('discAlert', 'Укажите доказательства невиновности', 'error'); return; }
-                fields.push({ name: "📅 Дата взыскания", value: date, inline: true }, { name: "🔗 Ссылка", value: link }, { name: "📷 Доказательства", value: proof });
-            } else if(discType === "Оплата") {
-                const officer = document.getElementById('discOfficerName').value.trim();
-                const reportNum = document.getElementById('discReportNumber').value.trim();
-                const punishType = document.getElementById('discPunishmentType').value.trim();
-                const reasonRemoval = document.getElementById('discReasonRemoval').value.trim();
-                if(!officer) { showAlert('discAlert', 'Укажите сотрудника, выдавшего взыскание', 'error'); return; }
-                if(!reportNum) { showAlert('discAlert', 'Укажите номер рапорта', 'error'); return; }
-                if(!punishType) { showAlert('discAlert', 'Укажите тип наказания', 'error'); return; }
-                if(!reasonRemoval) { showAlert('discAlert', 'Укажите основание для снятия', 'error'); return; }
-                fields.push({ name: "👮 Сотрудник", value: officer, inline: true }, { name: "📄 Рапорт №", value: reportNum, inline: true }, { name: "⚠️ Тип наказания", value: punishType }, { name: "📝 Основание для снятия", value: reasonRemoval });
-            }
-            const btn = document.getElementById('submitDiscBtn');
-            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
-            try {
-                await sendEmbed(WEBHOOK_DISCIPLINE, "⚖️ Снятие дисциплинарного взыскания", fields);
-                showAlert('discAlert', '✅ Заявление отправлено!', 'success');
-                document.getElementById('discFullname').value = ''; document.getElementById('discType').value = ''; document.getElementById('discDate').value = ''; document.getElementById('discReasonLink').value = ''; document.getElementById('discProof').value = ''; document.getElementById('discOfficerName').value = ''; document.getElementById('discReportNumber').value = ''; document.getElementById('discPunishmentType').value = ''; document.getElementById('discReasonRemoval').value = '';
-                toggleDiscFields();
-            } catch(e) { showAlert('discAlert', `❌ ${e.message}`, 'error'); }
-            finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Подать заявление'; }
-        });
-        
-        function showHome() {
-            document.getElementById('homePage').style.display = 'block';
-            document.querySelectorAll('.form-page').forEach(p => p.style.display = 'none');
-        }
-        function showFormPage(pageId) {
-            document.getElementById('homePage').style.display = 'none';
-            document.querySelectorAll('.form-page').forEach(p => p.style.display = 'none');
-            document.getElementById(pageId).style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        document.querySelectorAll('.action-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const page = card.dataset.page;
-                if (page === 'mpb') showFormPage('mpbPage');
-                else if (page === 'parking') showFormPage('parkingPage');
-                else if (page === 'discipline') showFormPage('disciplinePage');
-            });
-        });
-        window.showHome = showHome;
-        document.getElementById('parkingRulesLink')?.addEventListener('click', (e) => { e.preventDefault(); alert('Правила парковки доступны в канале #парковка'); });
-        
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light');
-            document.querySelector('#themeSwitch i').className = 'fas fa-moon';
-            document.querySelector('#themeSwitch span').innerText = 'Тёмная тема';
-        }
-        document.getElementById('themeSwitch').addEventListener('click', () => {
-            document.body.classList.toggle('light');
-            const isLight = document.body.classList.contains('light');
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            const icon = document.querySelector('#themeSwitch i');
-            const span = document.querySelector('#themeSwitch span');
-            if (isLight) { icon.className = 'fas fa-moon'; span.innerText = 'Тёмная тема'; }
-            else { icon.className = 'fas fa-sun'; span.innerText = 'Светлая тема'; }
-        });
-        showHome();
-    </script>
+        await sendEmbed('🪪 Заявка на военный билет', fields, 0x00ACC1);
+        showAlert('militaryAlert','✅ Заявка на военный билет отправлена!','success');
+        document.getElementById('milName').value = '';
+        document.getElementById('milPassport').value = '';
+        document.getElementById('milReport1').value = '';
+        document.getElementById('milReport2').value = '';
+        document.getElementById('milDaysCheck').checked = false;
+    });
+
+    // НАВИГАЦИЯ
+    function showHome() { hideAll(); document.getElementById('homePage').style.display='block'; }
+    function showRestMenu() { hideAll(); document.getElementById('restMenuPage').style.display='block'; }
+    function showOtherMenu() { hideAll(); document.getElementById('otherMenuPage').style.display='block'; }
+    function showForm(id) { hideAll(); document.getElementById(id).style.display='block'; }
+    function hideAll(){ ['homePage','restMenuPage','otherMenuPage','lunchPage','timeoffPage','icPage','oocPage','mpbPage','parkingPage','disciplinePage','militaryidPage'].forEach(id=>{let el=document.getElementById(id); if(el) el.style.display='none';});}
+    window.showHome=showHome; window.showRestMenu=showRestMenu; window.showOtherMenu=showOtherMenu;
+    document.querySelectorAll('.category-btn[data-category="rest"]').forEach(btn=>btn.addEventListener('click',showRestMenu));
+    document.querySelectorAll('.category-btn[data-category="other"]').forEach(btn=>btn.addEventListener('click',showOtherMenu));
+    document.querySelectorAll('#restMenuPage .action-card').forEach(card=>{ card.addEventListener('click',()=>{ let p=card.dataset.page; if(p==='lunch') showForm('lunchPage'); else if(p==='timeoff') showForm('timeoffPage'); else if(p==='ic') showForm('icPage'); else if(p==='ooc') showForm('oocPage'); });});
+    document.querySelectorAll('#otherMenuPage .action-card').forEach(card=>{ card.addEventListener('click',()=>{ let p=card.dataset.page; if(p==='mpb') showForm('mpbPage'); else if(p==='parking') showForm('parkingPage'); else if(p==='discipline') showForm('disciplinePage'); else if(p==='militaryid') showForm('militaryidPage'); });});
+    
+    // ТЕМА
+    let saved=localStorage.getItem('theme'); if(saved==='light'){document.body.classList.add('light'); document.querySelector('#themeSwitch i').className='fas fa-moon'; document.querySelector('#themeSwitch span').innerText='Тёмная тема';}
+    document.getElementById('themeSwitch').addEventListener('click',()=>{ document.body.classList.toggle('light'); let isLight=document.body.classList.contains('light'); localStorage.setItem('theme',isLight?'light':'dark'); let icon=document.querySelector('#themeSwitch i'),span=document.querySelector('#themeSwitch span'); if(isLight){icon.className='fas fa-moon'; span.innerText='Тёмная тема';}else{icon.className='fas fa-sun'; span.innerText='Светлая тема';}});
+    showHome();
+    
+    // Калькуляция продолжительности
+    function formatDur(s,e){ if(!s||!e) return null; let diff=new Date(e)-new Date(s); if(diff<=0) return null; let min=Math.floor(diff/60000); if(min<60) return `${min} мин`; let h=Math.floor(min/60); let m=min%60; return m>0?`${h} ч ${m} мин`:`${h} ч`; }
+    let lunchStart=document.getElementById('lunchStart'), lunchEnd=document.getElementById('lunchEnd'), lunchInfo=document.getElementById('lunchDurationInfo');
+    if(lunchStart&&lunchEnd) { let upd=()=>{ let d=formatDur(lunchStart.value,lunchEnd.value); if(d) lunchInfo.innerText=`⏱️ Продолжительность: ${d}`; else lunchInfo.innerText='❌ Некорректный интервал';}; lunchStart.addEventListener('change',upd); lunchEnd.addEventListener('change',upd);}
+    let toStart=document.getElementById('timeoffStart'), toEnd=document.getElementById('timeoffEnd'), toInfo=document.getElementById('timeoffDurationInfo');
+    if(toStart&&toEnd){ let upd=()=>{ let d=formatDur(toStart.value,toEnd.value); if(d) toInfo.innerText=`🕒 Продолжительность: ${d}`; else toInfo.innerText='❌ Некорректный интервал';}; toStart.addEventListener('change',upd); toEnd.addEventListener('change',upd);}
+</script>
 </body>
 </html>
