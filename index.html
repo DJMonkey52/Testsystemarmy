@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ARMY | Единая система заявок</title>
+    <title>ARMY | Система заявок</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -46,12 +46,15 @@
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         .army-hero h1 { font-size: 3.2rem; font-weight: 800; letter-spacing: 4px; background: linear-gradient(135deg, #FFFFFF, #A5D6A7); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .army-sub { font-size: 0.9rem; color: var(--text-secondary); letter-spacing: 1.5px; margin-top: 6px; }
+        
+        /* Главная кнопка - теперь одна */
         .main-categories { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 20px 0 30px; }
-        .category-btn { background: linear-gradient(135deg, var(--glass-bg), rgba(30, 60, 30, 0.9)); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 48px; padding: 16px 40px; font-size: 1.3rem; font-weight: 700; color: var(--text-primary); cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-        .category-btn i { font-size: 1.6rem; color: var(--accent); }
+        .category-btn { background: linear-gradient(135deg, var(--glass-bg), rgba(30, 60, 30, 0.9)); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 48px; padding: 18px 60px; font-size: 1.5rem; font-weight: 700; color: var(--text-primary); cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .category-btn i { font-size: 1.8rem; color: var(--accent); }
         .category-btn:hover { transform: translateY(-5px); border-color: var(--accent); background: rgba(76, 175, 80, 0.2); }
+        
         .action-buttons-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 30px 0 40px; }
-        .action-card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 32px; padding: 28px 24px; width: 250px; cursor: pointer; transition: all 0.3s; text-align: center; }
+        .action-card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 32px; padding: 28px 24px; width: 260px; cursor: pointer; transition: all 0.3s; text-align: center; }
         .action-card:hover { transform: translateY(-8px); border-color: var(--accent); }
         .card-icon { width: 70px; height: 70px; background: linear-gradient(135deg, rgba(76,175,80,0.25), rgba(46,125,50,0.15)); border-radius: 26px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 32px; color: var(--accent); }
         .action-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
@@ -81,7 +84,7 @@
         .alert.error { background: rgba(239,68,68,0.12); border-left: 3px solid #ef4444; color: #f87171; display: flex; }
         @keyframes slideIn { from { opacity:0; transform: translateX(-12px); } to { opacity:1; transform: translateX(0); } }
         .theme-toggle { position: fixed; top: 20px; right: 20px; background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); border-radius: 50px; padding: 6px 18px; display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-primary); font-size: 0.8rem; z-index: 100; }
-        @media (max-width: 880px) { .double-group, .triple-group { grid-template-columns: 1fr; } .action-card { width: 200px; } .category-btn { padding: 12px 24px; font-size: 1rem; } }
+        @media (max-width: 880px) { .double-group, .triple-group { grid-template-columns: 1fr; } .action-card { width: 200px; } .category-btn { padding: 14px 40px; font-size: 1.2rem; } }
     </style>
 </head>
 <body>
@@ -89,26 +92,15 @@
 <div class="container">
     <div class="army-hero"><div class="logo-icon"><i class="fas fa-gun"></i></div><h1>ARMY</h1><div class="army-sub">Официальная система заявок</div></div>
 
+    <!-- Главная страница с одной кнопкой "Прочие заявки" -->
     <div id="homePage" class="home-page">
         <div class="main-categories">
-            <div class="category-btn" data-category="rest"><i class="fas fa-umbrella-beach"></i> Заявки на отдых</div>
-            <div class="category-btn" data-category="other"><i class="fas fa-briefcase"></i> Прочие</div>
+            <div class="category-btn" data-category="other"><i class="fas fa-briefcase"></i> Прочие заявки</div>
         </div>
         <div class="footer-signature"><i class="fas fa-code"></i> By Alexandr DeHaus</div>
     </div>
 
-    <!-- МЕНЮ ОТДЫХА -->
-    <div id="restMenuPage" class="submenu-page">
-        <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
-        <div class="action-buttons-grid">
-            <div class="action-card" data-page="lunch"><div class="card-icon"><i class="fas fa-utensils"></i></div><h3>Обеденный перерыв</h3><p>Заявка на обед</p></div>
-            <div class="action-card" data-page="timeoff"><div class="card-icon"><i class="fas fa-plane-departure"></i></div><h3>Увольнительное время</h3><p>С датой и временем</p></div>
-            <div class="action-card" data-page="ic"><div class="card-icon"><i class="fas fa-mask"></i></div><h3>IC Отпуск</h3><p>Игровой отпуск</p></div>
-            <div class="action-card" data-page="ooc"><div class="card-icon"><i class="fas fa-comment-dots"></i></div><h3>OOC Отпуск</h3><p>Не игровой отпуск</p></div>
-        </div>
-    </div>
-
-    <!-- МЕНЮ ПРОЧИЕ (добавлена 5-я кнопка) -->
+    <!-- МЕНЮ ПРОЧИЕ (4 кнопки) -->
     <div id="otherMenuPage" class="submenu-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="action-buttons-grid">
@@ -119,16 +111,7 @@
         </div>
     </div>
 
-    <!-- ==================== СТРАНИЦЫ ОТДЫХА ==================== -->
-    <div id="lunchPage" class="form-page"><div class="back-btn" onclick="showRestMenu()"><i class="fas fa-arrow-left"></i> Назад</div><div class="glass-card"><div class="card-header"><h2><i class="fas fa-utensils"></i> Обеденный перерыв</h2></div><div class="card-body"><div id="lunchAlert"></div><div class="double-group"><div class="input-group"><label>👤 ИГРОВОЙ НИКНЕЙМ</label><input type="text" id="lunchNick" placeholder="Имя Фамилия"></div><div class="input-group"><label>🏅 РАНГ</label><select id="lunchRank"></select></div></div><div class="double-group"><div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="lunchDepartment"></select></div><div class="input-group"><label>⏰ ДАТА И ВРЕМЯ НАЧАЛА</label><input type="datetime-local" id="lunchStart"></div></div><div class="input-group"><label>⏰ ДАТА И ВРЕМЯ ОКОНЧАНИЯ</label><input type="datetime-local" id="lunchEnd"></div><div class="info-note" id="lunchDurationInfo">📆 Укажите интервал перерыва</div><div class="input-group"><label>💬 ПРИЧИНА</label><textarea rows="3" id="lunchReason" placeholder="Причина обеда"></textarea></div><button class="submit-btn" id="submitLunchBtn"><i class="fab fa-discord"></i> ОТПРАВИТЬ</button></div></div></div>
-    
-    <div id="timeoffPage" class="form-page"><div class="back-btn" onclick="showRestMenu()"><i class="fas fa-arrow-left"></i> Назад</div><div class="glass-card"><div class="card-header"><h2><i class="fas fa-plane-departure"></i> Увольнительное время</h2></div><div class="card-body"><div id="timeoffAlert"></div><div class="double-group"><div class="input-group"><label>👤 НИКНЕЙМ</label><input type="text" id="timeoffNick"></div><div class="input-group"><label>🏅 РАНГ</label><select id="timeoffRank"></select></div></div><div class="double-group"><div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="timeoffDepartment"></select></div><div class="input-group"><label>📅 НАЧАЛО (дата/время)</label><input type="datetime-local" id="timeoffStart"></div></div><div class="input-group"><label>📅 ОКОНЧАНИЕ (дата/время)</label><input type="datetime-local" id="timeoffEnd"></div><div class="info-note" id="timeoffDurationInfo">⏱️ Рассчет продолжительности</div><div class="input-group"><label>✍️ КОММЕНТАРИЙ</label><textarea rows="3" id="timeoffComment"></textarea></div><button class="submit-btn" id="submitTimeoffBtn"><i class="fab fa-discord"></i> ОТПРАВИТЬ</button></div></div></div>
-    
-    <div id="icPage" class="form-page"><div class="back-btn" onclick="showRestMenu()"><i class="fas fa-arrow-left"></i> Назад</div><div class="glass-card"><div class="card-header"><h2><i class="fas fa-mask"></i> IC Отпуск</h2></div><div class="card-body"><div id="icAlert"></div><div class="double-group"><div class="input-group"><label>🎭 ПЕРСОНАЖ</label><input type="text" id="icNick"></div><div class="input-group"><label>🏅 РАНГ</label><select id="icRank"></select></div></div><div class="double-group"><div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="icDepartment"></select></div><div class="input-group"><label>📅 НАЧАЛО</label><input type="date" id="icStart"></div></div><div class="input-group"><label>📅 КОНЕЦ</label><input type="date" id="icEnd"></div><div class="info-note" id="icDurationInfo">📅 Даты отпуска</div><div class="input-group"><label>📖 ПРИЧИНА</label><textarea rows="3" id="icReason"></textarea></div><button class="submit-btn" id="submitIcBtn"><i class="fab fa-discord"></i> ПОДАТЬ</button></div></div></div>
-    
-    <div id="oocPage" class="form-page"><div class="back-btn" onclick="showRestMenu()"><i class="fas fa-arrow-left"></i> Назад</div><div class="glass-card"><div class="card-header"><h2><i class="fas fa-comment-dots"></i> OOC Отпуск</h2></div><div class="card-body"><div id="oocAlert"></div><div class="double-group"><div class="input-group"><label>💬 DISCORD/NICK</label><input type="text" id="oocName"></div><div class="input-group"><label>🏅 РАНГ</label><select id="oocRank"></select></div></div><div class="double-group"><div class="input-group"><label>🏛️ ОТДЕЛ</label><select id="oocDepartment"></select></div><div class="input-group"><label>📅 НАЧАЛО</label><input type="date" id="oocStart"></div></div><div class="input-group"><label>📅 КОНЕЦ</label><input type="date" id="oocEnd"></div><div class="info-note" id="oocDurationInfo">📅 Период</div><div class="input-group"><label>📢 ПРИЧИНА</label><textarea rows="3" id="oocReason"></textarea></div><button class="submit-btn" id="submitOocBtn"><i class="fab fa-discord"></i> ЗАЯВИТЬ</button></div></div></div>
-
-    <!-- ==================== ПРОЧИЕ ФОРМЫ ==================== -->
+    <!-- ==================== ФОРМЫ ПРОЧИХ ЗАЯВОК ==================== -->
     <!-- MPB запрос -->
     <div id="mpbPage" class="form-page">
         <div class="back-btn" onclick="showOtherMenu()"><i class="fas fa-arrow-left"></i> Назад</div>
@@ -170,7 +153,7 @@
         </div></div>
     </div>
 
-    <!-- НОВАЯ СТРАНИЦА: ЗАЯВКА НА ВОЕННЫЙ БИЛЕТ -->
+    <!-- Заявка на военный билет -->
     <div id="militaryidPage" class="form-page">
         <div class="back-btn" onclick="showOtherMenu()"><i class="fas fa-arrow-left"></i> Назад</div>
         <div class="glass-card"><div class="card-header"><h2><i class="fas fa-id-card"></i> Заявка на военный билет</h2></div><div class="card-body">
@@ -196,11 +179,7 @@
 <script>
     // Данные для селектов
     const MAIN_RANKS = ["Специалист (3)","Капрал (4)","Сержант (5)","Штаб-сержант (6)","Уорент-офицер (7)","Старший Уорент-офицер (8)","Лейтенант (9)","Капитан (10)","Майор (11)","Подполковник (12)"];
-    const LUNCH_RANKS = ["Рекрут (1)","Рядовой (2)", ...MAIN_RANKS];
-    const DEPARTMENTS = ["MA","DIV","MPB","USAF","Delta"];
     function fillSelect(id, options) { let sel=document.getElementById(id); if(sel){ sel.innerHTML='<option value="">-- Выберите --</option>'; options.forEach(opt=>{let op=document.createElement('option'); op.value=opt; op.textContent=opt; sel.appendChild(op);});}}
-    fillSelect('lunchRank', LUNCH_RANKS); fillSelect('timeoffRank', MAIN_RANKS); fillSelect('icRank', MAIN_RANKS); fillSelect('oocRank', MAIN_RANKS);
-    fillSelect('lunchDepartment', DEPARTMENTS); fillSelect('timeoffDepartment', DEPARTMENTS); fillSelect('icDepartment', DEPARTMENTS); fillSelect('oocDepartment', DEPARTMENTS);
     fillSelect('mpbRank', MAIN_RANKS);
     
     const WEBHOOK = 'https://discord.com/api/webhooks/1502672112631025864/-yptacQUpgB-UUaoZFLK4cZIP8bTVbjbJ4Ae0G1vQmMqNaOqVMacBuuuoezjXB-M7Z5J';
@@ -211,15 +190,9 @@
     }
     function showAlert(containerId, msg, type) { let c=document.getElementById(containerId); if(!c) return; let div=document.createElement('div'); div.className=`alert ${type}`; div.innerHTML=`<i class="fas ${type==='success'?'fa-check-circle':'fa-exclamation-circle'}"></i> ${msg}`; c.appendChild(div); setTimeout(()=>div.remove(),5000); }
     
-    // Обработчики форм отдыха
-    document.getElementById('submitLunchBtn')?.addEventListener('click',async()=>{ let nick=document.getElementById('lunchNick').value; if(!nick){showAlert('lunchAlert','Введите ник','error');return;} await sendEmbed('🍽 Обеденный перерыв',[{name:'Ник',value:nick}],0xF9A825); showAlert('lunchAlert','Отправлено','success'); });
-    document.getElementById('submitTimeoffBtn')?.addEventListener('click',async()=>{ await sendEmbed('🏖 Увольнительное',[{name:'Статус','value':'принято'}],0x42A5F5); showAlert('timeoffAlert','Успешно','success');});
-    document.getElementById('submitIcBtn')?.addEventListener('click',async()=>{ await sendEmbed('🎭 IC Отпуск',[{name:'Статус','value':'принято'}],0x9C27B0); showAlert('icAlert','Готово','success');});
-    document.getElementById('submitOocBtn')?.addEventListener('click',async()=>{ await sendEmbed('💬 OOC Отпуск',[],0xEF6C00); showAlert('oocAlert','Отправлено','success');});
-    
     // MPB
     document.getElementById('submitMpbBtn')?.addEventListener('click', async()=>{
-        let name=document.getElementById('mpbFullname').value, rank=document.getElementById('mpbRank').value, dept=document.getElementById('mpbDepartment').value, reqType=document.getElementById('mpbRequestType').value, details=document.getElementById('mpbDetails').value;
+        let name=document.getElementById('mpbFullname').value.trim(), rank=document.getElementById('mpbRank').value, dept=document.getElementById('mpbDepartment').value, reqType=document.getElementById('mpbRequestType').value, details=document.getElementById('mpbDetails').value.trim();
         if(!name||!rank||!dept||!reqType||!details) { showAlert('mpbAlert','Заполните все поля','error'); return; }
         await sendEmbed('🛡 MPB Запрос', [{name:'Имя',value:name},{name:'Ранг',value:rank},{name:'Подразделение',value:dept},{name:'Запрос',value:reqType},{name:'Детали',value:details}], 0xE67E22);
         showAlert('mpbAlert','Запрос отправлен в MPB','success'); 
@@ -228,8 +201,8 @@
     
     // Парковка
     document.getElementById('submitParkingBtn')?.addEventListener('click', async()=>{
-        let name=document.getElementById('parkingName').value, rank=document.getElementById('parkingRank').value, action=document.getElementById('parkingAction').value, agree=document.getElementById('parkingAgree').checked;
-        let sector=document.getElementById('parkingSector').value, slot=document.getElementById('parkingSlot').value, plate=document.getElementById('parkingPlate').value;
+        let name=document.getElementById('parkingName').value.trim(), rank=document.getElementById('parkingRank').value, action=document.getElementById('parkingAction').value, agree=document.getElementById('parkingAgree').checked;
+        let sector=document.getElementById('parkingSector').value, slot=document.getElementById('parkingSlot').value.trim(), plate=document.getElementById('parkingPlate').value.trim();
         if(!name||!rank||!action||!agree||!sector||!slot) { showAlert('parkingAlert','Заполните обязательные поля и примите соглашение','error'); return; }
         await sendEmbed('🅿 Бронирование парковки', [{name:'Имя',value:name},{name:'Ранг',value:rank},{name:'Действие',value:action},{name:'Сектор',value:sector},{name:'№ парковки',value:slot},{name:'Номерной знак',value:plate||'Не указан'}], 0x3498DB);
         showAlert('parkingAlert','Парковка забронирована','success');
@@ -242,15 +215,15 @@
     let appealDiv=document.getElementById('appealBlock'), payDiv=document.getElementById('payBlock');
     typeSelect?.addEventListener('change',()=>{ let val=typeSelect.value; appealDiv.style.display= (val==='appeal') ? 'block':'none'; payDiv.style.display= (val==='pay') ? 'block':'none'; });
     document.getElementById('submitDisciplineBtn')?.addEventListener('click', async()=>{
-        let name=document.getElementById('disciplineName').value, type=typeSelect.value;
+        let name=document.getElementById('disciplineName').value.trim(), type=typeSelect.value;
         if(!name||!type){ showAlert('disciplineAlert','Заполните имя и тип','error'); return; }
         let fields=[{name:'Имя',value:name},{name:'Тип',value: type==='appeal'?'Обжалование':'Оплата'}];
         if(type==='appeal'){
-            let date=document.getElementById('disciplineDate').value, link=document.getElementById('disciplineReasonLink').value, proof=document.getElementById('disciplineProof').value;
+            let date=document.getElementById('disciplineDate').value, link=document.getElementById('disciplineReasonLink').value.trim(), proof=document.getElementById('disciplineProof').value.trim();
             if(!date||!link||!proof){ showAlert('disciplineAlert','Заполните дату, ссылку и доказательства','error'); return; }
             fields.push({name:'Дата взыскания',value:date},{name:'Ссылка',value:link},{name:'Доказательства',value:proof});
         } else if(type==='pay'){
-            let officer=document.getElementById('payOfficer').value, report=document.getElementById('payReportNumber').value, penalty=document.getElementById('penaltyType').value, basis=document.getElementById('payBasis').value;
+            let officer=document.getElementById('payOfficer').value.trim(), report=document.getElementById('payReportNumber').value.trim(), penalty=document.getElementById('penaltyType').value.trim(), basis=document.getElementById('payBasis').value.trim();
             if(!officer||!report||!penalty||!basis){ showAlert('disciplineAlert','Заполните все поля оплаты','error'); return; }
             fields.push({name:'Сотрудник',value:officer},{name:'Рапорт №',value:report},{name:'Наказание',value:penalty},{name:'Основание',value:basis});
         }
@@ -261,7 +234,7 @@
         document.getElementById('payOfficer').value=''; document.getElementById('payReportNumber').value=''; document.getElementById('penaltyType').value=''; document.getElementById('payBasis').value='';
     });
 
-    // НОВАЯ ФОРМА: Заявка на военный билет
+    // Заявка на военный билет
     document.getElementById('submitMilitaryBtn')?.addEventListener('click', async()=>{
         let name = document.getElementById('milName').value.trim();
         let passport = document.getElementById('milPassport').value.trim();
@@ -294,27 +267,37 @@
 
     // НАВИГАЦИЯ
     function showHome() { hideAll(); document.getElementById('homePage').style.display='block'; }
-    function showRestMenu() { hideAll(); document.getElementById('restMenuPage').style.display='block'; }
     function showOtherMenu() { hideAll(); document.getElementById('otherMenuPage').style.display='block'; }
     function showForm(id) { hideAll(); document.getElementById(id).style.display='block'; }
-    function hideAll(){ ['homePage','restMenuPage','otherMenuPage','lunchPage','timeoffPage','icPage','oocPage','mpbPage','parkingPage','disciplinePage','militaryidPage'].forEach(id=>{let el=document.getElementById(id); if(el) el.style.display='none';});}
-    window.showHome=showHome; window.showRestMenu=showRestMenu; window.showOtherMenu=showOtherMenu;
-    document.querySelectorAll('.category-btn[data-category="rest"]').forEach(btn=>btn.addEventListener('click',showRestMenu));
+    function hideAll(){ ['homePage','otherMenuPage','mpbPage','parkingPage','disciplinePage','militaryidPage'].forEach(id=>{let el=document.getElementById(id); if(el) el.style.display='none';});}
+    window.showHome=showHome; window.showOtherMenu=showOtherMenu;
+    
+    // Кнопка "Прочие заявки" на главной
     document.querySelectorAll('.category-btn[data-category="other"]').forEach(btn=>btn.addEventListener('click',showOtherMenu));
-    document.querySelectorAll('#restMenuPage .action-card').forEach(card=>{ card.addEventListener('click',()=>{ let p=card.dataset.page; if(p==='lunch') showForm('lunchPage'); else if(p==='timeoff') showForm('timeoffPage'); else if(p==='ic') showForm('icPage'); else if(p==='ooc') showForm('oocPage'); });});
-    document.querySelectorAll('#otherMenuPage .action-card').forEach(card=>{ card.addEventListener('click',()=>{ let p=card.dataset.page; if(p==='mpb') showForm('mpbPage'); else if(p==='parking') showForm('parkingPage'); else if(p==='discipline') showForm('disciplinePage'); else if(p==='militaryid') showForm('militaryidPage'); });});
+    
+    // Кнопки в меню прочих
+    document.querySelectorAll('#otherMenuPage .action-card').forEach(card=>{ 
+        card.addEventListener('click',()=>{ 
+            let p=card.dataset.page; 
+            if(p==='mpb') showForm('mpbPage'); 
+            else if(p==='parking') showForm('parkingPage'); 
+            else if(p==='discipline') showForm('disciplinePage'); 
+            else if(p==='militaryid') showForm('militaryidPage'); 
+        });
+    });
     
     // ТЕМА
-    let saved=localStorage.getItem('theme'); if(saved==='light'){document.body.classList.add('light'); document.querySelector('#themeSwitch i').className='fas fa-moon'; document.querySelector('#themeSwitch span').innerText='Тёмная тема';}
-    document.getElementById('themeSwitch').addEventListener('click',()=>{ document.body.classList.toggle('light'); let isLight=document.body.classList.contains('light'); localStorage.setItem('theme',isLight?'light':'dark'); let icon=document.querySelector('#themeSwitch i'),span=document.querySelector('#themeSwitch span'); if(isLight){icon.className='fas fa-moon'; span.innerText='Тёмная тема';}else{icon.className='fas fa-sun'; span.innerText='Светлая тема';}});
+    let saved=localStorage.getItem('theme'); 
+    if(saved==='light'){document.body.classList.add('light'); document.querySelector('#themeSwitch i').className='fas fa-moon'; document.querySelector('#themeSwitch span').innerText='Тёмная тема';}
+    document.getElementById('themeSwitch').addEventListener('click',()=>{ 
+        document.body.classList.toggle('light'); 
+        let isLight=document.body.classList.contains('light'); 
+        localStorage.setItem('theme',isLight?'light':'dark'); 
+        let icon=document.querySelector('#themeSwitch i'),span=document.querySelector('#themeSwitch span'); 
+        if(isLight){icon.className='fas fa-moon'; span.innerText='Тёмная тема';}
+        else{icon.className='fas fa-sun'; span.innerText='Светлая тема';}
+    });
     showHome();
-    
-    // Калькуляция продолжительности
-    function formatDur(s,e){ if(!s||!e) return null; let diff=new Date(e)-new Date(s); if(diff<=0) return null; let min=Math.floor(diff/60000); if(min<60) return `${min} мин`; let h=Math.floor(min/60); let m=min%60; return m>0?`${h} ч ${m} мин`:`${h} ч`; }
-    let lunchStart=document.getElementById('lunchStart'), lunchEnd=document.getElementById('lunchEnd'), lunchInfo=document.getElementById('lunchDurationInfo');
-    if(lunchStart&&lunchEnd) { let upd=()=>{ let d=formatDur(lunchStart.value,lunchEnd.value); if(d) lunchInfo.innerText=`⏱️ Продолжительность: ${d}`; else lunchInfo.innerText='❌ Некорректный интервал';}; lunchStart.addEventListener('change',upd); lunchEnd.addEventListener('change',upd);}
-    let toStart=document.getElementById('timeoffStart'), toEnd=document.getElementById('timeoffEnd'), toInfo=document.getElementById('timeoffDurationInfo');
-    if(toStart&&toEnd){ let upd=()=>{ let d=formatDur(toStart.value,toEnd.value); if(d) toInfo.innerText=`🕒 Продолжительность: ${d}`; else toInfo.innerText='❌ Некорректный интервал';}; toStart.addEventListener('change',upd); toEnd.addEventListener('change',upd);}
 </script>
 </body>
 </html>
