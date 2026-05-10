@@ -48,11 +48,11 @@
         .army-sub { font-size: 0.9rem; color: var(--text-secondary); letter-spacing: 1.5px; margin-top: 6px; }
         
         .cards-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 30px 0 40px; }
-        .action-card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 32px; padding: 38px 32px; width: 300px; cursor: pointer; transition: all 0.4s; text-align: center; box-shadow: var(--shadow-md); }
+        .action-card { background: var(--glass-bg); backdrop-filter: blur(16px); border: 1px solid var(--glass-border); border-radius: 32px; padding: 34px 28px; width: 280px; cursor: pointer; transition: all 0.4s; text-align: center; box-shadow: var(--shadow-md); }
         .action-card:hover { transform: translateY(-10px); border-color: var(--accent); }
         .card-icon { width: 75px; height: 75px; background: linear-gradient(135deg, rgba(76,175,80,0.25), rgba(46,125,50,0.15)); border-radius: 26px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 36px; color: var(--accent); }
-        .action-card h3 { font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
-        .action-card p { color: var(--text-secondary); font-size: 0.8rem; }
+        .action-card h3 { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+        .action-card p { color: var(--text-secondary); font-size: 0.75rem; }
         .card-arrow { margin-top: 16px; font-size: 1rem; color: var(--accent); opacity: 0; transition: 0.3s; }
         .action-card:hover .card-arrow { opacity: 1; transform: translateX(6px); }
         
@@ -68,6 +68,7 @@
         .double-group { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 22px; }
         .input-group { margin-bottom: 22px; }
         .input-group label { display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; color: var(--accent-glow); margin-bottom: 6px; text-transform: uppercase; }
+        .input-group label i { margin-right: 6px; }
         .input-group input, .input-group select, .input-group textarea { width: 100%; padding: 12px 14px; background: var(--input-bg); border: 1px solid var(--border-light); border-radius: 16px; font-size: 0.9rem; color: var(--text-primary); font-family: 'Inter', sans-serif; transition: 0.2s; }
         .input-group input:focus, .input-group select:focus, .input-group textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(76,175,80,0.3); }
         .checkbox-group { display: flex; align-items: center; gap: 12px; margin: 20px 0; background: rgba(76,175,80,0.1); padding: 12px 16px; border-radius: 20px; cursor: pointer; }
@@ -94,25 +95,31 @@
         <div class="army-sub">Официальная система заявок</div>
     </div>
 
-    <!-- Главная страница с 3 кнопками -->
+    <!-- Главная страница с 4 кнопками -->
     <div id="homePage">
         <div class="cards-grid">
             <div class="action-card" data-page="mpb">
                 <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>MPB запрос</h3>
+                <h3>🛡 MPB запрос</h3>
                 <p>Медицина, лицензии, банк</p>
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
             <div class="action-card" data-page="parking">
                 <div class="card-icon"><i class="fas fa-parking"></i></div>
-                <h3>Бронирование парковки</h3>
+                <h3>🅿 Бронирование парковки</h3>
                 <p>Сектора, номера, оплата</p>
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
             <div class="action-card" data-page="discipline">
                 <div class="card-icon"><i class="fas fa-gavel"></i></div>
-                <h3>Снятие дисциплинарного взыскания</h3>
+                <h3>⚖ Снятие взыскания</h3>
                 <p>Обжалование / оплата</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="action-card" data-page="militaryid">
+                <div class="card-icon"><i class="fas fa-id-card"></i></div>
+                <h3>🪪 Военный билет</h3>
+                <p>Оформление военного билета</p>
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
         </div>
@@ -125,17 +132,18 @@
     <div id="mpbPage" class="form-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="glass-card">
-            <div class="card-header"><h2><i class="fas fa-shield-alt"></i> MPB запрос</h2></div>
+            <div class="card-header"><h2><i class="fas fa-shield-alt"></i> 🛡 MPB запрос</h2></div>
             <div class="card-body">
                 <div id="mpbAlert"></div>
                 <div class="double-group">
-                    <div class="input-group"><label>Имя фамилия</label><input type="text" id="mpbFullname" placeholder="Иван Иванов"></div>
-                    <div class="input-group"><label>Ранг</label><select id="mpbRank"><option value="">-- Выберите --</option><option>Специалист (3)</option><option>Капрал (4)</option><option>Сержант (5)</option><option>Штаб-сержант (6)</option><option>Уорент-офицер (7)</option><option>Старший Уорент-офицер (8)</option><option>Лейтенант (9)</option><option>Капитан (10)</option><option>Майор (11)</option><option>Подполковник (12)</option></select></div>
+                    <div class="input-group"><label><i class="fas fa-user"></i> Имя фамилия</label><input type="text" id="mpbFullname" placeholder="Иван Иванов"></div>
+                    <div class="input-group"><label><i class="fas fa-star"></i> Ранг</label><select id="mpbRank"><option value="">-- Выберите --</option><option>Специалист (3)</option><option>Капрал (4)</option><option>Сержант (5)</option><option>Штаб-сержант (6)</option><option>Уорент-офицер (7)</option><option>Старший Уорент-офицер (8)</option><option>Лейтенант (9)</option><option>Капитан (10)</option><option>Майор (11)</option><option>Подполковник (12)</option></select></div>
                 </div>
-                <div class="input-group"><label>Ваше подразделение</label><select id="mpbDepartment"><option value="">-- Выберите --</option><option>ACD / КМБ</option><option>MA</option><option>DIV</option><option>USAF</option><option>MPB</option><option>DELTA</option></select></div>
-                <div class="input-group"><label>Что вы запрашиваете?</label><select id="mpbRequestType"><option value="">-- Выберите --</option><option>Снятие наркозависимости</option><option>Обновление мед.карты</option><option>Bank</option><option>Лицензия на оружие</option><option>Merryweather</option><option>Другое</option></select></div>
-                <div class="input-group"><label>Что вам требуется (подробно)</label><textarea rows="4" id="mpbDetails" placeholder="Опишите суть запроса..."></textarea></div>
+                <div class="input-group"><label><i class="fas fa-building"></i> Ваше подразделение</label><select id="mpbDepartment"><option value="">-- Выберите --</option><option>ACD / КМБ</option><option>MA</option><option>DIV</option><option>USAF</option><option>MPB</option><option>DELTA</option></select></div>
+                <div class="input-group"><label><i class="fas fa-question-circle"></i> Что вы запрашиваете?</label><select id="mpbRequestType"><option value="">-- Выберите --</option><option>Снятие наркозависимости</option><option>Обновление мед.карты</option><option>Bank</option><option>Лицензия на оружие</option><option>Merryweather</option><option>Другое</option></select></div>
+                <div class="input-group"><label><i class="fas fa-file-alt"></i> Что вам требуется (подробно)</label><textarea rows="4" id="mpbDetails" placeholder="Опишите суть запроса..."></textarea></div>
                 <button class="submit-btn" id="submitMpbBtn"><i class="fab fa-discord"></i> Отправить MPB запрос</button>
+                <div class="footer-signature"><i class="fas fa-code"></i> By Alexandr DeHaus <i class="fas fa-heart"></i></div>
             </div>
         </div>
     </div>
@@ -144,21 +152,22 @@
     <div id="parkingPage" class="form-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="glass-card">
-            <div class="card-header"><h2><i class="fas fa-parking"></i> Бронирование парковки</h2></div>
+            <div class="card-header"><h2><i class="fas fa-parking"></i> 🅿 Бронирование парковки</h2></div>
             <div class="card-body">
                 <div id="parkingAlert"></div>
                 <div class="double-group">
-                    <div class="input-group"><label>Имя Фамилия</label><input type="text" id="parkingName" placeholder="Имя Фамилия"></div>
-                    <div class="input-group"><label>Ваш ранг</label><select id="parkingRank"><option value="">-- Выберите --</option><option>3+</option><option>6+</option><option>9+</option><option>12+</option><option>14+</option></select></div>
+                    <div class="input-group"><label><i class="fas fa-user"></i> Имя Фамилия</label><input type="text" id="parkingName" placeholder="Имя Фамилия"></div>
+                    <div class="input-group"><label><i class="fas fa-chart-line"></i> Ваш ранг</label><select id="parkingRank"><option value="">-- Выберите --</option><option>3+</option><option>6+</option><option>9+</option><option>12+</option><option>14+</option></select></div>
                 </div>
-                <div class="input-group"><label>Выбор действия</label><select id="parkingAction"><option value="">-- Действие --</option><option>Получения парковочного места (Платно)</option><option>Смена парковочного места (Платно)</option><option>Смена номерного знака (Бесплатно)</option><option>Повторная оплата парковочного места</option></select></div>
-                <div class="checkbox-group"><input type="checkbox" id="parkingAgree"> <label style="margin:0;">Я соглашаюсь со всеми условиями, которые написаны в канале ❰🚗❱парковка (<span style="color:var(--accent);">#931300899517763594</span>)</label></div>
+                <div class="input-group"><label><i class="fas fa-hand-paper"></i> Выбор действия</label><select id="parkingAction"><option value="">-- Действие --</option><option>🚗 Получения парковочного места (Платно)</option><option>🔄 Смена парковочного места (Платно)</option><option>🔢 Смена номерного знака (Бесплатно)</option><option>💰 Повторная оплата парковочного места</option></select></div>
+                <div class="checkbox-group"><input type="checkbox" id="parkingAgree"> <label style="margin:0;"><i class="fas fa-check-circle"></i> Я соглашаюсь со всеми условиями, которые написаны в канале ❰🚗❱парковка (<span style="color:var(--accent);">#931300899517763594</span>)</label></div>
                 <div class="double-group">
-                    <div class="input-group"><label>Выберите сектор парковки</label><select id="parkingSector"><option value="">-- Сектор --</option><option>Сектор А (14+)</option><option>Сектор В (13+ / inst / Секретариат)</option><option>Сектор С (3+)</option><option>Сектор D1 (6+)</option><option>Сектор D2 (6+)</option><option>Сектор D3 (9+)</option><option>Сектор D4 (6+)</option><option>Сектор Е (3+)</option><option>Сектор F1 (3+)</option><option>Сектор F2 (3+)</option><option>Сектор H1 (3+)</option><option>Сектор H2 (3+)</option><option>Сектор Н3 (3+)</option><option>Сектор H4 (3+)</option><option>Сектор H5 (3+)</option><option>Сектор К</option><option>Вариант 16</option></select></div>
-                    <div class="input-group"><label>Выберите номер парковки</label><input type="text" id="parkingSlot" placeholder="Например: A12, C5"></div>
+                    <div class="input-group"><label><i class="fas fa-map-marker-alt"></i> Выберите сектор парковки</label><select id="parkingSector"><option value="">-- Сектор --</option><option>Сектор А (14+)</option><option>Сектор В (13+ / inst / Секретариат)</option><option>Сектор С (3+)</option><option>Сектор D1 (6+)</option><option>Сектор D2 (6+)</option><option>Сектор D3 (9+)</option><option>Сектор D4 (6+)</option><option>Сектор Е (3+)</option><option>Сектор F1 (3+)</option><option>Сектор F2 (3+)</option><option>Сектор H1 (3+)</option><option>Сектор H2 (3+)</option><option>Сектор Н3 (3+)</option><option>Сектор H4 (3+)</option><option>Сектор H5 (3+)</option><option>Сектор К</option><option>Вариант 16</option></select></div>
+                    <div class="input-group"><label><i class="fas fa-hashtag"></i> Выберите номер парковки</label><input type="text" id="parkingSlot" placeholder="Например: A12, C5"></div>
                 </div>
-                <div class="input-group"><label>Укажите свой номерной знак [13+ могут не указывать. Можно до 3-х номеров]</label><input type="text" id="parkingPlate" placeholder="001AA | 002BB | 003CC"></div>
+                <div class="input-group"><label><i class="fas fa-car"></i> Укажите свой номерной знак</label><input type="text" id="parkingPlate" placeholder="001AA | 002BB | 003CC (до 3 номеров)"></div>
                 <button class="submit-btn" id="submitParkingBtn"><i class="fab fa-discord"></i> Забронировать</button>
+                <div class="footer-signature"><i class="fas fa-code"></i> By Alexandr DeHaus <i class="fas fa-heart"></i></div>
             </div>
         </div>
     </div>
@@ -167,45 +176,47 @@
     <div id="disciplinePage" class="form-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="glass-card">
-            <div class="card-header"><h2><i class="fas fa-gavel"></i> Снятие дисциплинарного взыскания</h2></div>
+            <div class="card-header"><h2><i class="fas fa-gavel"></i> ⚖ Снятие дисциплинарного взыскания</h2></div>
             <div class="card-body">
                 <div id="disciplineAlert"></div>
-                <div class="input-group"><label>Имя фамилия</label><input type="text" id="disciplineName" placeholder="Имя Фамилия"></div>
-                <div class="input-group"><label>Тип снятия</label><select id="disciplineTypeSelect"><option value="">-- Выберите --</option><option value="appeal">Обжалование</option><option value="pay">Оплата</option></select></div>
+                <div class="input-group"><label><i class="fas fa-user"></i> Имя фамилия</label><input type="text" id="disciplineName" placeholder="Имя Фамилия"></div>
+                <div class="input-group"><label><i class="fas fa-tag"></i> Тип снятия</label><select id="disciplineTypeSelect"><option value="">-- Выберите --</option><option value="appeal">📢 Обжалование</option><option value="pay">💳 Оплата</option></select></div>
                 <div id="appealBlock" style="display:none;">
-                    <div class="input-group"><label>Дата получения дисциплинарного взыскания</label><input type="date" id="disciplineDate"></div>
-                    <div class="input-group"><label>За что получили дисциплинарное взыскание [Ссылка на сообщение]</label><input type="text" id="disciplineReasonLink" placeholder="Ссылка на сообщение"></div>
-                    <div class="input-group"><label>Доказательства невиновности</label><textarea rows="3" id="disciplineProof" placeholder="Скриншоты, объяснения..."></textarea></div>
+                    <div class="input-group"><label><i class="fas fa-calendar"></i> Дата получения взыскания</label><input type="date" id="disciplineDate"></div>
+                    <div class="input-group"><label><i class="fas fa-link"></i> Ссылка на сообщение</label><input type="text" id="disciplineReasonLink" placeholder="Ссылка на сообщение"></div>
+                    <div class="input-group"><label><i class="fas fa-image"></i> Доказательства невиновности</label><textarea rows="3" id="disciplineProof" placeholder="Скриншоты, объяснения..."></textarea></div>
                 </div>
                 <div id="payBlock" style="display:none;">
-                    <div class="input-group"><label>Имя и Фамилия сотрудника выдавшего взыскание</label><input type="text" id="payOfficer"></div>
-                    <div class="input-group"><label>Рапорт на взыскание №</label><input type="text" id="payReportNumber" placeholder="№ рапорта"></div>
-                    <div class="input-group"><label>Тип наказания:</label><input type="text" id="penaltyType" placeholder="Например: выговор, штраф"></div>
-                    <div class="input-group"><label>Основание для снятия взыскания:</label><textarea rows="3" id="payBasis" placeholder="Причина снятия"></textarea></div>
+                    <div class="input-group"><label><i class="fas fa-user-shield"></i> Сотрудник, выдавший взыскание</label><input type="text" id="payOfficer"></div>
+                    <div class="input-group"><label><i class="fas fa-file-signature"></i> Рапорт на взыскание №</label><input type="text" id="payReportNumber" placeholder="№ рапорта"></div>
+                    <div class="input-group"><label><i class="fas fa-exclamation-triangle"></i> Тип наказания</label><input type="text" id="penaltyType" placeholder="Например: выговор, штраф"></div>
+                    <div class="input-group"><label><i class="fas fa-pen"></i> Основание для снятия</label><textarea rows="3" id="payBasis" placeholder="Причина снятия"></textarea></div>
                 </div>
                 <button class="submit-btn" id="submitDisciplineBtn"><i class="fab fa-discord"></i> Подать ходатайство</button>
+                <div class="footer-signature"><i class="fas fa-code"></i> By Alexandr DeHaus <i class="fas fa-heart"></i></div>
             </div>
         </div>
     </div>
 
-    <!-- ==================== ЗАЯВКА НА ВОЕННЫЙ БИЛЕТ (доп. 4-я кнопка по вашему желанию, но добавим как отдельную) ==================== -->
+    <!-- ==================== ЗАЯВКА НА ВОЕННЫЙ БИЛЕТ ==================== -->
     <div id="militaryidPage" class="form-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="glass-card">
-            <div class="card-header"><h2><i class="fas fa-id-card"></i> Заявка на военный билет</h2></div>
+            <div class="card-header"><h2><i class="fas fa-id-card"></i> 🪪 Заявка на военный билет</h2></div>
             <div class="card-body">
                 <div id="militaryAlert"></div>
                 <div class="double-group">
-                    <div class="input-group"><label>Имя Фамилия</label><input type="text" id="milName" placeholder="Иван Иванов"></div>
-                    <div class="input-group"><label>Номер паспорта</label><input type="text" id="milPassport" placeholder="Серия и номер паспорта"></div>
+                    <div class="input-group"><label><i class="fas fa-user"></i> Имя Фамилия</label><input type="text" id="milName" placeholder="Иван Иванов"></div>
+                    <div class="input-group"><label><i class="fas fa-passport"></i> Номер паспорта</label><input type="text" id="milPassport" placeholder="Серия и номер паспорта"></div>
                 </div>
                 <div class="double-group">
-                    <div class="input-group"><label>Ссылка на отчет #1</label><input type="url" id="milReport1" placeholder="https://..."></div>
-                    <div class="input-group"><label>Ссылка на отчет #2</label><input type="url" id="milReport2" placeholder="https://..."></div>
+                    <div class="input-group"><label><i class="fas fa-file-alt"></i> Ссылка на отчет #1</label><input type="url" id="milReport1" placeholder="https://..."></div>
+                    <div class="input-group"><label><i class="fas fa-file-alt"></i> Ссылка на отчет #2</label><input type="url" id="milReport2" placeholder="https://..."></div>
                 </div>
-                <div class="checkbox-group"><input type="checkbox" id="milDaysCheck"> <label>✅ Да, прошло 15 дней с момента повышения (по дню блага)</label></div>
-                <div class="info-note">📌 Для оформления военного билета необходимо предоставить два отчета и подтверждение, что с момента последнего повышения прошло 15 дней.</div>
+                <div class="checkbox-group"><input type="checkbox" id="milDaysCheck"> <label style="margin:0;"><i class="fas fa-check"></i> ✅ Да, прошло 15 дней с момента повышения (по дню блага)</label></div>
+                <div class="info-note"><i class="fas fa-info-circle"></i> 📌 Для оформления военного билета необходимо предоставить два отчета и подтверждение, что с момента последнего повышения прошло 15 дней.</div>
                 <button class="submit-btn" id="submitMilitaryBtn"><i class="fab fa-discord"></i> Подать заявку</button>
+                <div class="footer-signature"><i class="fas fa-code"></i> By Alexandr DeHaus <i class="fas fa-heart"></i></div>
             </div>
         </div>
     </div>
@@ -228,10 +239,9 @@
         militaryid: '<@&713076174128939010> <@&713076174128939013>'
     };
 
-    // Аватар для вебхука (ссылка на изображение)
+    // Аватар для вебхука
     const WEBHOOK_AVATAR = 'https://i.yapx.ru/dj4ak.png';
 
-    // Универсальная функция отправки в Discord
     async function sendToDiscord(webhookUrl, title, fields, roleMention, color = 0x4CAF50) {
         const embed = {
             title: title,
@@ -270,13 +280,7 @@
         return d.toLocaleDateString('ru-RU');
     }
 
-    function formatDateTime(dtValue) {
-        if (!dtValue) return 'Не указано';
-        const d = new Date(dtValue);
-        return d.toLocaleString('ru-RU');
-    }
-
-    // ========== MPB ЗАПРОС ==========
+    // ========== MPB ==========
     document.getElementById('submitMpbBtn')?.addEventListener('click', async () => {
         const name = document.getElementById('mpbFullname').value.trim();
         const rank = document.getElementById('mpbRank').value;
@@ -309,7 +313,7 @@
         finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Отправить MPB запрос'; }
     });
 
-    // ========== БРОНИРОВАНИЕ ПАРКОВКИ ==========
+    // ========== ПАРКОВКА ==========
     document.getElementById('submitParkingBtn')?.addEventListener('click', async () => {
         const name = document.getElementById('parkingName').value.trim();
         const rank = document.getElementById('parkingRank').value;
@@ -349,7 +353,7 @@
         finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Забронировать'; }
     });
 
-    // ========== СНЯТИЕ ДИСЦИПЛИНАРНОГО ВЗЫСКАНИЯ ==========
+    // ========== ДИСЦИПЛИНА ==========
     let typeSelect = document.getElementById('disciplineTypeSelect');
     let appealDiv = document.getElementById('appealBlock');
     let payDiv = document.getElementById('payBlock');
@@ -411,9 +415,7 @@
         finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Подать ходатайство'; }
     });
 
-    // ========== ЗАЯВКА НА ВОЕННЫЙ БИЛЕТ (дополнительно, но без отдельной кнопки на главной - добавим её как скрытую или можно добавить 4ю кнопку по желанию) ==========
-    // Чтобы не нарушать "3 кнопки", добавим обработчик для военного билета, но на главной её не будет — либо добавим четвёртую. 
-    // По просьбе "сделай просто 3 кнопки" — оставляем 3, но страница доступна, если нужна.
+    // ========== ВОЕННЫЙ БИЛЕТ ==========
     document.getElementById('submitMilitaryBtn')?.addEventListener('click', async () => {
         const name = document.getElementById('milName').value.trim();
         const passport = document.getElementById('milPassport').value.trim();
@@ -463,6 +465,7 @@
             if (page === 'mpb') showFormPage('mpbPage');
             else if (page === 'parking') showFormPage('parkingPage');
             else if (page === 'discipline') showFormPage('disciplinePage');
+            else if (page === 'militaryid') showFormPage('militaryidPage');
         });
     });
     window.showHome = showHome;
