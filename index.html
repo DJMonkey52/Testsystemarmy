@@ -74,6 +74,9 @@
         .checkbox-group { display: flex; align-items: center; gap: 12px; margin: 20px 0; background: rgba(76,175,80,0.1); padding: 12px 16px; border-radius: 20px; cursor: pointer; }
         .checkbox-group input { width: 20px; height: 20px; cursor: pointer; accent-color: var(--accent); }
         .info-note { background: rgba(76,175,80,0.1); border-radius: 14px; padding: 10px; font-size: 0.8rem; text-align: center; color: var(--accent-glow); margin: 12px 0; }
+        .instruction-note { background: rgba(76,175,80,0.08); border-left: 3px solid var(--accent); border-radius: 12px; padding: 12px 16px; margin: 8px 0 16px 0; font-size: 0.75rem; color: var(--text-secondary); }
+        .instruction-note i { color: var(--accent); margin-right: 8px; }
+        .instruction-note .example { background: var(--input-bg); border-radius: 10px; padding: 8px 12px; margin-top: 8px; font-family: monospace; font-size: 0.75rem; color: var(--accent-glow); }
         .submit-btn { width: 100%; background: linear-gradient(105deg, var(--accent), var(--accent-dark)); border: none; padding: 14px; border-radius: 28px; font-size: 0.95rem; font-weight: 700; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: 0.3s; margin-top: 16px; }
         .submit-btn:hover { transform: translateY(-3px); filter: brightness(1.05); box-shadow: 0 10px 25px rgba(76,175,80,0.4); }
         .footer-signature { text-align: center; margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--border-light); color: var(--text-muted); font-size: 0.8rem; font-weight: 500; }
@@ -95,7 +98,7 @@
         <div class="army-sub">Официальная система заявок</div>
     </div>
 
-    <!-- Главная страница с 4 кнопками -->
+    <!-- Главная страница с 5 кнопками (добавлена жалобы) -->
     <div id="homePage">
         <div class="cards-grid">
             <div class="action-card" data-page="mpb">
@@ -120,6 +123,12 @@
                 <div class="card-icon"><i class="fas fa-id-card"></i></div>
                 <h3>Заявка на военный билет</h3>
                 <p>Оформление военного билета</p>
+                <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="action-card" data-page="complaint">
+                <div class="card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <h3>Жалобы на военнослужащих</h3>
+                <p>Нарушения, инциденты</p>
                 <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
             </div>
         </div>
@@ -148,7 +157,7 @@
         </div>
     </div>
 
-    <!-- ==================== БРОНИРОВАНИЕ ПАРКОВКИ ==================== -->
+    <!-- ==================== БРОНИРОВАНИЕ ПАРКОВКИ (добавлено "Старое парковочное место") ==================== -->
     <div id="parkingPage" class="form-page">
         <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
         <div class="glass-card">
@@ -160,12 +169,28 @@
                     <div class="input-group"><label><i class="fas fa-chart-line"></i> Ваш ранг</label><select id="parkingRank"><option value="">-- Выберите --</option><option>3+</option><option>6+</option><option>9+</option><option>12+</option><option>14+</option></select></div>
                 </div>
                 <div class="input-group"><label><i class="fas fa-hand-paper"></i> Выбор действия</label><select id="parkingAction"><option value="">-- Действие --</option><option>Получения парковочного места (Платно)</option><option>Смена парковочного места (Платно)</option><option>Смена номерного знака (Бесплатно)</option><option>Повторная оплата парковочного места</option></select></div>
+                
+                <!-- НОВОЕ ПОЛЕ: Старое парковочное место -->
+                <div class="input-group"><label><i class="fas fa-history"></i> Старое парковочное место (если смена)</label><input type="text" id="parkingOldSlot" placeholder="Например: B12, C7"></div>
+                
                 <div class="checkbox-group"><input type="checkbox" id="parkingAgree"> <label style="margin:0;"><i class="fas fa-check-circle"></i> Я соглашаюсь со всеми условиями, которые написаны в канале ❰🚗❱парковка (<span style="color:var(--accent);">#931300899517763594</span>)</label></div>
                 <div class="double-group">
                     <div class="input-group"><label><i class="fas fa-map-marker-alt"></i> Выберите сектор парковки</label><select id="parkingSector"><option value="">-- Сектор --</option><option>Сектор А (14+)</option><option>Сектор В (13+ / inst / Секретариат)</option><option>Сектор С (3+)</option><option>Сектор D1 (6+)</option><option>Сектор D2 (6+)</option><option>Сектор D3 (9+)</option><option>Сектор D4 (6+)</option><option>Сектор Е (3+)</option><option>Сектор F1 (3+)</option><option>Сектор F2 (3+)</option><option>Сектор H1 (3+)</option><option>Сектор H2 (3+)</option><option>Сектор Н3 (3+)</option><option>Сектор H4 (3+)</option><option>Сектор H5 (3+)</option><option>Сектор К</option><option>Вариант 16</option></select></div>
                     <div class="input-group"><label><i class="fas fa-hashtag"></i> Выберите номер парковки</label><input type="text" id="parkingSlot" placeholder="Например: A12, C5"></div>
                 </div>
                 <div class="input-group"><label><i class="fas fa-car"></i> Укажите свой номерной знак</label><input type="text" id="parkingPlate" placeholder="001AA | 002BB | 003CC (до 3 номеров)"></div>
+                
+                <!-- Доказательство с инструкцией -->
+                <div class="input-group"><label><i class="fas fa-image"></i> Доказательство (скриншот оплаты)</label><input type="url" id="parkingProof" placeholder="https://ссылка_на_скриншот_оплаты"></div>
+                <div class="instruction-note">
+                    <i class="fas fa-info-circle"></i> <strong>Инструкция:</strong><br>
+                    Загрузите скрины пополнения счета фракции в канал <strong style="color:var(--accent);">📁 GTA 5 RP | Army → 💰 пополнение-казны</strong>
+                    <div class="example">
+                        <i class="fas fa-check-circle" style="color:var(--accent);"></i> Пример сообщения в чате:<br>
+                        <strong style="color:var(--accent);">«Вы пополнили счет LS Army на 10000$»</strong>
+                    </div>
+                </div>
+                
                 <button class="submit-btn" id="submitParkingBtn"><i class="fab fa-discord"></i> Забронировать</button>
                 <div class="footer-signature"><i class="fas fa-code"></i> By Alexandr DeHaus <i class="fas fa-heart"></i></div>
             </div>
@@ -220,6 +245,26 @@
             </div>
         </div>
     </div>
+
+    <!-- ==================== НОВАЯ ФОРМА: ЖАЛОБЫ НА ВОЕННОСЛУЖАЩИХ ==================== -->
+    <div id="complaintPage" class="form-page">
+        <div class="back-btn" onclick="showHome()"><i class="fas fa-arrow-left"></i> На главную</div>
+        <div class="glass-card">
+            <div class="card-header"><h2><i class="fas fa-exclamation-triangle"></i> Жалобы на военнослужащих</h2></div>
+            <div class="card-body">
+                <div id="complaintAlert"></div>
+                <div class="double-group">
+                    <div class="input-group"><label><i class="fas fa-user"></i> Ваше имя и фамилия</label><input type="text" id="complaintAuthor" placeholder="Иван Иванов"></div>
+                    <div class="input-group"><label><i class="fas fa-user-tag"></i> Имя фамилия нарушителя</label><input type="text" id="complaintOffender" placeholder="Петр Петров"></div>
+                </div>
+                <div class="input-group"><label><i class="fas fa-building"></i> Подразделение нарушителя</label><select id="complaintDepartment"><option value="">-- Выберите --</option><option>ACD / КМБ</option><option>MA</option><option>DIV</option><option>USAF</option><option>MPB</option><option>DELTA</option></select></div>
+                <div class="input-group"><label><i class="fas fa-clipboard-list"></i> Суть нарушения</label><textarea rows="4" id="complaintDetails" placeholder="Опишите суть нарушения, обстоятельства..."></textarea></div>
+                <div class="input-group"><label><i class="fas fa-image"></i> Доказательства (ссылки на скриншоты/видео)</label><input type="url" id="complaintProof" placeholder="https://ссылка_на_доказательство"></div>
+                <button class="submit-btn" id="submitComplaintBtn"><i class="fab fa-discord"></i> Отправить жалобу</button>
+                <div class="footer-signature"><i class="fas fa-code"></i> By Alexandr DeHaus <i class="fas fa-heart"></i></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -227,10 +272,10 @@
     const WEBHOOKS = {
         mpb: 'https://discord.com/api/webhooks/1500803068437200956/qc8bumt7d1Jp-wEB-0s9ihnHh1pD9OY3_A12kwIvQThIXTle3VuAlwJDTA_c99xRxYus',
         parking: 'https://discord.com/api/webhooks/1067323906760912906/IcouwETzVDcRv6va1E9QSMIckqNPA2rXSitj8MaT8_VHpqAe-tjQQ3z52nGvSn10VnUx',
-        // Дисциплина разделена на два вебхука
         disciplineAppeal: 'https://discord.com/api/webhooks/1501576682463690875/yYzLvBz3BkWL3yz3G4rWtDOkSEJ9wZmV1HFthZnKdN5nYZgI_sS5D5lvbF5GzBsHTlK0',
-        disciplinePay: 'https://discord.com/api/webhooks/1503134279868092559/S-jZHq4MnVY9v0Y3avTbmQdfVTydPtVVtbOuUnyvJHL6YUK8GcZvtwXeahY4jirLVypt',
-        militaryid: 'https://discord.com/api/webhooks/1450888033531596863/l49CI5VXzoKKDFN9C0QBKgeGvZnWnZbpD7Jq6Xzu9gAnyr0tZKzrqkj0m4aZlVLz4gSQ'
+        disciplinePay: 'https://discord.com/api/webhooks/1501577437170110676/uDgdbQ52zP8LWkGl6eFbvDMHTLWRVMvhuitwUdubTrj7urZNpKffk62q8bkF-ydAaoKf',
+        militaryid: 'https://discord.com/api/webhooks/1450888033531596863/l49CI5VXzoKKDFN9C0QBKgeGvZnWnZbpD7Jq6Xzu9gAnyr0tZKzrqkj0m4aZlVLz4gSQ',
+        complaint: 'https://discord.com/api/webhooks/1354882159112224788/YOUR_COMPLAINT_WEBHOOK_TOKEN'  // ЗАМЕНИТЕ НА РЕАЛЬНЫЙ ВЕБХУК
     };
 
     // ========== РОЛИ ДЛЯ ТЕГА ПРИ ОТПРАВКЕ ==========
@@ -238,10 +283,10 @@
         mpb: '<@&713076174112161838>',
         parking: '<@&856558335477940225>',
         discipline: '<@&793440118367191050> <@&792081334541484062>',
-        militaryid: '<@&713076174128939010> <@&713076174128939013>'
+        militaryid: '<@&713076174128939010> <@&713076174128939013>',
+        complaint: '<@&793440118367191050> <@&792081334541484062>'   // те же роли для жалоб
     };
 
-    // Аватар для вебхука
     const WEBHOOK_AVATAR = 'https://i.yapx.ru/dj4ak.png';
 
     async function sendToDiscord(webhookUrl, title, fields, roleMention, color = 0x4CAF50) {
@@ -282,7 +327,7 @@
         return d.toLocaleDateString('ru-RU');
     }
 
-    // ========== MPB ==========
+    // ========== MPB (без изменений) ==========
     document.getElementById('submitMpbBtn')?.addEventListener('click', async () => {
         const name = document.getElementById('mpbFullname').value.trim();
         const rank = document.getElementById('mpbRank').value;
@@ -315,7 +360,7 @@
         finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Отправить MPB запрос'; }
     });
 
-    // ========== ПАРКОВКА ==========
+    // ========== ПАРКОВКА (добавлено поле старое место) ==========
     document.getElementById('submitParkingBtn')?.addEventListener('click', async () => {
         const name = document.getElementById('parkingName').value.trim();
         const rank = document.getElementById('parkingRank').value;
@@ -323,17 +368,22 @@
         const agree = document.getElementById('parkingAgree').checked;
         const sector = document.getElementById('parkingSector').value;
         const slot = document.getElementById('parkingSlot').value.trim();
+        const oldSlot = document.getElementById('parkingOldSlot').value.trim();
         const plate = document.getElementById('parkingPlate').value.trim();
+        const proof = document.getElementById('parkingProof').value.trim();
+        
         if (!name) { showAlert('parkingAlert', 'Введите имя и фамилию', 'error'); return; }
         if (!rank) { showAlert('parkingAlert', 'Выберите ранг', 'error'); return; }
         if (!action) { showAlert('parkingAlert', 'Выберите действие', 'error'); return; }
         if (!agree) { showAlert('parkingAlert', 'Подтвердите согласие с условиями', 'error'); return; }
         if (!sector) { showAlert('parkingAlert', 'Выберите сектор парковки', 'error'); return; }
         if (!slot) { showAlert('parkingAlert', 'Укажите номер парковки', 'error'); return; }
+        if (!proof) { showAlert('parkingAlert', 'Укажите ссылку на доказательство (скриншот оплаты)', 'error'); return; }
+        
         const btn = document.getElementById('submitParkingBtn');
         btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
         try {
-            const fields = [
+            let fields = [
                 { name: '👤 Имя Фамилия', value: name, inline: true },
                 { name: '🏅 Ранг', value: rank, inline: true },
                 { name: '⚡ Действие', value: action, inline: true },
@@ -342,6 +392,9 @@
                 { name: '🚗 Номерной знак', value: plate || 'Не указан', inline: true },
                 { name: '✅ Согласие', value: 'Принято', inline: true }
             ];
+            if (oldSlot) fields.splice(4, 0, { name: '🔄 Старое парковочное место', value: oldSlot, inline: true });
+            fields.push({ name: '📎 Доказательство (скриншот оплаты)', value: proof, inline: false });
+            
             await sendToDiscord(WEBHOOKS.parking, '🅿 Бронирование парковки', fields, ROLE_TAGS.parking, 0x3498DB);
             showAlert('parkingAlert', '✅ Парковка забронирована!', 'success');
             document.getElementById('parkingName').value = '';
@@ -350,12 +403,14 @@
             document.getElementById('parkingAgree').checked = false;
             document.getElementById('parkingSector').value = '';
             document.getElementById('parkingSlot').value = '';
+            document.getElementById('parkingOldSlot').value = '';
             document.getElementById('parkingPlate').value = '';
+            document.getElementById('parkingProof').value = '';
         } catch (e) { showAlert('parkingAlert', `❌ Ошибка: ${e.message}`, 'error'); }
         finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Забронировать'; }
     });
 
-    // ========== ДИСЦИПЛИНА (разделение по типам) ==========
+    // ========== ДИСЦИПЛИНА (без изменений) ==========
     let typeSelect = document.getElementById('disciplineTypeSelect');
     let appealDiv = document.getElementById('appealBlock');
     let payDiv = document.getElementById('payBlock');
@@ -431,7 +486,7 @@
         finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Подать ходатайство'; }
     });
 
-    // ========== ВОЕННЫЙ БИЛЕТ ==========
+    // ========== ВОЕННЫЙ БИЛЕТ (без изменений) ==========
     document.getElementById('submitMilitaryBtn')?.addEventListener('click', async () => {
         const name = document.getElementById('milName').value.trim();
         const passport = document.getElementById('milPassport').value.trim();
@@ -464,6 +519,41 @@
         finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Подать заявку'; }
     });
 
+    // ========== НОВОЕ: ЖАЛОБЫ НА ВОЕННОСЛУЖАЩИХ ==========
+    document.getElementById('submitComplaintBtn')?.addEventListener('click', async () => {
+        const author = document.getElementById('complaintAuthor').value.trim();
+        const offender = document.getElementById('complaintOffender').value.trim();
+        const department = document.getElementById('complaintDepartment').value;
+        const details = document.getElementById('complaintDetails').value.trim();
+        const proof = document.getElementById('complaintProof').value.trim();
+        
+        if (!author) { showAlert('complaintAlert', 'Укажите ваше имя и фамилию', 'error'); return; }
+        if (!offender) { showAlert('complaintAlert', 'Укажите имя и фамилию нарушителя', 'error'); return; }
+        if (!department) { showAlert('complaintAlert', 'Выберите подразделение нарушителя', 'error'); return; }
+        if (!details) { showAlert('complaintAlert', 'Опишите суть нарушения', 'error'); return; }
+        if (!proof) { showAlert('complaintAlert', 'Укажите ссылку на доказательства', 'error'); return; }
+        
+        const btn = document.getElementById('submitComplaintBtn');
+        btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Отправка...';
+        try {
+            const fields = [
+                { name: '👤 Заявитель', value: author, inline: true },
+                { name: '⚠️ Нарушитель', value: offender, inline: true },
+                { name: '🏢 Подразделение нарушителя', value: department, inline: true },
+                { name: '📝 Суть нарушения', value: details, inline: false },
+                { name: '📎 Доказательства', value: proof, inline: false }
+            ];
+            await sendToDiscord(WEBHOOKS.complaint, '⚠️ ЖАЛОБА НА ВОЕННОСЛУЖАЩЕГО', fields, ROLE_TAGS.complaint, 0xE74C3C);
+            showAlert('complaintAlert', '✅ Жалоба отправлена!', 'success');
+            document.getElementById('complaintAuthor').value = '';
+            document.getElementById('complaintOffender').value = '';
+            document.getElementById('complaintDepartment').value = '';
+            document.getElementById('complaintDetails').value = '';
+            document.getElementById('complaintProof').value = '';
+        } catch (e) { showAlert('complaintAlert', `❌ Ошибка: ${e.message}`, 'error'); }
+        finally { btn.disabled = false; btn.innerHTML = '<i class="fab fa-discord"></i> Отправить жалобу'; }
+    });
+
     // ========== НАВИГАЦИЯ ==========
     function showHome() {
         document.getElementById('homePage').style.display = 'block';
@@ -482,6 +572,7 @@
             else if (page === 'parking') showFormPage('parkingPage');
             else if (page === 'discipline') showFormPage('disciplinePage');
             else if (page === 'militaryid') showFormPage('militaryidPage');
+            else if (page === 'complaint') showFormPage('complaintPage');
         });
     });
     window.showHome = showHome;
